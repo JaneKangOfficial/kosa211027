@@ -49,13 +49,13 @@ public class Test01 {
 		
 //		7. 반복 변수 i가 초기값 10을 가지고 있으며 25회를 반복할 때 변수 i를 출력할 때 4씩 증가한 값만 출력되도록 하시오.
 		System.out.println("===7===");
-		for(int i = 10; i <= 25; i+=4) {
+		for(int i = 10; i <= 35; i+=4) {
 			System.out.println(i);
 		}
 		
 //		8. 반복 변수 i가 12부터 20회를 반복할 때 "개발을 잘하려면 자바를 들이셔야합니다"를 4회만 출력되도록 하시오.(나이도 2.5)
 		System.out.println("===8===");
-		for(int i = 12; i <= 20; i++) {
+		for(int i = 12; i <= 32; i++) {
 			if (i % 2 != 0) {
 				System.out.println("개발을 잘하려면 자바를 들이셔야합니다");
 			}
@@ -77,10 +77,12 @@ public class Test01 {
 		
 //		11. 구구단 7단을 출력하되 홀수만을 출력하되 반복변수는 사용하지 말것.
 		System.out.println("===11===");
+		int j = 1;
 		for (int i = 1; i <= 9; i++)  {
-			if (i % 2 != 0) {
-				System.out.println("7 * " + i + " = " + 7 * i);
+			if (j % 2 != 0) {
+				System.out.println("7 * " + j + " = " + 7 * j);
 			}
+			j++;
 		}
 		
 //		12. 구구단 6단 중 짝수 곱만 출력하시오.
@@ -141,7 +143,9 @@ public class Test01 {
 		
 //		19. 3단을 출력할때 2부터 5곱까지 만 출력하시오. 단, 반복 변수는 사용하지 마시오.
 		System.out.println("===19===");
-		for(int gop = 2; gop <= 5; gop++) {
+		int a = 2;
+		int b = 5;
+		for(int gop = a; gop <= b; gop++) {
 			System.out.println("3 * " + gop + " = " + 3 * gop);
 		}
 		
@@ -164,12 +168,10 @@ public class Test01 {
 			}
 		}
 		
-//		22. i는 1부터  1씩 증가한 값이 15이거나  y는 1000 부터 20씩 감소한 값이 0일때 까지 반복이 이루어져야 한다.
+//		22. i는 1부터  1씩 증가한 값이 15이거나  y11 1000 부터 20씩 감소한 값이 0일때 까지 반복이 이루어져야 한다.
 		System.out.println("===22===");
-		for (int i = 1; i <= 15; i++) {
-			for (y = 1000; y >= 0; y-=20) {
+		for (int i = 1, y11 = 1000; i <= 15 && y11 >= 0; i++, y11-=20) {
 				System.out.println("자바는 나의 사랑");
-			}
 		}
 		
 //		23. 3단부터 8단까지 출력
@@ -249,8 +251,8 @@ public class Test01 {
 		System.out.println("<table>");
 		for (int i = 1; i <= 4; i++) {
 			System.out.print("<tr>");
-			for (int j = 1; j <= 4; j++) {
-				System.out.print("<td>" + j + "</td>");
+			for (int j1 = 1; j1 <= 4; j1++) {
+				System.out.print("<td>" + j1 + "</td>");
 			}
 			System.out.print("</tr>\n");
 		}
@@ -259,7 +261,7 @@ public class Test01 {
 //		30. 1부터 45까지의 수 중 6개를 추출하여 출력하는 데 6개의 수를 5번 출력하시오.
 		System.out.println("===30===");
 		for (int i = 1; i <= 5; i++) {
-			for (int j = 1; j <= 6; j++) {
+			for (int j1 = 1; j1 <= 6; j1++) {
 				num = (int)(Math.random() * 45) + 1;
 				System.out.println(num);
 			}
