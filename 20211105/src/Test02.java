@@ -27,35 +27,35 @@ public class Test02 {
 //		평균=37.70
 	
 		Scanner sc = new Scanner(System.in);
-//		
-//		System.out.println("몸무게를 입력하시오 : ");
-//		double a1 = sc.nextDouble();
-//		System.out.println("몸무게를 입력하시오 : ");
-//		double a2 = sc.nextDouble();
-//		System.out.println("몸무게를 입력하시오 : ");
-//		double a3 = sc.nextDouble();
-//		System.out.println("몸무게를 입력하시오 : ");
-//		double a4 = sc.nextDouble();
+		
+		System.out.println("몸무게를 입력하시오 : ");
+		double a1 = sc.nextDouble();
+		System.out.println("몸무게를 입력하시오 : ");
+		double a2 = sc.nextDouble();
+		System.out.println("몸무게를 입력하시오 : ");
+		double a3 = sc.nextDouble();
+		System.out.println("몸무게를 입력하시오 : ");
+		double a4 = sc.nextDouble();
 	
-//		double[] arr = {a1, a2, a3, a4};
-//		double sum1 = 0;
-//		double max = arr[0];
-//		double min = arr[0];
-//		for (int i = 0; i <= arr.length; i++) {
-//			sum1 += arr[i];
-//			
-//			if (arr[i] > max) {
-//				max = arr[i];
-//			}
-//			
-//			if (arr[i] < min) {
-//				min = arr[i];
-//			}
-//		}
-//		System.out.println("합 = " + sum1);
-//		System.out.println("평균 = " + sum1 / arr.length);
-//		System.out.println("최대값 = " + max);
-//		System.out.println("최소값 = " + min);
+		double[] arr = {a1, a2, a3, a4};
+		double sum1 = 0;
+		double max = arr[0];
+		double min = arr[0];
+		for (int i = 0; i < arr.length; i++) {
+			sum1 += arr[i];
+			
+			if (arr[i] > max) {
+				max = arr[i];
+			}
+			
+			if (arr[i] < min) {
+				min = arr[i];
+			}
+		}
+		System.out.println("합 = " + sum1);
+		System.out.println("평균 = " + sum1 / arr.length);
+		System.out.println("최대값 = " + max);
+		System.out.println("최소값 = " + min);
 		
 	
 		System.out.println("===== 3 =====");
