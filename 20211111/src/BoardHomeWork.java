@@ -97,6 +97,19 @@ public class BoardHomeWork {
 					break;
 				case "2" : 
 					System.out.println("수정페이지입니다.");
+					System.out.println("글쓴이를 수정하려면 1 | 제목을 수정하려면 2 | 내용을 수정하려면 3");
+					String select = sc.nextLine();
+					switch(select) {
+					case "1" :
+						System.out.println("글쓴이를 수정합니다.");
+						break;
+					case "2" : 
+						System.out.println("제목을 수정합니다.");
+						break;
+					case "3" : 
+						System.out.println("내용을 수정합니다.");
+						break;
+					}
 					break;
 				case "3" : 
 					System.out.println("삭제합니다.");
