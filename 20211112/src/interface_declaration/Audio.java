@@ -1,6 +1,6 @@
 package interface_declaration;
 
-// interface는 추상메서드로 이루어져 있으므로 구현해서 사용한다.
+// interface는 추상메서드로만 이루어져 있으므로 구현해서 사용한다.
 public class Audio implements RemoteControl {
 
 	// 필드
