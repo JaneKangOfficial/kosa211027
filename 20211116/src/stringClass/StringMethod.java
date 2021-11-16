@@ -9,19 +9,19 @@ public class StringMethod {
 		//						1
 		// 맨 앞에 0이 있으면 문자
 		
-		char ch = ssn.charAt(7);
-		switch(ch) {
+		char ch = ssn.charAt(7); // 7번째 문자
+		switch(ch) { // 남자
 		case '1' :
 		case '3' : System.out.println("남자"); break;
 		case '2' :
 		case '4' : System.out.println("여자"); break;
 		}
-		System.out.println(ssn.charAt(7));
+		System.out.println(ssn.charAt(7));	// 1
 		
-		System.out.println(ssn.charAt(7));
+		System.out.println(ssn.charAt(7));	// 1
 		String str = "나는 자바가 너무 재미있어요";
 		//           012 3456 7890 1234
-		System.out.println(str.charAt(10));
+		System.out.println(str.charAt(10));	// 재
 		// charAt() : index에 해당하는 문자를 가져옴.
 		
 		// Method 정리
@@ -46,9 +46,9 @@ public class StringMethod {
 		System.out.println(str1.indexOf("t")); // 7 // t가 있는 위치
 		System.out.println(str1.indexOf("a")); // 12 // 맨처음 a가 있는 위치
 		System.out.println(str1.lastIndexOf("a")); // 14 // 맨뒤 a가 있는 위치
-		System.out.println(str1.length()); // 배열 외에는 length()
+		System.out.println(str1.length()); // 15 // 배열 외에는 length()
 		int[] ii = new int[5];
-		System.out.println(ii.length); // 배열에서만 length : 괄호없음
+		System.out.println(ii.length); // 5 // 배열에서만 length : 괄호없음
 		
 		// I를 i로 문자 변환
 		System.out.println(str1.replace('I', 'i'));
@@ -66,11 +66,11 @@ public class StringMethod {
 
 		// 파이썬 slicing : a = "abcdef" : a[1:3] substring
 		str1 = "abcdef";
-		System.out.println(str1.substring(1, 1 + 2));
+		System.out.println(str1.substring(1, 1 + 2));	// bc
 	
 		str1 = "abcDEF";
-		System.out.println(str1.toLowerCase());
-		System.out.println(str1.toUpperCase());
+		System.out.println(str1.toLowerCase());	// abcdef
+		System.out.println(str1.toUpperCase()); // ABCDEF
 
 		Integer i = 10;
 		str = "10" + i.toString();	// toString : 숫자를 문자로 변경

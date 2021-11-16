@@ -30,7 +30,7 @@ public class HashMapExample1 {
 		map.put("박길동", 25);
 		map.put("홍길동", 95); // 중복 키를 허용하지 않는다. // 값이 수정된다.
 		System.out.println("map의 크기 : " + map.size()); // 4
-		System.out.println("홍길동의 나이는 " + map.get("홍길동") + "살 입니다.");
+		System.out.println("홍길동의 나이는 " + map.get("홍길동") + "살 입니다."); // 95
 	
 		map.put("김길동", 16);	// 키로 값을 수정할 수 있다.
 		

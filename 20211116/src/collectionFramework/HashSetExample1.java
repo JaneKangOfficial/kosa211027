@@ -16,21 +16,21 @@ public class HashSetExample1 {
 		set.add("박길동");
 		set.add("박길동");		// set에서 같은 값은 저장되지 않는다. (list는 같은 값 저장된다.)
 		int size = set.size();
-		System.out.println(size);
+		System.out.println(size);	// 4
 		
 		System.out.println("---------");
 		
 		Iterator iterator =  set.iterator();
 		while(iterator.hasNext()) {
 			String s = (String)iterator.next();
-			System.out.println(s);
+			System.out.println(s);	// 중복값은 출력되지 않는다.
 		}
 		
 		System.out.println("---------");
 		
 		set.remove("김길동");
 		size = set.size();
-		System.out.println(size);
+		System.out.println(size);	// 3
 		
 		System.out.println("---------");
 
