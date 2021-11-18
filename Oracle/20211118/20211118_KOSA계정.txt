@@ -3,6 +3,7 @@
 -- number, char, varchar2, date, long, clob, timestemp
 -- number(4), number(8,2)(권장) => number(7,2)
 -- print("나의 키는 %8.2f입니다."  %17555.50)
+
 select * from departments;
 drop table departments;
 create table departments(       -- 부서 정보
@@ -30,7 +31,8 @@ create table departments (  -- 열레벨
 );
 
 desc departments;
--- 테이블명 대문자로 찾기
+
+-- 테이블명은 대문자로 찾아야 한다.
 select * from user_constraints where table_name = 'DEPARTMENTS';
 
 drop table departments;
@@ -443,12 +445,76 @@ select * from departments;
 insert into departments(DEPARTMENT_ID, DEPARTMENT_NAME, MANAGER_ID, LOCATION_ID)
 values(20, 'Marketing', 201, 1800);
 
-select * from departments;
-select * from employees;
-select * from jobs;
+select * from departments;  -- data 27개
+select * from employees;    -- data 107개
+select * from jobs;         -- date 19개
 
 -- 사용
 Alter table departments
 enable constraint emp_mngid_fk;
 
 desc job_history;
+
+insert into job_history(EMPLOYEE_ID, START_DATE, END_DATE, JOB_ID, DEPARTMENT_ID)
+values(102, '2001-01-13', '2006-07-24', 'IT_PROG', 60);
+
+insert into job_history(EMPLOYEE_ID, START_DATE, END_DATE, JOB_ID, DEPARTMENT_ID)
+values(101, '1997-09-21', '2001-10-27', 'AC_ACCOUNT', 110);
+
+insert into job_history(EMPLOYEE_ID, START_DATE, END_DATE, JOB_ID, DEPARTMENT_ID)
+values(101, '2001-10-28', '2005-03-15', 'AC_MGR', 110);
+
+select * from job_history;  -- data 10개
+
+select * from employees;
+select * from jobs;
+select * from user_constraints where table_name = 'EMPLOYEES';
+select * from user_cons_columns where table_name = 'EMPLOYEES';
+
+alter table employees
+add constraint emp_jobs_id_fk foreign key(job_id)
+    references jobs(job_id);        -- job_id 같으면 생략 가능
+    
+--- INDEX
+SELECT * FROM employees
+WHERE first_name = 'Lex';
+
+drop index first_name_IDX;
+
+create INDEX first_name_IDX
+ON employees(first_name);
+--- INDEX는 SELECT를 하면 자동으로 사용하게 된다.
+--- WHERE 조건절에서 주로 사용되는 컬럼에 INDEX를 만들어 준다.
+
+alter table c
+add constraint c_pk primary key(c1, c2, c3);    -- PRIMARY KEY는 자동으로 INDEX를 만들어서 사용한다.
+--- 정렬된 컬럼부터 앞에 오는 것이 좋다.
+--- 자주 사용되는 컬럼부터 앞에 오는 것이 좋다.
+--- INDEX는 SELECT할 때 사용된다.
+--- INDEX는 INSERT나 DELETE 나 UPDATE시 INDEX를 조회한 후 사용해야 되는 경우 시스템 성능에 영향을 미칠 수 있다.
+
+select * from employees where employee_id = 100;
+
+-- 시퀀스 : 번호 자동 생성기
+select * from employees;
+create SEQUENCE SEQ_NUM
+INCREMENT BY 1      -- 증가분
+START WITH 207      -- 207부터 시작
+MAXVALUE 999999999999
+MINVALUE 210        -- 주로 사용하지 않는다. 
+NOCYCLE
+NOCACHE;
+
+CREATE SEQUESCE SEQ_NUM;
+
+SELECT SEQ_NUM.NEXTVAL FROM dual, 
+SELECT SEQ_NUM.CURRVAL FROM dual;
+
+desc c1;
+insert into (c1(c1,c2) values(seq_num.nextVal, 1);
+select * from c1;
+
+SESECT * FROM DEPARTMENTS;
+INSERT INTO DEPARTMENTS
+VALUES(SEQ_NUM.NEXTVAL, 'TEST', 100, 1500);
+SELECT * FROM DEPARTMENTS;
