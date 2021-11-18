@@ -1,0 +1,410 @@
+create table employees(
+    employee_id     number,         -- 컬럼명
+    first_name      varchar2(20),
+    last_name       varchar2(20),
+    hire_date       date
+);
+
+-- String
+-- euc-kr : 2byte / utf-8 : 3byte ("홍길동" 9byte)
+
+-- varchar 도 있다. varchar2는 버전 차이
+-- first_name varchar2(20) : 20Byte
+-- abc : 3byte만 쓸거야, 최대 20byte : 4000글자
+
+--first_name char(20) : 20byte
+-- abc : 3byte만 쓸 수 없어, 20byte 다 써야 된다. (크기 고정, 빠르다.) : 2000글자
+
+-- Integer, float, double, long
+-- 주로 number 사용
+-- number : 정수 6자리
+-- number(10,3) : 점을 포함해서 10자리, 정수부 6자리, 실수부 3자리
+-- number(10) : 정수 10자리
+
+-- Date : 날짜 저장
+-- "2021-11-17" - "1999-12-25"
+
+-- long : 문자저장 2G
+-- CLOB : 문자저장 4G
+
+-- integer : 숫자만 저장
+
+-- varchar2해도 상관없다.
+-- 게시판에 내용 : content CLOB;
+
+drop table employees;
+
+create table EMPLOYEES (
+    EMPLOYEE_ID NUMBER(6),          -- 직원번호
+    FIRST_NAME VARCHAR2(20),        -- 이름
+    LAST_NAME VARCHAR2(25),         -- 성
+    EMAIL VARCHAR2(25),             -- 이메일
+    PHONE_NUMBER VARCHAR2(20),      -- 연락처
+    HIRE_DATE DATE,                 -- 입사일
+    JOB_ID VARCHAR2(10),            -- 직무
+    SALARY NUMBER(8,2),             -- 급여 (정수 5자리(만달러), 소수점 2자리)
+    COMMISSION_PCT NUMBER(2,2),     -- 커미션퍼센트 (소수점 2자리)
+    MANAGER_ID NUMBER(6),           -- 직속상사
+    EDPARTMENT_ID NUMBER(4)         -- 부서번호
+);
+
+create table departments(
+    DEPARTMENT_ID NUMBER(4),        -- 부서번호
+    DEPARTMENT_NAME VARCHAR2(30),   -- 부서명
+    MANAGER_ID NUMBER,              -- 부서장
+    LOCATION_ID NUMBER(4)           -- 주소
+);
+
+-- 만들어진 테이블 정보 확인
+DESCRIBE employees;
+desc employees;
+DESCRIBE departments;
+
+insert into departments(department_id, department_name, manager_id, LOCATION_ID)
+values (300, 'Engineering', 110, 1700);
+
+select * from departments;
+
+insert into departments(department_id, department_name, manager_id, LOCATION_ID)
+values (400, '영업부', 100, 1700);
+
+select * from departments;
+
+drop table departments;
+drop table employees;
+
+insert into departments(department_id, department_name, manager_id)
+values (400, '영업부', 100);
+
+select * from departments;
+
+insert into departments(department_id, department_name, manager_id, LOCATION_ID)
+values (400, '영업부', 100, null);
+
+-- 컬럼리스트의 순서를 알고 모든 컬럼에 데이터를 저장한다면 컬럼리스트는 생략이 가능하다.
+insert into departments
+values (400, '영업부', 100, 1700);
+
+select * from departments;
+
+drop table departments;
+
+create table departments(
+    DEPARTMENT_ID NUMBER(4),        -- 부서번호
+    DEPARTMENT_NAME VARCHAR2(30),   -- 부서명
+    MANAGER_ID NUMBER,              -- 부서장
+    LOCATION_ID NUMBER(4) default 1800   -- 주소
+);
+
+desc departments;
+
+insert into departments(DEPARTMENT_ID, DEPARTMENT_NAME, MANAGER_ID, LOCATION_ID)
+values(300, '영업부', 110, 1700);
+
+select * from departments;
+
+-- 컬럼에 default 값이 있는 경우에는 값을 주지 않았을 경우 컬럼에 있는 default 값이 들어간다.
+insert into departments(DEPARTMENT_ID, DEPARTMENT_NAME, MANAGER_ID)
+values(300, '영업부', 110);
+
+select * from departments;
+
+insert into departments(DEPARTMENT_ID, DEPARTMENT_NAME, MANAGER_ID, LOCATION_ID)
+values(300, '영업부', 110, null);
+
+select * from departments;
+
+insert into departments(DEPARTMENT_ID, DEPARTMENT_NAME, LOCATION_ID)
+values(300, '영업부', null);
+
+select * from departments;
+
+insert into departments(DEPARTMENT_ID, DEPARTMENT_NAME)
+values(400, '영업부');
+
+select * from departments;
+
+insert into departments(DEPARTMENT_NAME)
+values('영업부');
+
+select * from departments;
+
+insert into departments(DEPARTMENT_ID)
+values(400);
+
+select * from departments;
+
+drop table departments;
+
+create table departments(
+    DEPARTMENT_ID NUMBER(4) not null,  -- 부서번호
+    DEPARTMENT_NAME VARCHAR2(30) not null,  -- 부서명
+    MANAGER_ID NUMBER,              -- 부서장
+    LOCATION_ID NUMBER(4) default 1800   -- 주소
+);
+
+desc departments;
+
+select * from departments;
+
+insert into departments(DEPARTMENT_ID, DEPARTMENT_NAME)
+values(100, '영업부');
+
+select * from departments;
+
+insert into departments(DEPARTMENT_ID, DEPARTMENT_NAME)
+values(200, '기술부');
+
+select * from departments;
+
+drop table departments;
+
+create table departments(
+    DEPARTMENT_ID NUMBER(4) not null,  -- 부서번호
+    DEPARTMENT_NAME VARCHAR2(30) not null,  -- 부서명
+    MANAGER_ID NUMBER,              -- 부서장
+    LOCATION_ID NUMBER(4) default 1800   -- 주소
+);
+
+insert into departments(DEPARTMENT_ID, DEPARTMENT_NAME, MANAGER_ID, LOCATION_ID)
+values(300, '영업부', 100, 1700);
+
+-- MANAGER_ID 에는 null 값이 저장
+insert into departments (DEPARTMENT_ID, DEPARTMENT_NAME, LOCATION_ID)
+values(400, '기술부', 1800);
+
+insert into departments
+values(500, '관리부', 120, 1600);
+
+-- MANAGER_ID는 null, LOCATION_ID는 default 값을 저장
+insert into departments(DEPARTMENT_ID, DEPARTMENT_NAME)
+values(600, '개발부');
+
+select * from departments;
+
+-- default 값이 있는 컬럼(LOCATION_ID)에 null 값을 저장
+insert into departments(DEPARTMENT_ID, DEPARTMENT_NAME, LOCATION_ID)
+values(700, '경리부', null);
+
+select * from departments;
+
+drop table employees;
+create table employees(
+    employee_id NUMBER NOT NULL,
+    first_name  VARCHAR2(255),
+    last_name   VARCHAR2(255) NOT NULL,
+    email       VARCHAR2(255) NOT NULL,
+    phone       VARCHAR2(50)  NOT NULL,
+    hire_date   DATE NOT NULL,
+    manager_id  NUMBER,
+    job_id      VARCHAR2(255),
+    salary      NUMBER(8,2),
+    commission_pct  NUMBER(2,2),
+    department_id   NUMBER(4)
+);
+
+insert into employees
+values(100, '길동', '홍', 'hiemail', '010-1234-1234', '1999-10-25', null, null, 1000, null, 10);
+
+select * from employees;
+
+desc employees;
+
+insert into employees(EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE, HIRE_DATE)
+values(101, '동길', '홍', 'hemail', '010-1234-5678', '2000-11-10');
+
+select * from employees;
+
+-- employees에 3개의 데이터를 마음대로 입력해보세요.
+insert into employees(EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE, HIRE_DATE)
+values(102, '동글', '이', 'eemail', '010-123-1234', '2021-12-31');
+
+insert into employees
+values(103, '동구', '박', 'pemail', '123-123-123', '1955-01-01', 10, null, 1000, null, 10);
+
+insert into employees(EMPLOYEE_ID, LAST_NAME, EMAIL, PHONE, HIRE_DATE)
+values(104, '이', 'eeemail', '123-123-1234', '1950-02-22');
+
+select * from employees;
+
+drop table employees;
+
+-- sysdate는 현재 날짜를 가지고 올 때 사용
+select sysdate from dual;   -- dual은 가상의 테이블
+
+create table employees(
+    employee_id NUMBER NOT NULL,
+    first_name  VARCHAR2(255),
+    last_name   VARCHAR2(255) NOT NULL,
+    email       VARCHAR2(255) NOT NULL,
+    phone       VARCHAR2(50)  NOT NULL,
+    hire_date   DATE default sysdate NOT NULL,
+    manager_id  NUMBER,
+    job_id      VARCHAR2(255),
+    salary      NUMBER(8,2),
+    commission_pct  NUMBER(2,2),
+    department_id   NUMBER(4)
+);
+
+insert into employees(employee_id, last_name, email, phone)
+values(101, '이', 'hiemail', '010-123-123');
+
+select * from employees;
+
+insert into employees
+values(101, '길동','홍', 'hemail', '010-123-123', sysdate, null, 'AC_ACC', 1900, 0.31, 30);
+
+insert into employees
+values(102, '길동','황', 'hwemail', '010-123-321', '2021-11-17', null, 'AC_ACC', 1900, 0.31, 30);
+
+select * from employees;
+
+desc employees;
+
+-- length(컬럼명) 글자수 확인
+select employee_id, first_name, length(first_name), email, length(email)
+from employees;
+
+create table tb1 (
+    col1 VARCHAR2(3), -- byte
+    col2 VARCHAR2(3 Byte),
+    col3 VARCHAR2(3 Char)
+);
+
+insert into tb1(col1) values('abc');
+insert into tb1(col1) values('홍길동'); --(실제: 9, 최대값: 3)
+insert into tb1(col2) values('abc');
+insert into tb1(col2) values('홍길동'); --(실제: 9, 최대값: 3)
+insert into tb1(col3) values('abc');
+insert into tb1(col3) values('홍길동'); 
+
+select * from tb1;
+select * from employees;
+
+-- 하나의 row가 하나의 data이다.
+-- 컬럼들의 집합을 row라 한다.
+-- 각 컬럼은 row에 해당하는 하나의 데이터를 가지고 있다.
+
+select last_name, email, phone
+from employees;         -- projection : 원하는 열만 가져옴.
+
+select * from employees
+where employee_id = 102;    -- selection : 원하는 행만 가져옴.
+
+select last_name, email, phone  -- projection
+from employees
+where employee_id = 102;    -- selection
+
+select * from employees
+where employee_id = 102;
+
+select * from employees
+where employee_id = 101;
+
+select * from tb1;
+
+insert into tb1 (col1, col2, col3) values ('abc','abc','홍길동');
+
+select * from tb1;
+
+-- length : 글자수         lengthb : 크기 lengthbyte
+select col1, length(col1), lengthb(col1)
+from tb1;
+
+select col1, length(col1), lengthb(col1),
+         col2, length(col2), lengthb(col2),
+          col3, length(col3), lengthb(col3)
+from tb1;
+
+create table tb2 (
+    col1 Integer,   -- 내부적으로는 모두 number로 변환되어 생성된다.
+    col2 decimal,   -- 내부적으로는 모두 number로 변환되어 생성된다.
+    col3 number
+);
+
+
+-- 테이블에 컬럼의 정보확인 user_tab_cols;
+-- object를 만들 때는 소문자를 사용해도 object 정보에는 모두 대문자로 들어간다. (서치 대문자로!)
+-- object를 사용하는 경우에는 대소문자를 구별하지 않는다.
+select * from user_tab_cols
+where table_name = 'TB2';
+
+insert into tb2 values(1,2,3);
+insert into TB2 values(1,2,3);
+
+CREATE table tb3 (
+    col1 float(32), -- (32승)
+    col2 float,      -- float 기본값 126 (2의 126승), 정확도가 좋아진다.
+    col3 number(10,5) -- 정확도가 필요없으면 number 사용
+);
+
+-- float : 0.123456789              : float(32)
+-- double : 0.1234567890123456789   : float : float(126)
+
+select * from user_tab_cols
+where table_name='TB3';
+
+create table tb4 (      -- 20211117           -- 세기 년 원 일 시 분 초
+    col1 date,          -- 년원일시분초       
+    col2 TIMESTAMP      -- 년원일시분초 미리초   -- 1970년 1월 1일부터 현재까지의 시간을 미리초로 계산한 시간
+);
+
+insert into tb4 values (sysdate, sysdate);
+
+select * from tb4;
+insert into tb4 values (sysdate, SYSTIMESTAMP);
+
+create table tb5 (
+    col1 NUMBER,
+    col2 varchar2(20)
+);
+
+--                    학번  이름
+insert into tb5 values(1,'홍길동');
+insert into tb5 values(1,'헝길동');
+select * from tb5 where col1 = 1;
+-- 중복값이 들어가지 못하도록 하자.
+
+create table tb6(
+    col1 number PRIMARY KEY, -- 중복을 허용하지 않겠다.
+    email varchar2(20)
+);
+
+insert into tb6 values(1, '홍길동');
+insert into tb6 values(1, '동홍길');    -- col1이 중복값이므로 저장되지 않는다.
+insert into tb6 values(2, '길동홍');
+insert into tb6 values(3, '길동홍');
+
+select * from tb6;
+
+create table tb7(
+    col1 NUMBER primary key,
+    email VARCHAR2(20) primary key    -- Remove the extra primary key.
+); -- primary key는 테이블에 오로지 하나만 존재해야 한다.
+
+create table tb8 (
+    col1 number primary key,    -- primary key : default가 not null이다.
+                                -- NULL을 ("KOSA"."TB8"."COL1") 안에 삽입할 수 없습니다
+    email varchar2(20) unique   -- unique : default가 null이다. null은 중복 허용 (알수없는 값이기 때문에)
+);
+
+insert into tb8 values(1, '홍길동');
+insert into tb8 values(2, '홍길동');   -- 무결성 제약 조건(KOSA.SYS_C008334)에 위배됩니다
+insert into tb8 values(2, '이순신');
+insert into tb8 values(null,'이순심'); -- 안됨
+insert into tb8 values(3, null);        -- 됨
+insert into tb8 values(4, null);        -- 됨. null 중복허용
+select * from tb8;
+
+create table tb9(
+    col1 number primary key,
+    email varchar2(20) unique,              -- NULL 허용
+    phone varchar2(13) unique not null,     -- NULL을 ("KOSA"."TB9"."PHONE") 안에 삽입할 수 없습니다 ('' = null)
+    first_name varchar2(20)
+);
+
+insert into tb9 values (1, 'a', '1234', '길동');
+insert into tb9 values (2, null, '010', '길동');
+insert into tb9 values (3, '', '01', '길동');
+insert into tb9 values (4, '', '', '길동');   -- NULL을 ("KOSA"."TB9"."PHONE") 안에 삽입할 수 없습니다 ('' = null)
+select * from tb9;
