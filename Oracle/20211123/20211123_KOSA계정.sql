@@ -178,6 +178,7 @@ from employees;
 
 -- select max(board_num) + 1 from board;        -- 많이 사용!
 
+-- join
 select employee_id, first_name, department_id
 from employees
 where employee_id = 100;
@@ -212,7 +213,7 @@ from employees, departments                                             -- 1
 where employees.department_id = departments.department_id;              -- 2
 
 --- 카티시안 조인
-select employee_id, last_name, first_name, salary, job_id,              -- 3
+select employee_id, last_name, first_name, salary, job_id,             
         departments.department_id, location_id, department_name
 from employees, departments;
 
@@ -329,9 +330,10 @@ where e.job_id = j.job_id and e.department_id = d.department_id;
 -- 테이블 3개이면 조인 조건은 최소 2개
 -- 테이블이 n개이면 조인 조건은 n-1개
 
--- Ansi join        -- 현업에서 주로 사용
+-- Ansi join(inner join)        -- 현업에서 주로 사용
 select employee_id, j.job_id, job_title, d.department_id, department_name
 from employees e join jobs j
+--from employees e inner join jobs j    -- inner 생략해서 많이 쓴다.
 on e.job_id = j.job_id join departments d 
 on e.department_id = d.department_id;
 
