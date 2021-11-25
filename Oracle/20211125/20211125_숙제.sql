@@ -189,7 +189,7 @@ commit;
 
 --문제 18) '이숭무'회원이 탈퇴하려고 한다. 이숭무 회원이 탈퇴 할수 있게 삭제하시오.
 delete from board
-where user_name = (select user_name from member where user_id = 'highland0');
+where user_id = 'highland0';
 
 delete from member
 where user_name = (select user_name from member where user_id = 'highland0');
