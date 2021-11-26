@@ -1,4 +1,4 @@
---¹®Á¦ 1) È¸¿ø Å×ÀÌºíÀ» ¸¸µå½Ã¿À. °¢ ÄÃ·³¿¡ Á¦¾à Á¶°ÇÀ» ºÎ¿© ÇÏ½Ã¿À.
+--ë¬¸ì œ 1) íšŒì› í…Œì´ë¸”ì„ ë§Œë“œì‹œì˜¤. ê° ì»¬ëŸ¼ì— ì œì•½ ì¡°ê±´ì„ ë¶€ì—¬ í•˜ì‹œì˜¤.
 --Table MEMBER
 --================================
 --USER_ID     	NOT NULL 	VARCHAR2(20)  
@@ -15,7 +15,7 @@
 --
 --USER_ID     : primary key (MEMBER_USER_ID_PK)
 --USER_EMAIL : unique (member_USER_EMAIL_UU)
---USER_REGIST  : µğÆŞÆ® °ªÀº sysdate
+--USER_REGIST  : ë””í„íŠ¸ ê°’ì€ sysdate
 
 create table MEMBER (
     user_id     varchar2(20)    not null,
@@ -34,22 +34,22 @@ create table MEMBER (
 );
 desc member;
 
---¹®Á¦2) °Ô½ÃÆÇ Å×ÀÌºíÀ» ¸¸µé°í °¢ ÄÃ·³¿¡ Á¦¾àÁ¶°ÇÀ» ºÎ¿© ÇÏ½Ã¿À.
+--ë¬¸ì œ2) ê²Œì‹œíŒ í…Œì´ë¸”ì„ ë§Œë“¤ê³  ê° ì»¬ëŸ¼ì— ì œì•½ì¡°ê±´ì„ ë¶€ì—¬ í•˜ì‹œì˜¤.
 --Table BOARD
 --====================================
 --BOARD_NUM     	NOT NULL 	NUMBER         
 --USER_ID       	NOT NULL 	VARCHAR2(20)   
---BOARD_NAME    	NOT NULL 	VARCHAR2(20)    --- ±Û ¾´ÀÌ 
+--BOARD_NAME    	NOT NULL 	VARCHAR2(20)    --- ê¸€ ì“´ì´ 
 --BOARD_PASS    	NOT NULL 	VARCHAR2(200)  
---BOARD_SUBJECT 	NOT NULL 	VARCHAR2(100)  -- Á¦¸ñ
---BOARD_CONTENT          		VARCHAR2(2000) -- ³»¿ë
+--BOARD_SUBJECT 	NOT NULL 	VARCHAR2(100)  -- ì œëª©
+--BOARD_CONTENT          		VARCHAR2(2000) -- ë‚´ìš©
 --BOARD_DATE             		TIMESTAMP   
 --IP_ADDR                		VARCHAR2(15)   
 --READ_COUNT             		NUMBER      
 --
 --BOARD_NUM : primary key (BOARD_BOARD_NUM_PK)
 --USER_ID : foreign key (BOARD_USER_ID_FK)
---READ_COUNT ; µğÆŞÆ® °ªÀº 0
+--READ_COUNT ; ë””í„íŠ¸ ê°’ì€ 0
 
 create table BOARD (
     BOARD_NUM         NUMBER         not null,
@@ -66,113 +66,113 @@ create table BOARD (
 );
 desc BOARD;
 
---¹®Á¦ 3) È¸¿øÅ×ÀÌºí¿¡ ¾Æ·¡ ³»¿ëÀ» Æ÷ÇÔÇÏ¿© 5°³ÀÇ µ¥ÀÌÅÍ¸¦ ³ÖÀ¸½Ã¿À.
+--ë¬¸ì œ 3) íšŒì›í…Œì´ë¸”ì— ì•„ë˜ ë‚´ìš©ì„ í¬í•¨í•˜ì—¬ 5ê°œì˜ ë°ì´í„°ë¥¼ ë„£ìœ¼ì‹œì˜¤.
 --insert into member (user_id,USER_PW,USER_NAME,USER_BIRTH,USER_GENDER,USER_ADDR ,USER_PH1,USER_PH2,USER_REGIST,USER_EMAIL)
---values('highland0','111111','ÀÌ¼ş¹«','1999-12-12','1','¼­¿ï','010-1234-1234',null,default,null);
+--values('highland0','111111','ì´ìˆ­ë¬´','1999-12-12','1','ì„œìš¸','010-1234-1234',null,default,null);
 
 insert into member (user_id,USER_PW,USER_NAME,USER_BIRTH,USER_GENDER,USER_ADDR ,USER_PH1,USER_PH2,USER_REGIST,USER_EMAIL)
-values('highland0','111111','ÀÌ¼ş¹«','1999-12-12','1','¼­¿ï','010-1234-1234',null,default,null);
+values('highland0','111111','ì´ìˆ­ë¬´','1999-12-12','1','ì„œìš¸','010-1234-1234',null,default,null);
 
 insert into member (user_id,USER_PW,USER_NAME,USER_BIRTH,USER_GENDER,USER_ADDR ,USER_PH1,USER_PH2,USER_REGIST,USER_EMAIL)
-values('hi','111111','È«±æµ¿','1909-10-10','2','°æ±â','010-1234-5678',null,default,'aemail');
+values('hi','111111','í™ê¸¸ë™','1909-10-10','2','ê²½ê¸°','010-1234-5678',null,default,'aemail');
 
 insert into member (user_id,USER_PW,USER_NAME,USER_BIRTH,USER_GENDER,USER_ADDR ,USER_PH1,USER_PH2,USER_REGIST,USER_EMAIL)
-values('ha','111111','ÀÌ¼ø½Å','2009-09-09','2','ÀÎÃµ','010-1212-3434',null,default,'bemail');
+values('ha','111111','ì´ìˆœì‹ ','2009-09-09','2','ì¸ì²œ','010-1212-3434',null,default,'bemail');
 
 insert into member (user_id,USER_PW,USER_NAME,USER_BIRTH,USER_GENDER,USER_ADDR ,USER_PH1,USER_PH2,USER_REGIST,USER_EMAIL)
-values('han','111111','°­°¨Âù','2005-05-05','2','ºÎ»ê','010-1111-1234',null,default,'cemail');
+values('han','111111','ê°•ê°ì°¬','2005-05-05','2','ë¶€ì‚°','010-1111-1234',null,default,'cemail');
 
 insert into member (user_id,USER_PW,USER_NAME,USER_BIRTH,USER_GENDER,USER_ADDR ,USER_PH1,USER_PH2,USER_REGIST,USER_EMAIL)
-values('land','111111','ÀÌ¼ø½É','2021-11-25','1','±¤ÁÖ','010-2222-1234',null,default,null);
+values('land','111111','ì´ìˆœì‹¬','2021-11-25','1','ê´‘ì£¼','010-2222-1234',null,default,null);
 
 select * from member;
 
---¹®Á¦4)°Ô½ÃÆÇ Å×ÀÌºí¿¡ µ¥ÀÌÅÍ¸¦ ¾Æ·¡ ³»¿ë Æ÷ÇÔ 6°³ ÀÌ»óÀ» ³Ö´Âµ¥ À§ È¸¿øµéÀº ÃÖ¼Ò ÇÑ°³ ÀÌ»ó °Ô½Ã±ÛÀÌ µî·ÏµÇ°Ô ÇÏ½Ã¿À.
+--ë¬¸ì œ4)ê²Œì‹œíŒ í…Œì´ë¸”ì— ë°ì´í„°ë¥¼ ì•„ë˜ ë‚´ìš© í¬í•¨ 6ê°œ ì´ìƒì„ ë„£ëŠ”ë° ìœ„ íšŒì›ë“¤ì€ ìµœì†Œ í•œê°œ ì´ìƒ ê²Œì‹œê¸€ì´ ë“±ë¡ë˜ê²Œ í•˜ì‹œì˜¤.
 --insert into board(BOARD_NUM,USER_ID,BOARD_NAME,BOARD_PASS,BOARD_SUBJECT,BOARD_CONTENT,IP_ADDR)
---values(1, 'highland0', '»óÀå¹ü ¾Æºü', '1111','Á¦¸ñ', '³»¿ë', '192.168.3.117');
+--values(1, 'highland0', 'ìƒì¥ë²” ì•„ë¹ ', '1111','ì œëª©', 'ë‚´ìš©', '192.168.3.117');
 
 insert into board(BOARD_NUM,USER_ID,BOARD_NAME,BOARD_PASS,BOARD_SUBJECT,BOARD_CONTENT,IP_ADDR)
-values(1, 'highland0', '»óÀå¹ü ¾Æºü', '1111','Á¦¸ñ', '³»¿ë', '192.168.3.117');
+values(1, 'highland0', 'ìƒì¥ë²” ì•„ë¹ ', '1111','ì œëª©', 'ë‚´ìš©', '192.168.3.117');
 
 insert into board(BOARD_NUM,USER_ID,BOARD_NAME,BOARD_PASS,BOARD_SUBJECT,BOARD_CONTENT,IP_ADDR)
-values(2, 'hi', 'È«', '1111','Á¦¸ñ2', '³»¿ë2', '192.168.3.123');
+values(2, 'hi', 'í™', '1111','ì œëª©2', 'ë‚´ìš©2', '192.168.3.123');
 
 insert into board(BOARD_NUM,USER_ID,BOARD_NAME,BOARD_PASS,BOARD_SUBJECT,BOARD_CONTENT,IP_ADDR)
-values(3, 'ha', '¼ø', '1111','Á¦¸ñ3', '³»¿ë3', '192.168.3.456');
+values(3, 'ha', 'ìˆœ', '1111','ì œëª©3', 'ë‚´ìš©3', '192.168.3.456');
 
 insert into board(BOARD_NUM,USER_ID,BOARD_NAME,BOARD_PASS,BOARD_SUBJECT,BOARD_CONTENT,IP_ADDR)
-values(4, 'han', 'Âù', '1111','Á¦¸ñ4', '³»¿ë4', '192.168.3.789');
+values(4, 'han', 'ì°¬', '1111','ì œëª©4', 'ë‚´ìš©4', '192.168.3.789');
 
 insert into board(BOARD_NUM,USER_ID,BOARD_NAME,BOARD_PASS,BOARD_SUBJECT,BOARD_CONTENT,IP_ADDR)
-values(5, 'highland0', '½É', '1111','Á¦¸ñ5', '³»¿ë5', '192.168.1.123');
+values(5, 'highland0', 'ì‹¬', '1111','ì œëª©5', 'ë‚´ìš©5', '192.168.1.123');
 
 insert into board(BOARD_NUM,USER_ID,BOARD_NAME,BOARD_PASS,BOARD_SUBJECT,BOARD_CONTENT,IP_ADDR)
-values(6, 'land', '½É', '1111','Á¦¸ñ6', '³»¿ë6', '192.168.2.123');
+values(6, 'land', 'ì‹¬', '1111','ì œëª©6', 'ë‚´ìš©6', '192.168.2.123');
 
 select * from board;
 
---¹®Á¦5) highland0È¸¿øÀÇ È¸¿ø¾ÆÀÌµğ, È¸¿ø¸í, ÀÌ¸ŞÀÏ, °Ô½Ã±Û ¹øÈ£, °Ô½Ã±Û Á¦¸ñ, READ_COUNT¸¦ Ãâ·ÂÇÏ½Ã¿À.
+--ë¬¸ì œ5) highland0íšŒì›ì˜ íšŒì›ì•„ì´ë””, íšŒì›ëª…, ì´ë©”ì¼, ê²Œì‹œê¸€ ë²ˆí˜¸, ê²Œì‹œê¸€ ì œëª©, READ_COUNTë¥¼ ì¶œë ¥í•˜ì‹œì˜¤.
 select m.user_id, user_name, user_email, board_num, board_subject, read_count
 from member m, board b
 where m.user_id = b.user_id and m.user_id = 'highland0';
 desc member;
 desc board;
 
---¹®Á¦6) °Ô½Ã±ÛÀ» ÀĞÀ¸¸é READ_COUNT°¡ 1¾¿ Áõ°¡ ÇÒ °ÍÀÌ´Ù. 
---         update¹®À» ½ÇÇà ÇÒ ¶§¸¶´Ù READ_COUNT 1Áõ°¡ ÇÒ¼ö ÀÖ°Ô update¹®À» ÀÛ¼ºÇÏ½Ã¿À.
---         1¹ø °Ô½Ã±ÛÀ» Áõ°¡ ½ÃÅ°½Ã¿À.
+--ë¬¸ì œ6) ê²Œì‹œê¸€ì„ ì½ìœ¼ë©´ READ_COUNTê°€ 1ì”© ì¦ê°€ í•  ê²ƒì´ë‹¤. 
+--         updateë¬¸ì„ ì‹¤í–‰ í•  ë•Œë§ˆë‹¤ READ_COUNT 1ì¦ê°€ í• ìˆ˜ ìˆê²Œ updateë¬¸ì„ ì‘ì„±í•˜ì‹œì˜¤.
+--         1ë²ˆ ê²Œì‹œê¸€ì„ ì¦ê°€ ì‹œí‚¤ì‹œì˜¤.
 update board
 set read_count = read_count + 1
 where board_num = 1;
 
 select * from board;
 
---¹®Á¦ 7) °Ô½Ã±Û 2¹ø¿¡ ÇØ´çÇÏ´Â È¸¿øÀ» Ãâ·ÂÇÏ½Ã¿À.
+--ë¬¸ì œ 7) ê²Œì‹œê¸€ 2ë²ˆì— í•´ë‹¹í•˜ëŠ” íšŒì›ì„ ì¶œë ¥í•˜ì‹œì˜¤.
 select * from board where board_num = 2;
 
---¹®Á¦ 8) µî·ÏµÈ °Ô½Ã±ÛÀÇ °³¼ö¸¦ Ãâ·ÂÇÏ½Ã¿À.
+--ë¬¸ì œ 8) ë“±ë¡ëœ ê²Œì‹œê¸€ì˜ ê°œìˆ˜ë¥¼ ì¶œë ¥í•˜ì‹œì˜¤.
 select count(*) from board;
 
---¹®Á¦ 9) °¢ È¸¿øÀÇ °Ô½Ã±ÛÀÇ °¹¼ö¸¦ Ãâ·ÂÇÏ½Ã¿À. (Á¶ÀÎ ¾Æ´Ô)
+--ë¬¸ì œ 9) ê° íšŒì›ì˜ ê²Œì‹œê¸€ì˜ ê°¯ìˆ˜ë¥¼ ì¶œë ¥í•˜ì‹œì˜¤. (ì¡°ì¸ ì•„ë‹˜)
 select user_id, count(*) 
 from board
 group by user_id;
 
---¹®Á¦ 10) È¸¿øÀÇ ¼ö¸¦ Ãâ·ÂÇÏ½Ã¿À.
+--ë¬¸ì œ 10) íšŒì›ì˜ ìˆ˜ë¥¼ ì¶œë ¥í•˜ì‹œì˜¤.
 select count(*) from member;
 
---¹®Á¦ 11) ¾ÆÀÌµğ°¡ 'highland0'ÀÎ È¸¿øÀÇ ÀüÈ­¹øÈ£¸¦ '02-9876-1234', ÀÌ¸ŞÀÏÀ» 'highland0@nate.com', ºñ¹Ğ¹øÈ£¸¦ '22222'·Î º¯°æÇÏ½Ã¿À.
+--ë¬¸ì œ 11) ì•„ì´ë””ê°€ 'highland0'ì¸ íšŒì›ì˜ ì „í™”ë²ˆí˜¸ë¥¼ '02-9876-1234', ì´ë©”ì¼ì„ 'highland0@nate.com', ë¹„ë°€ë²ˆí˜¸ë¥¼ '22222'ë¡œ ë³€ê²½í•˜ì‹œì˜¤.
 update member
 set user_ph1 = '02-9876-1234', user_email = 'highland0@nate.com', user_pw = '22222'
 where user_id = 'highland0';
 
 select * from member;
 
---¹®Á¦ 12) °Ô½Ã±Û 1¹øÀÇ Á¦¸ñÀ» '³ª´Â ¿­½ÉÈ÷ °øºÎÇÒ·¡', ³»¿ëÀ» '¿­½ÉÈ÷ °øºÎÇØ¼­ \n »¡¸® Ãë¾÷ÀÌ µÉ ¼ö ÀÖ°Ô ³ë·ÂÇØ¾ßÁö'·Î  ¼öÁ¤ÇÏ½Ã¿À.
+--ë¬¸ì œ 12) ê²Œì‹œê¸€ 1ë²ˆì˜ ì œëª©ì„ 'ë‚˜ëŠ” ì—´ì‹¬íˆ ê³µë¶€í• ë˜', ë‚´ìš©ì„ 'ì—´ì‹¬íˆ ê³µë¶€í•´ì„œ \n ë¹¨ë¦¬ ì·¨ì—…ì´ ë  ìˆ˜ ìˆê²Œ ë…¸ë ¥í•´ì•¼ì§€'ë¡œ  ìˆ˜ì •í•˜ì‹œì˜¤.
 update board
-set board_subject = '³ª´Â ¿­½ÉÈ÷ °øºÎÇÒ·¡', board_content = '¿­½ÉÈ÷ °øºÎÇØ¼­ \n »¡¸® Ãë¾÷ÀÌ µÉ ¼ö ÀÖ°Ô ³ë·ÂÇØ¾ßÁö'
+set board_subject = 'ë‚˜ëŠ” ì—´ì‹¬íˆ ê³µë¶€í• ë˜', board_content = 'ì—´ì‹¬íˆ ê³µë¶€í•´ì„œ \n ë¹¨ë¦¬ ì·¨ì—…ì´ ë  ìˆ˜ ìˆê²Œ ë…¸ë ¥í•´ì•¼ì§€'
 where board_num = 1;
 
 select * from board;
 
---¹®Á¦ 13) 1¹ø °Ô½Ã±ÛÀ» Ãâ·ÂÇÒ ¶§ ³»¿ëÀÇ \nÀ» <br /> ·Î Ãâ·ÂµÇ°Ô ÇÏ½Ã¿À.
+--ë¬¸ì œ 13) 1ë²ˆ ê²Œì‹œê¸€ì„ ì¶œë ¥í•  ë•Œ ë‚´ìš©ì˜ \nì„ <br /> ë¡œ ì¶œë ¥ë˜ê²Œ í•˜ì‹œì˜¤.
 select replace (board_content, '\n', '<br/>')
 from board
 where board_num = 1;
 
 select * from board;
 
---¹®Á¦ 14)  °Ô½Ã±Û Á¦¸ñÀÌ ³Ê¹« ±æ¾î¼­ È­¸é¿¡ ´Ù Ãâ·ÂµÇ±â ¾î·Æ´Ù . Á¦¸ñÀ» Ã¹¹øÂ° ±ÛÀÚ ºÎÅÍ 5±ÛÀÚ¸¦ Ãâ·ÂÇÏ°í µÚ¿¡´Â *¸¦ 5°³°¡ Ãâ·ÂµÇ°Ô ÇÏ½Ã¿À.
+--ë¬¸ì œ 14)  ê²Œì‹œê¸€ ì œëª©ì´ ë„ˆë¬´ ê¸¸ì–´ì„œ í™”ë©´ì— ë‹¤ ì¶œë ¥ë˜ê¸° ì–´ë µë‹¤ . ì œëª©ì„ ì²«ë²ˆì§¸ ê¸€ì ë¶€í„° 5ê¸€ìë¥¼ ì¶œë ¥í•˜ê³  ë’¤ì—ëŠ” *ë¥¼ 5ê°œê°€ ì¶œë ¥ë˜ê²Œ í•˜ì‹œì˜¤.
 select rpad(substr(board_subject,1,5), 10, '*')
 from board;
 
---¹®Á¦ 15) 'ÀÌ¼ş¹«'È¸¿øÀÌ ¾ÆÀÌµğ¸¦ ÀØ¾î¹ö·È´Ù°í ÇÑ´Ù. ÀÌ¸ŞÀÏ°ú ÀüÈ­¹øÈ£¸¦ ÀÌ¿ëÇØ¼­ ¾ÆÀÌµğ¸¦ Ãâ·ÂÇÏ´Â µ¥ ¾ÆÀÌµğ´Â ¸ğµÎ Ãâ·ÂÇØ¼­´Â ¾ÈµÇ°í Ã¹±ÛÀÚºÎÅÍ ¼¼±ÛÀÚ ³ª¸ÓÁö´Â '*'·Î Ãâ·ÂµÇ°Ô ÇÏ½Ã¿À.
+--ë¬¸ì œ 15) 'ì´ìˆ­ë¬´'íšŒì›ì´ ì•„ì´ë””ë¥¼ ìŠì–´ë²„ë ¸ë‹¤ê³  í•œë‹¤. ì´ë©”ì¼ê³¼ ì „í™”ë²ˆí˜¸ë¥¼ ì´ìš©í•´ì„œ ì•„ì´ë””ë¥¼ ì¶œë ¥í•˜ëŠ” ë° ì•„ì´ë””ëŠ” ëª¨ë‘ ì¶œë ¥í•´ì„œëŠ” ì•ˆë˜ê³  ì²«ê¸€ìë¶€í„° ì„¸ê¸€ì ë‚˜ë¨¸ì§€ëŠ” '*'ë¡œ ì¶œë ¥ë˜ê²Œ í•˜ì‹œì˜¤.
 select rpad(substr(user_id,1,3), length(user_id), '*')
 from member
-where user_email =  (select user_email from member where user_name = 'ÀÌ¼ş¹«')
-and    user_ph1 = (select user_ph1 from member where user_name = 'ÀÌ¼ş¹«');
+where user_email =  (select user_email from member where user_name = 'ì´ìˆ­ë¬´')
+and    user_ph1 = (select user_ph1 from member where user_name = 'ì´ìˆ­ë¬´');
 
---¹®Á¦ 16) °Ô½ÃÆÇ Å×ÀÌºí¿¡¼­ °Ô½Ã±ÛÀ» ¸¹ÀÌ ¾´ °Ô½Ã±ÛÀÇ user_id¸¦ °Ô½Ã±Û °¹¼ö¿Í °°ÀÌ Ãâ·ÂÇÏ½Ã¿À.
+--ë¬¸ì œ 16) ê²Œì‹œíŒ í…Œì´ë¸”ì—ì„œ ê²Œì‹œê¸€ì„ ë§ì´ ì“´ ê²Œì‹œê¸€ì˜ user_idë¥¼ ê²Œì‹œê¸€ ê°¯ìˆ˜ì™€ ê°™ì´ ì¶œë ¥í•˜ì‹œì˜¤.
 select count(board_subject), user_id
 from board
 group by user_id;
@@ -184,21 +184,21 @@ from(select count(board_subject), user_id
      order by count(board_subject) desc)
 where rownum <= 1;
 
---¹®Á¦ 17) Áö±İ±îÁöÀÇ ÀÛ¾÷À» ¸ğµÎ Á¤»ó Á¾·á ½ÃÅ°½Ã¿À.
+--ë¬¸ì œ 17) ì§€ê¸ˆê¹Œì§€ì˜ ì‘ì—…ì„ ëª¨ë‘ ì •ìƒ ì¢…ë£Œ ì‹œí‚¤ì‹œì˜¤.
 commit;
 
---¹®Á¦ 18) 'ÀÌ¼ş¹«'È¸¿øÀÌ Å»ÅğÇÏ·Á°í ÇÑ´Ù. ÀÌ¼ş¹« È¸¿øÀÌ Å»Åğ ÇÒ¼ö ÀÖ°Ô »èÁ¦ÇÏ½Ã¿À.
+--ë¬¸ì œ 18) 'ì´ìˆ­ë¬´'íšŒì›ì´ íƒˆí‡´í•˜ë ¤ê³  í•œë‹¤. ì´ìˆ­ë¬´ íšŒì›ì´ íƒˆí‡´ í• ìˆ˜ ìˆê²Œ ì‚­ì œí•˜ì‹œì˜¤.
 delete from board
 where user_id = 'highland0';
 
 delete from member
 where user_name = (select user_name from member where user_id = 'highland0');
 
---¹®Á¦ 19) 'ÀÌ¼ş¹«' È¸¿øÀÌ Å»ÅğÇÏ´Â °ÍÀÌ ¾Æ´Ï¾ú´Â µ¥ Àß ¸ø »èÁ¦¸¦ ÇÏ¿´´Ù . Á¤»óÀûÀ¸·Î 'ÀÌ¼ş¹«'È¸¿ø¿¡ ´ëÇÑ ¸ğµç ³»¿ëÀÌ(°Ô½ÃÆÇ Æ÷ÇÔ) Á¸Àç ÇÒ ¼ö ÀÖ°Ô ÇÏ½Ã¿À.
+--ë¬¸ì œ 19) 'ì´ìˆ­ë¬´' íšŒì›ì´ íƒˆí‡´í•˜ëŠ” ê²ƒì´ ì•„ë‹ˆì—ˆëŠ” ë° ì˜ ëª» ì‚­ì œë¥¼ í•˜ì˜€ë‹¤ . ì •ìƒì ìœ¼ë¡œ 'ì´ìˆ­ë¬´'íšŒì›ì— ëŒ€í•œ ëª¨ë“  ë‚´ìš©ì´(ê²Œì‹œíŒ í¬í•¨) ì¡´ì¬ í•  ìˆ˜ ìˆê²Œ í•˜ì‹œì˜¤.
 rollback;
 
---¹®Á¦ 20) ¡®highland0¡¯ÀÎ È¸¿øÀÌ ·Î±×ÀÎÀ» ÇÏ¿© ÀÚ½ÅÀÌ ¾´ ±ÛÀÎ 1¹ø °Ô½Ã±ÛÀ» »èÁ¦ÇÏ·Á°í ÇÑ´Ù.
---ÇØ´ç °Ô½Ã¹°ÀÌ »èÁ¦ µÇ°Ô ÇÏ½Ã¿À.
+--ë¬¸ì œ 20) â€˜highland0â€™ì¸ íšŒì›ì´ ë¡œê·¸ì¸ì„ í•˜ì—¬ ìì‹ ì´ ì“´ ê¸€ì¸ 1ë²ˆ ê²Œì‹œê¸€ì„ ì‚­ì œí•˜ë ¤ê³  í•œë‹¤.
+--í•´ë‹¹ ê²Œì‹œë¬¼ì´ ì‚­ì œ ë˜ê²Œ í•˜ì‹œì˜¤.
 delete from board
 where user_id = 'highland0' and board_num = 1;
 
