@@ -1,4 +1,4 @@
---- 1. ÇÁ·Î½ÃÀú¸¦ ÀÌ¿ëÇØ¼­ emp3_7¿¡ Á÷¿øÁ¤º¸¸¦ ÀÔ·ÂÇÏ¼¼¿ä.
+--- 1. í”„ë¡œì‹œì €ë¥¼ ì´ìš©í•´ì„œ emp3_7ì— ì§ì›ì •ë³´ë¥¼ ì…ë ¥í•˜ì„¸ìš”.
 CREATE OR REPLACE PROCEDURE exam1
 (
     empid in number,
@@ -12,15 +12,15 @@ BEGIN
     insert into emp3_7(employee_id, last_name, email, hire_date, job_id)
     values(empid, lname, mail, hdate, jid);
     DBMS_OUTPUT.PUT_LINE(empid|| ' ' || lname|| ' ' || mail|| ' ' || hdate|| ' ' || jid);
-    DBMS_OUTPUT.PUT_LINE(SQL%ROWCOUNT|| ' Çà');
+    DBMS_OUTPUT.PUT_LINE(SQL%ROWCOUNT|| ' í–‰');
 END;
 /
-exec exam1 (500, 'ha', 'a@mail.com', '2021-11-11', '°³¹ß');
+exec exam1 (500, 'ha', 'a@mail.com', '2021-11-11', 'ê°œë°œ');
 select * from emp3_7;
 
 
---- 2. jobs_examÀ» ¸¸µé¾î¼­ 'AD_PRES'¸¦ ÇÁ·Î½ÃÀú¿¡ ÀÎÀÚ°ªÀ¸·Î Àü´ŞÇÏ°í 
--- ¾øÀ¸¸é jobs¿¡¼­ insert, ÀÖÀ¸¸é min_salary´Â 2000, max_salary´Â 6000À¸·Î update ÇÏ½Ã¿À.
+--- 2. jobs_examì„ ë§Œë“¤ì–´ì„œ 'AD_PRES'ë¥¼ í”„ë¡œì‹œì €ì— ì¸ìê°’ìœ¼ë¡œ ì „ë‹¬í•˜ê³  
+-- ì—†ìœ¼ë©´ jobsì—ì„œ insert, ìˆìœ¼ë©´ min_salaryëŠ” 2000, max_salaryëŠ” 6000ìœ¼ë¡œ update í•˜ì‹œì˜¤.
 -- EXEC my_new_job_proc('AD_PRES', 2000, 6000);
 create table jobs_exam
 as
@@ -28,7 +28,7 @@ select * from jobs;
 
 select * from jobs_exam;
 
--- merge »ç¿ë
+-- merge ì‚¬ìš©
 CREATE OR REPLACE PROCEDURE my_new_job_proc
 (
     jid in varchar2,
