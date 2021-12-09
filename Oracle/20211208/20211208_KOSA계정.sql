@@ -181,17 +181,10 @@
                         배송업체명                 각 배송업체의 이름
                         전화번호                   연락 가능한 전화번호
 
-7. 도메인 정의서
+7. 도메인 정의서 (도메인 타입에 이름을 붙여준다)
     도메인 구분              도메인 이름          도메인 타입              비고
         번호                 번호               NUMBER(20)
                             전화번호            VARCHAR(30)
-                            사업자 번호         NUMBER(20)
-                            도서번호            NUMBER(20)
-                            계약번호            NUMBER(20)
-                            정산번호            NUMBER(20)
-                            배송번호            NUMBER(20)
-                            주문번호            NUMBER(20)
-                            계좌번호            NUMBER(20)
                             
         이름                 특정이름             VARCHAR(50)
                                                 
@@ -227,7 +220,7 @@
         5       business_number       사업자번호        일련번호    NUMBER       20                    FK
     
     엔티티타입명                                 계약도서
-    테이블명                                   TABLE
+    테이블명                                   CON_BOOK
         번호     컬럼명                 속성명           도메인     데이터타입     길이      NULL여부      KEY
         1       contract_number       계약번호          일련번호    NUMBER      20       NOT NULL      FK
         2       book_number           도서번호          일련번호    NUMBER      20       NOT NULL      FK
@@ -257,7 +250,7 @@
         5       author                저자             이름        VARCHAR     50
         
     엔티티타입명                                 주문리스트
-    테이블명                                    ORDER LIST
+    테이블명                                    ORDER_LIST
         번호     컬럼명                 속성명           도메인     데이터타입     길이      NULL여부      KEY
         1       book_number           도서번호          일련번호    NUMBER      20       NOT NULL      FK
         2       order_num             주문번호          일련번호    NUMBER      20       NOT NULL      FK
@@ -294,12 +287,139 @@
         4       amount                정산금액          금액       INTEGER
     
     엔티티타입명                                 배송업체
-    테이블명                                    SHIPPING COMPANY
+    테이블명                                    SHIPPING_COMPANY
         번호     컬럼명                 속성명           도메인     데이터타입     길이      NULL여부      KEY
         1       shipping_business_num 배송업체사업자번호 일련번호     NUMBER      20       NOT NULL      PK
         2       shipping_com_name     배송업체명        이름        VARCHAR     50
         3       shipping_com_phone    배송업체연락처     전화번호     VARCHAR     30
 
 ---------------------------------------------------------------------------
+create.sql
+create table shipping_company(
+    shipping_business_num       number(20)
+    shipping_com_name           varchar2(50)
+    shipping_com_phone          varchar2(30)    
+);    
 
+create table shipping(    
+    shipping_number             number(20)
+    shipping_date               date
+    result_code                 varchar2(15)
+);
+
+create table calculate(
+    settlement_num          number(20)
+    shipping_number         number(20)
+    settlement_day          date
+    amount                  integer
+);
+
+create table member(
+    member_num          number(20)
+    book_number         number(20)
+    member_addr         number(20)
+    email               varchar2(40)
+);
+
+create table order_list(
+    order_qty           number
+    order_price         integer
+);
+
+create table order(
+    order_num           number(20)
+    member_num          number(20)
+    shipping_addr       varchar2(255)
+    total_price         integer
+);
+
+create table book(
+    book_number         number(20)
+    book_name           varchar2(50)
+    book_qty            integer
+    book_price          integer
+    quthor              varchar2(50)
+);
+
+create table 계약도서(
+    
+);
+
+create table contractor (
+    contract_number     number(20)
+    contract_date       date
+    min_price_pct       number(2,2)
+    constract_state     char(1)
+    business_number     number(20)
+);
+
+create table publisher(
+    business_number     number(20)
+    publisher_name      varchar2(50)
+    publisher_addr      varchar2(255)
+    publisher_phone     varchar2(30)
+    bank_code           varchar2(15)
+    account_num         number(20)
+);
+
+---------------------------------------------------------------------------
+
+PrimaryKey.sql
+alter table CONTRACTOR
+add constraint con_cnum_pk primary key (contract_number);
+
+alter table ORDER
+add constraint order_member_num_pk primary key(order_num, member_num);
+
+alter table BOOK
+add constraint book_num_pk primary key(book_number);
+
+alter table SHIPPING
+add constraint ship_num_pk primary key(shipping_number);
+
+alter table PUBLISHER
+add constraint busi_num_pk primary key(business_number);
+ 
+alter table CALCULATE
+add constraint cal_set_num_pk primary key(settlement_num);   
+   
+alter table SHIPPING_COMPANY
+add constraint shi_busi_num_pk primary key(shipping_business_num);    
+       
+---------------------------------------------------------------------------        
+ForeignKey.sql
+alter table CONTRACTOR
+add constraint busi_num_fk foreign key(business_number)
+    references PUBLISHER(business_number); 
+
+alter table CON_BOOK
+add (
+    constraint con_num_fk foreign key(contract_number)
+		references CONTRACTOR(contract_number),
+	constraint book_num_fk foreign key(book_number)
+		references BOOK(book_number)
+    ); 
+
+alter table ORDER_LIST
+add (
+    constraint order_num_fk foreign key(order_num)
+		references ORDER(order_num),
+	constraint book_num_fk foreign key(book_number)
+		references BOOK(book_number),
+	constraint mem_num_fk foreign key(member_num)
+		references MEMBER(member_num)
+    ); 
+
+alter table SHIPPING
+add (
+    constraint sh_bu_num_fk foreign key(shipping_business_num)
+		references SHIPPING_COMPANY(shipping_business_num),
+	constraint mem_num_fk foreign key(member_num)
+		references MEMBER(member_num)
+    ); 
+
+alter table CALCULATE
+add constraint shi_num_fk foreign key(shipping_number)
+    references SHIPPING(shipping_number);  
+            
 */
