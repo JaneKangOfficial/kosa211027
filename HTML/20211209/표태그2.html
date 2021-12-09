@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  
+  <title>표 태그2</title>
+ </head>
+ <body>
+	<table border = 1>
+		<tr><td colspan = 3>공연요금</td></tr>
+
+		<tr><td>소인</td><td colspan = 2>미취학 아동 일반 요금의 50%</td></tr>
+		<tr><td rowspan = 2>공연시간</td><td>1회</td><td>13:00시 - 15:00시</td></tr>
+		<tr><td>2회</td><td>17:00시 - 19:00시</td></tr>
+
+		<tr><td>구분</td><td>S석</td><td>VIP</td></tr>
+		<tr><td>성인</td><td>30,000원</td><td>50,000원</td></tr>
+		<tr><td>청소년</td><td>40,000원</td><td>60,000원</td></tr>		
+	  </table>
+
+	  <table border = 1>
+		 <thead>
+			<tr><td colspan = 3>공연요금</td></tr>
+		 </thead>
+		 	
+		 <tfoot>
+			<tr><td>소인</td><td colspan = 2>미취학 아동 일반 요금의 50%</td></tr>
+			<tr><td rowspan = 2>공연시간</td><td>1회</td><td>13:00시 - 15:00시</td></tr>
+			<tr><td>2회</td><td>17:00시 - 19:00시</td></tr>
+		 </tfoot>
+
+		 <tbody> <!-- thead와 tfoot는 위에, tbody는 밑에 있어야 유지보수가 쉽다 -->
+			<tr><td>구분</td><td>S석</td><td>VIP</td></tr>
+			<tr><td>성인</td><td>30,000원</td><td>50,000원</td></tr>
+			<tr><td>청소년</td><td>40,000원</td><td>60,000원</td></tr>
+    	 </tbody>
+	  </table>
+
+	  <table border = 1>
+	  	<caption>제주특별자치도 학교현황(2015.4.1 기준)</caption>
+		
+		<colgroup> <!-- colgroup은 논리테이블(thead, tbody, tfoot)일 때 사용 가능하다 -->
+			<col width = "30%"/>
+			<col width = "20%" span = 3 style="background-color:gray;"/> <!-- 3개가 같다 -->
+			<col width = "10%"/>
+		</colgroup>
+
+		 <thead>
+			<tr><th>구분</th><th>학교수</th><th>학급수</th><th>학생수</th><th>교원수</th></tr>
+		 </thead>
+		 	
+		 <tfoot>
+			<tr><th>합계</th><td>300</td><td>3,437</td><td>86,954</td><td>6,111</td></tr>
+		 </tfoot>
+
+		 <tbody> 
+			<tr><th>유치원</th><td>117</td><td>252</td><td>5,547</td><td>474</td></tr>
+			<tr><th>초등학교</th><td>111</td><td>1,720</td><td>37,686</td><td>2,632</td></tr>
+			<tr><th>중학교</th><td>44</td><td>699</td><td>21,274</td><td>1,412</td></tr>
+			<tr><th>고등학교</th><td>29</td><td>676</td><td>22,019</td><td>1,433</td></tr>
+			<tr><th>특수학교</th><td>3</td><td>90</td><td>428</td><td>160</td></tr>
+    	 </tbody>
+	  </table>
+
+ <h3>Who am I ?</h3>
+ <p><mark>프론트앤드 웹기술(Front-end-Web Tech.)</mark>에 관심이 많습니다.</p>
+ <p>현재 제주의 한 시골 마을에서 코딩 중입니다.</p>
+
+ <hr/>
+
+ <h3>Experience</h3>
+ <ul>
+	<li>프론트엔드 개발
+		<ul>
+			<li>업무 내용 </li>
+			<li>업무 내용 업무 내용</li>
+			<li>업무 내용 업무 내용 업무 내용</li>
+		</ul>
+	</li>
+	<li>웹디자인
+		<ul>
+			<li>업무 내용</li>
+			<li>업무 내용 업무 내용</li>
+		</ul>
+	</li>
+ </ul>
+
+ <hr/>
+
+ <h3>Skills</h3>
+
+ <hr/>
+
+ <h3>Education</h3>
+ <table border = 1>
+ 	<caption>학력사항</caption>
+	<thead style = "background-color:gray;"><tr><th>출신학교</th><th>전공</th><th>기간</th><th>구분</th></tr></thead>	
+	<tbody>
+		<tr><td>ㅇㅇ대학교</td><td>컴퓨터공학</td><td>2004.3 ~ 2008.3</td><td>졸업</td></tr>
+		<tr><td>ㅁㅁ고등학교</td><td>-</td><td>2000.3 ~ 2004.2</td><td>졸업</td></tr>
+	</tbody>
+ </table>
+
+ </body>
+</html>
