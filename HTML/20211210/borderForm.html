@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8">
+  
+  <title>게시판</title>
+ </head>
+ <body>
+ <form action="#" name="frm">
+ 
+ <!-- hidden : 화면에서는 보이지 않지만 submit하면 서버에 값을 보낸다. -->
+ <input type="hidden" name="memNum" value="30" />
+ <input type="hidden" name="boardNum" value="1" />
+
+  <table>
+	<caption>게시글 등록</caption>
+	<colgroup>
+		<col width="30%">
+		<col width="70%">
+	</colgroup>
+	<tfoot>
+		<tr><th colspan=2>
+			<!-- type = image도 submit 버튼이다. -->
+			<input type="image" src="../images/강아지2.jpg" width="50" height="50" />
+			<input type="submit" value="전송" />
+		</th></tr>
+	</tfoot>
+	<tbody>
+		<tr>
+			<th>글쓴이</th> <!-- value : 화면에 값을 출력 (게시글 수정에서 사용) -->
+			<td><input type="text" name="writer" value="홍길동" /></td>
+		</tr>
+		<tr>
+			<th>이메일</th>
+			<td><input type="email" name="userEmail" value="id@mail.com" /></td>
+		</tr>
+		<tr>
+			<th>제목</th>
+			<td><input type="text" name="subject" value="홍길동전" /></td>
+		</tr>
+		<tr>
+			<th>내용</th>
+			<!-- texterea에는 value가 없다. -->
+			<td><textarea name="content" rows="6" cols="50">안녕하세요. 내용입니다.</textarea></td>
+		</tr>
+		<tr>
+			<th>비밀번호</th>
+			<td><input type="password" name="pw"></input></td>
+		</tr>
+	</tbody>
+  </table>
+  </form>
+ </body>
+</html>

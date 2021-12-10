@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8">
+  
+  <title>radio_checkbox</title>
+ </head>
+ <body>
+  <form action="#" name="frm">
+	
+	<p>메일 수신 여부 : 
+		<!-- radio : 두개 중에 하나를 선택하기 때문에 name은 같아야 한다.
+					  같은 name이 4개이면 4개 중에 하나만 선택한다. -->
+		<!-- checked : 미리 체크되어 있다. -->
+		<input type="radio" value="Y" name="recieve" checked/> 예
+		<input type="radio" value="N" name="recieve" /> 아니요
+	</p>
+	<p>성별 : 
+		<input type="radio" value="F" name="gender" checked/> 여자
+		<input type="radio" value="M" name="gender" /> 남자
+	</p>
+	
+	<p>좋아하는 운동 : 
+		<!-- name이 같으면 배열처리 chk[] , 
+				배열처리하기 위해 checkbox는 같은 name으로 하는 것이 좋다 -->
+		<input type="checkbox" value="농구" name="chk" checked/> 농구
+		<input type="checkbox" value="배구" name="chk" checked/> 배구
+		<input type="checkbox" value="야구" name="chk"/> 야구
+		<input type="checkbox" value="축구" name="chk"/> 축구
+		<input type="checkbox" value="골프" name="chk"/> 골프
+	</p>
+	<p>관심분야 : 		
+		<input type="checkbox" value="HTML" name="chk1" checked/> HTML
+		<input type="checkbox" value="CSS" name="chk2"/> CSS
+		<input type="checkbox" value="JAVASCRIPT" name="chk3"/> JAVASCRIPT
+	</p>
+
+	<p><input type="submit" value="전송" /></p>
+
+  </form>
+ </body>
+</html>
