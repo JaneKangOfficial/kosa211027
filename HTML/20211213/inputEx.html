@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8">
+ 
+  <title>inputEx</title>
+ </head>
+ <body>
+  <!-- input type="file" 태그가 있다면 method="post", (text 작성은 get, file은 binary 형태 그대로 보내겠다.) enctype="multipart/form-data" 그자체 그대로 보낸다고 설정해야 한다. 설정 안되어 있으면 서버에서 받지 못한다. -->
+  <form action="#" method="post" name="frm" enctype="multipart/form-data">
+  <input type="hidden" name="num" value="100" />
+  	<fieldset>
+		<legend>form 태그만 get/post 둘 다 사용가능</legend>
+  	<table border="1" width="600">
+		<caption>input 태그</caption>
+		<colgroup>
+			<col width="30%" />
+			<col width="70%" />
+		</colgroup>
+		<tfoot>
+			<tr>
+				<th  colspan="2">
+				<input type="submit" value="전송" />
+				<input type="reset" value="취소" />
+				<input type="image" src="../images/강아지2.jpg" width="30" height="30" />
+				</th>
+			</tr>
+		</tfoot>
+		<tbody>
+		<tr>
+			<th>고객번호</th>
+			<td><input type="text" name="userNum" value="12345" readonly /></td>
+		</tr>
+			<tr>
+				<th><label for="userName">* 이름</label></th>
+				<td><input type="text" size="30" id="userName" name="userName" autofocus required /></td>
+			</tr>
+			<tr>
+				<th><label for="userId">* 아이디</label></th>
+				<td><input type="text" size="30" id="userId" name="userId" required /></td>
+			</tr>
+			<tr>
+				<th>* 비밀번호</th>
+				<td><input type="password" size="30" name="userPw" required minlength="8" maxlength="13" /></td>
+			</tr>
+			<tr>
+				<th>* 비밀번호 확인</th>
+				<td><input type="password" size="30" name="userPwCon" required minlength="8" maxlength="13" /></td>
+			</tr>
+			<tr>
+				<th>* 연락처</th>
+				<td><input type="tel" size="30" name="userPh" placeholder="-없이 숫자로만" required /></td>
+			</tr>
+			<tr>
+				<th>이메일</th>
+				<td><input type="email" size="30" name="userMail" /></td>
+			</tr>
+			<tr>
+				<th>* 자기소개</th>
+				<td><textarea rows="5" cols="60" name="introduction" required></textarea></td>
+			</tr>
+			<tr>
+				<th>메일 수신 여부</th>
+				<td>
+					<input type="radio" name="emailCk" value="Y" checked /> Y
+					<input type="radio" name="emailCk" value="N" /> N
+				</td>
+			</tr>
+			<tr>
+				<th>관심분야</th>
+				<td>
+					<input type="checkbox" value="HTML" name="chk1" /> HTML
+					<input type="checkbox" value="CSS" name="chk1" /> CSS
+					<input type="checkbox" value="JavaScript" name="chk1" /> JavaScript
+				</td>
+			</tr>
+			<tr>
+				<th>사는 지역</th>
+				<td>
+					<select name="location">
+						<optgroup label="관악구">
+							<option>봉천동</option>
+							<option>신림동</option>
+							<option selected>남현동</option>
+						</optgroup>
+						<optgroup label="동대문구">
+							<option>전농동</option>
+							<option>답십리</option>
+							<option>신설동</option>
+						</optgroup>						
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>과목 선택</th>
+				<td>
+					<!-- size="3" : 보기가 3개씩 보인다. -->
+					<select name="subject" size="3" multiple>
+						<option value="1">CSS</option>
+						<option value="2" selected>HTML</option>
+						<option value="3" selected>JAVA</option>
+						<option value="4">JavaScript</option>
+						<option value="5">JSP</option>
+						<option value="6">데이터베이스</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>홈페이지</th>
+				<td><input type="url" name="userUrl" /></td>
+			</tr>
+			<tr>
+				<th>숫자</th>
+				<td><input type="number" min="1" max="100" step="2" value="1" /></td>
+			</tr>
+			<tr>
+				<th>month</th>
+				<td><input type="month" value="2021-12" /></td>
+			</tr>
+			<tr>
+				<th>date</th>
+				<td><input type="date" value="2021-12-13" /></td>
+			</tr>
+			<tr>
+				<th>datetime</th>
+				<td><input type="datetime" /></td>
+			</tr>
+			<tr>
+				<th>datetime-local</th>
+				<td><input type="datetime-local" name="ldatetime" value="2021-12-13T10:39" /></td>
+			</tr>
+			<tr>
+				<th>week</th>
+				<td><input type="week" name="wk" value="2021-W50" /></td>
+			</tr>
+			<tr>
+				<th>time</th>
+				<td><input type="time" name="tm" value="14:03:32" /></td>
+			</tr>
+			<tr>
+				<th>color</th>
+				<td><input type="color" value="#123456" /></td>
+			</tr>
+			<tr>
+				<th>datalist</th>
+				<td>
+					<input type="text" list="list" name="list" />
+					<datalist id="list">
+						<option value="html"></option>
+						<option value="javascript"></option>
+						<option value="css"></option>
+						<option value="java"></option>
+					</datalist>
+				</td>
+			</tr>
+			<tr>
+				<th>search</th>
+				<!-- search : text와의 차이는 x 표시 -->
+				<td>
+					<input type="search" name="search" />
+				</td>
+			</tr>
+			<tr>
+				<th>파일</th>
+				<td><input type="file" name="upFile" /></td>
+			</tr>
+			<tr>
+				<th>파일(multiple)</th>
+				<td><input type="file" name="upFile1" multiple /></td>
+			</tr>
+		</tbody>		
+	</table>
+	</fieldset>
+ </body>
+</html>

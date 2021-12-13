@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8">
+  <!-- CSS를 만들기 위해 div 그룹이 필요하다. -->
+  <!-- id는 #id명 / class는 .class명 -->
+  <style>
+	body {font-size:12px;}
+	#wrap {
+		background-color:gray;
+		width:650px;	<!-- wrap의 넓이를 정함, 박스처리 -->
+		margin:auto;	<!-- auto는 중앙 -->
+	}
+	#skipnav {display:none}
+	#gnb {float:right; margin-top:10px;}
+	#header h1 {float:left;}
+	#header #gnbmenu li {list-style:none; float:left; padding-left:20px;}
+	.hidden {display:none;}
+	#contentwrap {height:80px;}
+	#contentwrap #left {float:left; padding-right:100px; border-right:1px solid #ccc;}
+	#contentwrap #center {float:left; padding-right:80px; padding-left:40px;}
+	#contentwrap #right {float:right; border-left:1px solid #ccc; padding-left:50px; padding-right:40px;}
+	hr {clear:both; height:1px; border:none; background-color:#ccc;}
+
+  </style>
+  <title>그룹Ex</title>
+ </head>
+ <body>
+  <div id="wrap">
+  	<div id="skipnav" class="hidden">
+		<a href="#contentwrap">컨텐츠 바로가기 </a>
+	</div>
+	<div id="header">
+		<h1>HONG</h1>
+		<h2 class="hidden">메인메뉴</h2>
+		<div id="gnb">
+			<ul id="gnbmenu">
+				<li>Hong</li></li>
+				<li>도서소개</li>
+				<li>자료실</li>
+			</ul>
+		</div>
+	</div>
+	<hr />
+	<div id="contentwrap">
+		<div id="left">
+			<h2>왼쪽 컨텐츠</h2>
+			<p>내용</p>
+		</div>
+		<div id="center">
+			<h2>중앙 컨텐츠</h2>
+			<p>내용</p>
+		</div>
+		<div id="right">
+			<h2>오른쪽 컨텐츠</h2>
+			<p>내용</p>
+		</div>
+	</div>
+  </div>
+ </body>
+</html>
