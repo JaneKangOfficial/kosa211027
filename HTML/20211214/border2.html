@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8">
+  <title>border2</title>
+  <style>
+	div {
+		width:200px;
+		height:100px;
+		display:inline-block;
+		margin:15px;
+		border-width:5px; /* 테두리 굵기 */
+	}
+	.box1 {
+		border-style:solid;
+		border-color:red;
+		border-radius:20px;
+	}
+	.box2 {
+		border-style:dotted;
+		border-color:blue;
+		border-radius: 20px 40px; /* 왼쪽상단 오른쪽하단, 오른쪽상단 왼쪽하단 */
+	}
+	.box3 {
+		border-style:dashed;
+		border-color:skyblue;
+		border-radius: 20px 40px 60px 80px; /* 왼쪽상단, 오른쪽상단, 오른쪽하단, 왼쪽하단 */
+	}
+	.box4 {
+		border-style:solid;
+		border-top-color:red;
+		border-left-color:gray;
+		border-bottom-color:yellow;
+		border-right-color:blue;
+	}
+	.box5 {
+		border:3px dotted aqua;
+		border-top-left-radius: 20px;
+		border-top-right-radius: 40px;
+		border-bottom-right-radius: 60px;
+		border-bottom-left-radius: 80px;
+	}
+	h1 {
+		border-bottom:3px solid black;
+	}
+	p {
+		border:3px dotted gray;
+	}
+  </style>
+ </head>
+ <body>
+  <div class="box1"></div>
+  <div class="box2"></div>
+  <div class="box3"></div>
+  <div class="box4"></div>
+  <div class="box5"></div>
+
+  <h1>오징어 게임</h1>
+  <p> ‘오징어 게임’이 골든글로브 작품상 후보에 지명되며 지난해 ‘미나리’가 당한 부당함을 떨치게 됐다. 이정재, 오영수는 지난해 여우조연상 후보지명이 불발됐던 윤여정과 달리 올해 골든글로브 연기상 후보에 올랐다.</p>
+
+ </body>
+</html>

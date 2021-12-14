@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8">
+  <title>background image3</title>
+  <style>
+	div {
+		width:500px;
+		height:500px;
+		border:2px double black;
+		margin-bottom:20px;
+	}
+	.bg1 {
+		background:url("../images/bg4.jpg") no-repeat left top; /* left center */
+		background-size: auto; /* 원본 크기 */
+	}
+	.bg2 {
+		background:url("../images/bg4.jpg") no-repeat left top; /* left center */
+		background-size: 200px 150px;
+	}
+	.bg3 {
+		background:url("../images/bg4.jpg") no-repeat left top; /* left center */
+		background-size: 60% 40%;
+	}
+	.bg4 {
+		background:url("../images/bg4.jpg") no-repeat left top; /* left center */
+		background-size: contain; /* 박스 크기만큼 */
+	}
+	.bg5 {
+		background:url("../images/bg4.jpg") no-repeat left top; /* left center */
+		background-size: cover; /* 박스 안에 채우기 */
+	}
+	.bg6 {
+		background:url("../images/bg4.jpg") no-repeat left top; /* left center */
+		background-size: 100% 100%; /* 박스만큼 전체적으로 그림 채우기 */
+	}
+  </style>
+ </head>
+ <body>
+  <div class="bg1"></div>
+  <div class="bg2"></div>
+  <div class="bg3"></div>
+  <div class="bg4"></div>
+  <div class="bg5"></div>
+  <div class="bg6"></div>
+ </body>
+</html>
