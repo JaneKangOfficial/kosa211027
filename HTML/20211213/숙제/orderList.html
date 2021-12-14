@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>auction</title>
+  <style>
+	* {
+		margin:0px;
+		padding:0px;
+	}
+	thead {background-color:gray;}
+	.red {color:red;}
+	.print {font-size:5px;}
+	.state {font-size:5px;}
+
+  </style>
+ </head>
+ <body>
+  <form action="#" name="frm">
+	<table border=1>
+	<colgroup>
+		<col width="20%" />
+		<col width="50%" />
+		<col width="20%" />
+		<col width="10%" />
+	</colgroup>
+		<thead>
+			<tr>
+				<th>주문일(결제번호)</th>
+				<th>상품명/주문옵션/주문번호</th>
+				<th>판매자</th>
+				<th>주문상태</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>2021-11-12</td>
+				<td rowspan=2>
+					<img src="../../images/강아지2.jpg" width="50" height="50"/> 토탈A급60개/볼빅/컬러볼/
+				</td>
+				<td rowspan=2>제이앤제이골프2</td>
+				<td rowspan=2 >
+					<p class="red">거래완료</p><p class="state">구매결정일자 (11-23결정)</p>
+				</td>
+			</tr>
+			<tr>
+				<td rowspan=2>
+					<p>결제금액:24,500원</p>
+					<a href="#">주문상세보기</a>
+					<input type="submit" value="구매영수증 출력" />
+				</td>
+			</tr>
+			<tr>
+				<td class="print">
+					<a href="#">신용카드영수증 출력</a>
+					<a href="#">신용카드영수증 출력</a>
+					<a href="#">신용카드영수증 출력</a>
+				</td>
+				<td></td>
+				<td><img src="../../images/강아지2.jpg" width="30" height="30"/></td>
+			</tr>
+			
+		</tbody>
+	</table>
+  </form>
+ </body>
+</html>
