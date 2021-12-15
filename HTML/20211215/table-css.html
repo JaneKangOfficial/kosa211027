@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8">  
+  <title>table-css</title>
+  <style>
+	.table1, .table2 {
+		border: 1px solid red;
+		/* border-collapse:collapse; table선과 td선을 합치기 */
+		border-collapse:separate; /* 기본값, table선과 td선을 합치지 않는다. */
+		border-spacing:20px 10px; /* table 여백 */
+		width:500px;
+	}
+	.table1 td {
+		border: 1px dotted black;
+		empty-cells:show; /* 기본값, data가 없는 부분도 보이도록 */
+	}
+	.table2 td {
+		border: 1px dotted black;
+		empty-cells:hide; /* data가 없는 부분 보이지 않도록 */
+	}
+/* */
+	table {
+		border:1px solid #ccc;
+		width:300px;
+		/* table-layout:auto;   기본값 */		
+		table-layout:fixed;
+		word-break:break-all;
+		height:auto;		
+		/* 영문자는 박스를 벗어난다. word-break, height를 같이 써줘야 한다. */
+	}
+	td {
+		width:150px;
+	}
+/* */
+	.v-align {
+		border:1px solid #ccc;
+		width: 300px;
+	}
+	.v-align td {
+		height:150px;
+		border: 1px dotted black;		
+	}
+	#td1 {vertical-align:top; text-align:left;}
+	#td2 {vertical-align:middle; text-align:right;}
+	#td3 {vertical-align:bottom; text-align:center;}
+	
+  </style>
+ </head>
+ <body>
+  <table class="table1" >
+  	<caption>프로축구 경기 일정</caption>
+	<tr>
+		<td>울산</td>
+		<td>울산 vs 인천</td>
+		<td>tv중계</td>
+	</tr>
+	<tr>
+		<td>부산</td>
+		<td>부산 vs 대전</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>서울</td>
+		<td>서울 vs 강원</td>
+		<td></td>
+	</tr>	
+  </table>
+  <table class="table2" width="600">
+  	<caption>프로축구 경기 일정</caption>
+	<tr>
+		<td>울산</td>
+		<td>울산 vs 인천</td>
+		<td>tv중계</td>
+	</tr>
+	<tr>
+		<td>부산</td>
+		<td>부산 vs 대전</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>서울</td>
+		<td>서울 vs 강원</td>
+		<td></td>
+	</tr>	
+  </table>
+
+ <hr />
+
+  <h1>Table Layout</h1>
+  <table>
+	<tr>
+		<td>
+			한글로띄어쓰기없게길게붙여쓰기
+		</td>
+		<td>
+			long_description_without_spaceeeeeeeeeeeeeeeeeeee
+		</td>
+	</tr>
+  </table>
+
+ <hr />
+
+  <table border="1">
+	<tr width="150px" height="150px">
+		<!-- valign : style에서 vertical-align과 같다. -->		
+		<td align="center" valign="top">홍길동</td> 
+		<td align="center" valign="bottom">동길홍</td>
+	</tr>
+  </table>
+  <table class="v-align">
+	<tr>
+		<!-- align : style에서 text-align과 같다. -->
+		<td id="td1" align="left">홍길동</td>		
+		<td id="td2" align="right">동길홍</td>
+		<td id="td3" align="center">동글홍</td>
+	</tr>
+  </table>
+ </body>
+</html>

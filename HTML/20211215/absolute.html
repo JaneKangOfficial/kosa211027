@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8">  
+  <title>position-absolute(부모기준)</title>
+  <style>
+	* {
+		margin:0;
+		padding:0;
+	}
+	body {
+		margin:20px;
+	}
+	#box {
+		width:550px;
+		border: 3px solid #000;
+		position: relative;
+	}
+	p {
+		width:130px;
+		height:80px;
+		padding:10px;
+		color:#fff;
+	}
+	.myred {
+		background:red;
+	}
+	.myblue {
+		background:blue; 
+		/* absolute : 부모의 왼쪽 상단 꼭지점을 기준으로 내 좌표를 잡는다. */
+		position:absolute; 
+		left:50px; 
+		top:50px;		
+		z-index:2; /* 높은 값을 가질수록 위층으로 배정된다. */
+	}
+	.mygreen {
+		background:green;
+		/* position:absolute; */		
+	}
+
+  </style>
+ </head>
+ <body>
+  <div id="box">
+	<p class="myred">세계보건기구(WHO)는 새 변이 오미크론이 전례없이 빠른 속도로</p>
+	<p class="myblue">세계보건기구(WHO)는 새 변이 오미크론이 전례없이 빠른 속도로</p>
+	<p class="mygreen">세계보건기구(WHO)는 새 변이 오미크론이 전례없이 빠른 속도로</p>
+  </div>
+ </body>
+</html>
