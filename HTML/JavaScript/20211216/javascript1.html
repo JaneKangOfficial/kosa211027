@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8"> 
+  <title>javascript</title>
+  <link scr="" type="" />  
+  <!-- 
+	스크립트 언어(정적언어) - html, python, javascript
+	웹브라우저에 의해 작동 
+  --> 
+  <script src="note.js" type="text/javascript">/* 이 안에 작성할 수 없다. 새로 <script>를 선언해서 작성한다. */</script>
+  <script>
+	document.write("<br />가나다");     
+  </script>
+  <script>
+	document.write("라마바<br />");
+  </script>
+  <script>
+	var num = 10; /* 자료형 없다 = python */
+	document.write(num + "<br />");
+
+	var num = "홍길동"; /* " " : 문자열 */
+	document.write(num + "<br />");
+
+	num = 10.5;
+	document.write(num + "<br />");
+
+	var firstNum = 10;
+	var nextNum = 10.5;
+	var result = firstNum + nextNum;
+	document.write(result + "<br />");
+
+	var name = '동길홍'; /* ' ' : 문자 */
+	document.write(name + "<br />");
+
+	var result = true; /* 부울타입 변수선언 가능 */
+	document.write(result + "<br />");
+
+	var result = null; /* null값 사용 가능 */
+	document.write(result + "<br />");
+
+	var b1 = true;
+	var b2 = false;
+	result = b1 && b2;	/* 부울타입 연산 가능 */
+	document.write(result + "<br />");
+
+	var num1 = 100;	// 후행 연산자
+	document.write(num1++ + "<br />"); // System.out.print(); // 100
+	document.write(num1 + "<br />"); // 101
+
+	var num1 = 100;	// 선행 연산자
+	document.write(++num1 + "<br />"); // 101
+	document.write(num1 + "<br />"); // 101
+
+	/* 
+		논리 연산(&&, ||, !) : 부울타입의 연산(비교 연산자의 결과값 : 부울타입)
+							 항상 비교연산자와 같이 사용된다.
+	*/
+	var num2 = 200;
+	var num3 = 150;
+	document.write(num1 < num2 && num1 > num3);
+	document.write("<br />");
+	var b1 = true;
+	document.write(!b1 + "<br />");
+
+	// prompt : 키보드로 입력, 동적으로 사용 가능
+	// Number : 키보드로 입력 받는 값은 문자이기 때문에 숫자 자료형으로 형변환
+	// 초기값 "0"으로 설정
+	var korNum = 70; // Number(prompt("국어 점수를 입력해주세요", "0")); 
+	var engNum = 85; // Number(prompt("영어 점수를 입력해주세요", "0"));
+	var mathNum = 90; // Number(prompt("수학 점수를 입력해주세요", "0"));
+	var avg = (korNum + engNum + mathNum) / 3;
+	var result = avg >= 70 && engNum >= 60 && korNum >= 60 && mathNum >= 60;
+	document.write(result + "<br />");
+
+	// + : 문자 결합 연산자(문자+문자, 숫자+문자)
+	// String(숫자) : 숫자를 문자로 바꿈
+	var num1 = 100; // 숫자
+	var num2 = 200; // 숫자
+	var txt5 = String(1000); // 문자
+	// 우선순위 적용
+	document.write(num1 + num2 + txt5 + "<br />"); // 숫자 + 숫자 + 문자 = 문자 // 3001000
+	document.write(num1 + txt5 + num2 + "<br />"); // 1001000200
+	document.write(txt5 + num1 + num2 + "<br />"); // 1000100200
+
+	// 삼항 연산자
+	var num1 = 10;
+	var num2 = 20;
+	var result = num1 > num2? num1 + num2 : num1 - num2;
+	document.write(result + "<br />");
+
+	var result = confirm("당신은 자바스크립트를 하세요?"); // 확인:true / 취소:false
+	var txt = result ? "Good" : "No-Good"; // "문자열" = true이기 때문에 prompt값이 true로만 나온다.
+	document.write(txt + "<br />");
+
+  </script>
+ </head>
+ <body>
+  
+ </body>
+</html>
