@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8"> 
+  <title>Document</title>
+  <script>	
+	document.write("<h3> 함수 (Function) </h3>");
+
+	function greet() {
+		alert("안녕하세요.");
+	}
+	// greet();	// 창이 열리면서 greet() 함수 시작
+	
+	var num = 1;
+	function nextGallery() {
+		num++;
+		if(num > 7) num = 1;
+		document.getElementById("gallery").src = "../../images/img" + num + ".jpg";
+	}
+
+	function prevGallery() {
+		num--;
+		if(num < 1) num = 7;
+		document.getElementById("gallery").src = "../../images/img" + num + ".jpg";
+	}
+
+	function greet1(text) { // text : 매개변수명만 작성 / javascript는 변수에 타입이 없기 때문에
+		alert(text);
+	}	
+
+  </script>
+ </head>
+ <body>  
+  <br /><hr />
+  여기는 body
+  <br /><br />
+
+  <button onclick="greet();">버튼</button> <!-- button 누르면 greet() 함수 시작 -->
+  <br /><br /><br />
+
+  <a href="javascript:prevGallery();"><img src="../../images/left_btn.png" /></a>
+  <img src="../../images/img1.jpg" id="gallery" />
+  <a href="javascript:nextGallery();"><img src="../../images/right_btn.png" /></a>
+  <br /><br /><br />
+
+  <button onClick="greet1('안녕하세요');">버튼1</button>
+  <button onClick="greet1('안녕히 가세요');">버튼2</button>
+  <br /><br /><br />
+
+  <input type="text" id="ctxt" /><br />	
+  
+  <br />
+  여기는 /body
+  <br /><hr /><br /> 
+ </body>
+</html>
+
+<script>
+
+	var num1 = 10;
+	function theFnc(num2) {
+		var sum = num1 + num2;
+		return sum;	// 반환값이 있는 함수는 <script>내에서 사용
+	}
+	var result = theFnc(40);
+	// document.write(result + "<br />"); // 50
+	document.getElementById("ctxt").value = result; // .ctxt가 만들어진 후에 사용되어야 하기 때문에 <script>를 밑에 작성한다. 
+
+</script>

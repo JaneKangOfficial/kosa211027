@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8"> 
+  <title>Document</title>
+  <script>
+	function greet() {
+		document.getElementById("ctxt").value = 10;
+	} // ctxt가 만들어진 후에 button을 누르기 때문에 값을 줄 수 있다.
+
+	// document.getElementById("ctxt1").value = 20; // ctxt1이 만들어지기 전에 값을 줄수는 없다.
+
+	var num1 = 0;
+	function test() {
+		var num = 30;	// 지역변수이므로 함수안에서만 사용이 가능하다.
+		document.write(num + "<br />");
+		num1 = 100;
+		document.write(num1 + "<br />");
+	}
+	// console.log(num); // 지역변수이므로 함수안에서만 사용이 가능하다.
+	
+	console.log(num1); // 0
+	test();		// 함수 실행 후
+	console.log(num1); // 100 // 전역변수이므로 함수밖에서도 사용 가능
+
+	document.write("<h3> 내장함수 </h3>");
+
+	document.write("10+20 <br/>"); // "10+20"
+	document.write(eval("10+20") + "<br />"); // 30 // eval : 문자열을 자바스크립트 코드로 변환
+
+	var num = 100;
+	document.write("num" + 10 + "<br/>"); // "num10"
+	document.write(eval("num") + 10 + "<br/>");	// 110
+
+	// isNaN() : 숫자가 아닙니까 is Not a Number / 숫자면 false 아니면 true
+	document.write(isNaN("100") + "<br/>"); // isNaN("100") : "100"이 넘버가 아닙니까 // 숫자여서 false 
+	document.write(isNaN("031-123-123") + "<br/>"); // isNaN("031-123-123") : "031-123-123"이 넘버가 아닙니까 // "-"가 있는 문자여서 true
+	document.write(isNaN("031123123") + "<br/>"); // 숫자여서 false
+
+	// Number = paseInt
+	document.write(Number("10") + parseInt("20") + "<br/>"); // 30 / 숫자로 변환
+
+	document.write(String(10) + String(20) + "<br />"); // 1020 / 문자열로 변환
+	
+	document.write("<br/>");
+  </script>
+ </head>
+ <body>
+  <input type="text" id="ctxt1" />
+  <br /><br />
+
+  <button onClick="greet();">버튼</button>
+  <input type="text" id="ctxt" />
+  <br /><br />
+
+  <button onclick="test()">버튼</button>
+
+ </body>
+</html>
+
+<script>
+	document.getElementById("ctxt1").value = 20; //ctxt1이 <body>에서 만들어진 후에 값을 줘야 가능하다.
+</script>

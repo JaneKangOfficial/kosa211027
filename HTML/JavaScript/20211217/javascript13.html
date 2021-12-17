@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8"> 
+  <title>Document</title>
+  <script>
+	function p1() {
+		document.getElementById("p1").innerHTML = "내용이 변경되었어요.";
+	}
+	
+	function image() {
+		// src와 setAttribute의 결과는 같지만 setAttribute를 쓰는 것을 권장
+		// document.getElementById("image").src="../../images/img2.jpg";
+		document.getElementById("image").setAttribute("src","../../images/img2.jpg");
+	}
+
+	var fontColor = ["#123456", "#987654", "#abcdef", "#abc", "#123"];
+	var i = -1;
+	function font_color() {
+		i++;
+		if(i == fontColor.length) i = 0;
+		// document.querySelector("#p2").style.color = fontColor[i];
+		document.getElementById("p2").style.color = fontColor[i];
+	}
+
+  </script>
+ </head>
+ <body>
+  
+  <p id="p1">글씨가 있어요.</p>
+  <button onClick="p1();">innerHTML</button>
+  <br /><br /><br />
+
+  <img id="image" src="../../images/img1.jpg" /><br />
+  <button onClick="image();">이미지 변경</button>
+
+  <h1 id="p2">글자 색상이 변경</h1>
+  <button onClick="font_color();">글자색 변경</button>
+
+ </body>
+</html>

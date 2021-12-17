@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8"> 
+  <title>Document</title>
+ </head>
+ <body>
+<!-- 
+	DOM : Document Object Model = 브라우저에서 제공, 문서내에 있는 것 = Tag관련 객체 
+	document.getElementById("아이디");	 # 복수가 허용되지 않음
+	document.getElementsByTagName("태그명");	# 복수가 허용됨, 배열
+	document.getElementsByClassName("클래스명");	# 복수가 허용됨, 배열
+	document.querySelector("div p") : 선택자
+-->
+
+  <h1>H1 Tag1</h1>
+  <h1>H1 Tag2</h1>
+  <h1>H1 Tag3</h1>
+  <h1>H1 Tag4</h1>
+  <br />
+
+  <h2 class="head2">head2 class1</h2>
+  <h2 class="head2">head2 class2</h2>
+  <h2 class="head2">head2 class3</h2>
+  <h2 class="head2">head2 class4</h2>
+  <br />
+
+  <h3 id="head3">head3 id1</h3>
+  <h3 id="head3">head3 id2</h3>
+  <br />
+
+  <input type="text" id="id" /><br />
+  <input type="text" id="id" /><br />
+  <br />
+
+ </body>
+</html>
+
+<script>
+	var elemTag = document.getElementsByTagName("h1");	// 복수, 배열
+	console.log(elemTag);	
+	document.write("1번째 h1 : " + elemTag[0].innerHTML + "<br />"); // innerHTML : 안에 text를 가져옴. // H1 Tag1
+	elemTag[3].innerHTML = "홍길동";
+	document.write("4번째 h1 : " + elemTag[3].innerHTML + "<br />"); // H1 Tag4 -> 홍길동
+	document.write("<br />");
+
+	var elemClass = document.getElementsByClassName("head2"); // 복수, 배열
+	console.log(elemClass);
+	document.write("2번째 h2 : " + elemClass[1].innerHTML + "<br />"); // head2 class2
+	elemClass[2].innerHTML = "홍길동";
+	document.write("3번째 h2 : " + elemClass[2].innerHTML + "<br />"); // head2 class3 -> 홍길동
+
+	var elemId = document.getElementById("head3"); // getElementById : id는 처음 한개만 가능	
+	console.log(elemId); // head3 id1
+
+	document.getElementById("id").value = 10; // getElementById : id는 처음 한개만 가능
+
+</script>

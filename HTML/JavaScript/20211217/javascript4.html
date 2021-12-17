@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">  
+  <title>Document</title>
+  <script>
+	var theText = "Web Js Hi Ciy";
+	document.write(theText + "<br />");
+	document.write(theText.bold() + "<br />");
+	document.write(theText.link("http://www.naver.com") + "<br />");
+	document.write(theText.length + "<br />");	// 13
+	document.write(theText.toLowerCase() + "<br />");
+	document.write(theText.toUpperCase() + "<br />");
+	document.write(theText.indexOf("i") + "<br />");	// 8
+	document.write(theText.lastIndexOf("i") + "<br />");	// 11
+	document.write(theText.charAt(5) + "<br />");	// s
+
+	// substring과 slice는 같다.
+	document.write(theText.substring(4,6) + "<br />");	// 4번째부터 6번째까지 // Js
+	document.write(theText.slice(4,6) + "<br />"); // 4번째부터 6번째까지 // Js
+
+	document.write(theText.substr(4,2) + "<br />");	// 4번째부터 2글자 // Js
+	
+	document.write(theText.replace("Web","Bye") + "<br />");
+	document.write(theText.concat(" Good") + "<br />");	// 문자 붙이기
+	document.write(theText.split(" ") + "<br />");
+
+	document.write("<br /><hr /><br />");
+
+	var theText1 = new String("Web:Js:Hi:Ciy");
+	document.write(theText1 + "<br />");
+	document.write(theText1.split(":") + "<br />"); 
+	document.write(theText1.split(":")[0] + "<br />"); // Web
+	document.write(theText1.split(":")[1] + "<br />"); // Js
+	document.write(theText1.split(":")[2] + "<br />"); // Hi
+	document.write(theText1.split(":")[3] + "<br />"); // Ciy
+
+	document.write("<br /><hr /><br />");
+
+	var theText2 = "../../images/img10.jpg";	
+	document.write(theText2.split("/") + "<br />");
+	document.write(theText2.split("/")[3] + "<br />"); // img10.jpg
+
+	document.write("<h3>img10.jpg에서 숫자 10만 출력하세요.</h3>");	
+	var theText3 = theText2.split("/")[3];
+	document.write(theText3.substr(3,2) + "<br />");
+
+	document.write("<h3>마지막 문자를 추출하세요.</h3>");	
+	document.write(theText2.charAt(theText2.length-1) + "<br />");
+
+  </script>
+ </head>
+ <body>
+  
+ </body>
+</html>

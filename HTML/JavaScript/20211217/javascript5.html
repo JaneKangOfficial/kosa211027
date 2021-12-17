@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8"> 
+  <title>배열객체</title>
+  <script>
+	document.write("<h3> 배열객체 : Array 객체 </h3>");
+/*	
+	java  
+	int[] i = new int[3]; 
+	int[] i = {1,2,3};
+*/
+/*	
+	// internet Explorer로 열면 가능 / chrome은 안됨
+	var name = new Array();	
+	name[0] = "홍길동";
+	name[1] = "이순신";
+	name[2] = "강감찬";
+	name[3] = "동길홍";
+	document.write(name[0] + "<br />");
+*/
+
+	var name1 = ["홍길동", "이순신", "강감찬", "동길홍"];
+	document.write(name1[0] + "<br />");
+
+	var name2 = new Array(4);
+	name2[0] = "홍길동";
+	name2[1] = "이순신";
+	name2[2] = "강감찬";
+	name2[3] = "동길홍";
+	document.write(name2[0] + "<br />");
+
+	var money = [100, 100, 200, 50];	
+	var total = 0;
+	document.write(money[0] + "<br />"); // 100
+
+	/* 배열 안에 있는 값의 합을 구하시오. */
+	for(var i = 0; i < money.length; i++) {
+		total += money[i];
+	}
+	document.write(total + "<br />"); // 450
+
+
+	document.write("<h3> 배열의 내장함수 </h3>");
+	
+	var theFood = ["짜장면", "냉면", "갈비탕", "돈까스", "삼겹살"];
+	document.write(theFood + "<br />");
+
+	theFood.reverse();	// 역순으로 저장
+	document.write("reverse : " + theFood + "<br />");
+
+	theFood.sort();		// 오름차순으로 저장
+	document.write("sort : " + theFood + "<br />");
+
+	document.write("<br />");
+
+
+	var Mountain2 = ["설악산", "지리산", "한라산", "속리산"];
+	var result = theFood.concat(Mountain2);
+	document.write("theFood.concat(Mountain2) : " + result + "<br />");
+
+	result = theFood.slice(2,4); // 2번째부터 3번째까지
+	document.write("theFood.slice(2,4) : " + result + "<br />");
+
+	result = theFood.join("-");
+	document.write("join('-') : " + result + "<br />");
+
+	document.write("<br />");
+
+
+	var theSubway = ["2호선", "9호선", "7호선", "4호선", "3호선"];
+	var newLine1 = "1호선";
+	var newLine2 = "분당선";
+	document.write(theSubway + "<br />");
+	
+	theSubway.pop();	// 뒤에 있는 것을 빼서 제거
+	document.write("pop : " + theSubway + "<br />");
+
+	theSubway.push(newLine2);	// 뒤에 newLine2를 넣는다.
+	document.write("push : " + theSubway + "<br />");
+	document.write("<br />");
+
+	theSubway.shift();	// 앞에 있는 것을 밀어서 제거
+	document.write("shift : " + theSubway + "<br />");
+
+	theSubway.unshift(newLine1);	// 앞에 newLine1을 밀어넣겠다.
+	document.write("unshift : " + theSubway + "<br />");
+
+	document.write("<br />");
+
+	console.log(theSubway); // 개발자 환경 : 화면에 보이진 않지만 결과 확인을 위해 사용
+
+  </script>
+ </head>
+ <body>
+  
+ </body>
+</html>

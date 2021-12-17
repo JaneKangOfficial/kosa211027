@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">  
+  <title>Document</title>
+  <script>
+	/* 
+		브라우저 객체 (BOM : Browser Bobject Model) 
+		window : document, navigator, location, screan, history
+				 "open, alert, prompt, confirm", setTimeout, setInterval	
+	
+		open (popUp) : 보안에 취약, 잘 쓰지 않는다.
+		div : 엑스 누르는 광고
+	*/
+
+	// 보안상 chrome은 서버를 거치지 않으면 잘 실행되지 않는다.
+	// internet Explorer는 실행 가능
+	function popup() {
+		window.open("popup.html", "popName", "width=600px, height=300px, left=50px, top=100px, scrollbars=yes, toolbar=yes, location=no");
+	} // 생략 가능 : scrollbars=yes, toolbar=yes, location=no
+	
+
+	document.write("코드명 : " + navigator.appCodeName + "<br />");
+	document.write("브라우저명 : " + navigator.appName + "<br />"); // Netscape 표준 브라우저, internet Explorer 비표준 브라우저
+	document.write("플랫폼버전 : " + navigator.appVersion + "<br />");
+	
+	/* navigator.userAgent : 가장 중요! */
+	document.write("전체정보 : " + navigator.userAgent + "<br />"); // pc인지 모바일인지 확인하기 위해 필요하다.
+
+	document.write("<br />");
+
+/*
+	if (navigator.userAgent.indexOf("Windows NT")){ // pc인지 모바일인지 확인!
+		document.write("pc버전입니다.");
+		location.href="http://www.naver.com";
+	}else {
+		document.write("mobile 버전입니다.");
+		location.href="http://m.naver.com";
+	}
+*/
+
+	var myAgent = navigator.userAgent.toLowerCase(); 
+	var mobile = ["iphone", "ipod", "android", "blackberry", "window ce", "nokia", "webos", "opera mini", "sonyericsson"];
+	
+	for(var i = 0; i < mobile.length; i++) {
+		if (myAgent.indexOf(mobile[i]) >= 0) {
+			document.write("mobile 버전입니다.<br />");
+			// location.href="http://m.naver.com";
+			break;
+		}else if (myAgent.indexOf(mobile[i]) < 0){
+			document.write("pc 버전입니다.<br />");
+			// location.href="http://www.naver.com";
+			break;
+		}
+	}
+  </script>
+ </head>
+ <body>
+
+  <hr />
+  <button onClick="popup();">팦업</button><br/>
+
+ </body>
+</html>
