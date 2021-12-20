@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8"> 
+  <title>문서 객체 조작 메서드</title>
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+  <script>
+	$(function(){
+		$("#btn1").click(function(){
+			// 요소로 바꾸는 경우에는 html() 사용
+			$(".theTitle").html("<a href='#'>요소가 있는 내용으로 변경</a>");
+		});
+		
+		// list_2 ==> 리스트2 로 변경, text로 바꾸는 경우에는 text(), html() 둘다 사용 가능
+		// 요소와 텍스트 둘다 변경이 가능한 html()을 주로 많이 사용
+		$("#btn2").click(function(){
+			// $(".obj1").text("리스트2");
+			$(".obj1").html("리스트2");
+		});
+
+		// id="list3"인 요소에 마지막 위치에 새요소를 추가합니다.(append : 마지막에 추가)
+		$("#btn3").click(function(){
+			$("#list3").append("<li>list_6</li>");
+		});
+
+		// id="list3"인 요소에 처음 위치에 새요소를 추가합니다. (prepend : 처음에 추가)
+		$("#btn4").click(function(){
+			$("#list3").prepend("<li>list_1</li>");
+		});
+
+		/* insertBefore(), insertAfter()만 선택자가 뒤에 온다. */
+		// id="list3"인 3번째 <li> 요소 이전에 새요소를 중간에 추가합니다. (insertBefore : 중간에서 앞에 추가)
+		$("#btn5").click(function(){
+			$("<li>이전에 추가된 요소</li>").insertBefore($("#list3 li").eq(2));
+		});
+
+		/* insertBefore(), insertAfter()만 선택자가 뒤에 온다. */
+		// id="list3"인 3번째 <li> 요소 이후에 새요소를 중간에 추가합니다. (insertAfter : 중간에서 뒤에 추가)
+		$("#btn6").click(function(){
+			$("<li>이후에 추가된 요소</li>").insertAfter($("#list3 li").eq(2));
+		});
+
+		// id="list3"인 요소에 하위 <li> 요소 중 첫번째 요소 삭제 (remove() : 삭제)
+		$("#btn7").click(function(){
+			$("#list3 li").eq(0).remove();
+		});
+
+		// 두번째 요소에 속성 추가 (개발자 모드에서 확인) (addClass() : class 속성 추가)
+		$("#btn8").click(function(){
+			$("#list3 li").eq(1).addClass("obj3");
+		});
+
+		// 첫번째 요소의 class명을 변경 (개발자 모드에서 확인), class 추가
+		// attr("class", "obj2") : 값이 있으면 값 변경
+		// attr("class") : class만 있으면 값 가져오기
+		$("#btn9").click(function(){
+			$("#list3 li").eq(0).attr("class", "obj2"); 
+			$(".obj2").css("color","purple"); // 변경한 클래스명으로 폰트색상 변경
+			
+			$("#list3 li").eq(0).addClass("obj4"); // class 추가
+			$(".obj4").css("border", "2px solid #ccc"); // 추가한 클래스명으로 border 만들기
+		});
+
+		// class값 가져오기
+		$("#btn10").click(function(){ 
+			// "$(".theTitle")"에 "html($("#list3 li").eq(0)의 attr("class") 값을 가져온다
+			$(".theTitle").html($("#list3 li").eq(0).attr("class"));
+		});
+	});
+  </script>
+ </head>
+ <body>
+  <button type="button" id="btn1">버튼1</button>
+  <button type="button" id="btn2">버튼2</button>
+  <button type="button" id="btn3">버튼3</button>
+  <button type="button" id="btn4">버튼4</button>
+  <button type="button" id="btn5">버튼5</button>
+  <button type="button" id="btn6">버튼6</button>
+  <button type="button" id="btn7">버튼7</button>
+  <button type="button" id="btn8">버튼8</button>
+  <button type="button" id="btn9">버튼9</button>
+  <button type="button" id="btn10">버튼10</button>
+
+  <!-- <li class="obj1">텍스트</li> : 요소 -->
+  <h2 class="theTitle">html 조작</h2>
+  <ul id="list3">
+	<li class="obj1">list_2</li>
+	<li>list_3</li>
+	<li>list_4</li>
+	<li>list_5</li>	
+  </ul>
+  
+ </body>
+</html>

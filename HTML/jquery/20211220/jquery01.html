@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8"> 
+  <title>jquery</title>
+  <!-- 아래 셋 중 하나를 사용 -->
+
+  <!-- 다운로드 받은 파일 사용 -->
+  <script src="js/jquery-3.6.0.min.js" type="text/javascript"></script> 
+
+  <!-- CDN 사용 -->  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+
+  <!-- CDN 마지막 버전 사용, 버전마다 내용이(기능이) 다르다. -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery-latest.js"></script> 
+
+  <script>	
+	// document.getElementById("txt").value="10"; // input이 먼저 만들어져야 사용할 수 있다. <html> 밑에 <script> 적어서 사용
+
+  	$(document).ready(function(){	// jquery에서는 document가 준비가 되었다면 사용할 수 있다.
+		document.getElementById("txt").value="10";
+	});
+
+	// 위와 같음! $();
+	$(function(){
+		document.getElementById("txt1").value="20";
+		// DOM : getElementById(), getElementsByTagName(), getElementsByClassName()
+	});
+
+	$();
+	$(function(){});
+
+	$(function(){
+		// jquery에서는 DOM을 사용하지 않는다. DOM 대신에 selector(.txt3)를 사용할 수 있도록 $()를 사용
+		$("#txt2").val("홍길동");
+		$(".txt3").val("강감찬");
+	});
+
+	$().click(function(){});
+	
+  </script>
+
+ </head>
+ <body>
+  <input type="text" id="txt" />
+  <input type="text" id="txt1" />
+  <input type="text" id="txt2" />
+  <input type="text" class="txt3" />
+ </body>
+</html>
