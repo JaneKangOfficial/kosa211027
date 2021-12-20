@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8">  
+  <title>Document</title>
+  <script>
+  	/* 
+		BOM : window.open(), location.href, navicator.userAgent, confirm, alert, prompt,
+			  setInterval(), clearInterval(), setTimeout()
+			  // setInterval(), clearInterval() : 이미지 롤링에서 사용, 요즘은 gif에서  링크까지 지원이 되기 때문에 잘 사용하지 않는다.
+	*/
+	function cart() {
+		var con = confirm("장바구니로 이동하시겠습니까?"); // confirm : 값 true, false
+		if (con){ // true
+			location.href="http://www.naver.com";
+		}
+	}
+	function conf() {
+		var con = confirm("정말로 탈퇴하시겠습니까?");
+		if(con) {
+			alert("탈퇴되었습니다.");
+			location.href="#"; // 홈으로 이동
+		}
+	}
+	function btn() {
+		var cnt = 10;
+		var msg = document.getElementById("count");
+
+		interval = setInterval(function(){
+			cnt--;
+			msg.innerHTML = cnt;
+		}, 1000);	// 1000 : 1초마다 setInterval() 함수가 실행
+
+		setTimeout(function() {
+			clearInterval(interval);	// clearInterval() : setInterval() 함수를 지우기 위해서(더이상 실행되지 않도록) 사용
+			alert("페이지를 이동합니다.");
+			location.href="http://www.naver.com";
+		}, 10000); // 10000 : 10초 후에 setTimeout() 함수가 실행
+	}
+  </script>
+ </head>
+ <body>
+  청바지 <br />
+  가격 : 5000원 <br />
+  <button type="button" onclick="cart()">장바구니</button>
+  <br /><hr /><br />
+
+  회원 수정<br />
+  <button type="button" onclick="conf()">회원 탈퇴</button>
+  <br /><hr /><br />
+
+  <h3><span id="count">10</span>초 후에 이동합니다.</h3>
+  <button type="button" onclick="btn()">버튼</button>
+
+ </body>
+</html>
