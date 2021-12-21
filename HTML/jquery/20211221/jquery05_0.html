@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8"> 
+  <title>Document</title>
+   <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+  <script>
+	$(function(){
+		$("#btn1").click(function(){
+			$("span").html($("h1").html());
+			/* 값이 없으면 값을 가져옴, 값이 있으면 대체 */
+		});
+	});	
+  </script>
+ </head>
+ <body>
+  
+  <h1>안녕하세요</h1>
+  <span>여기에</span>
+  <button type="button" id="btn1">버튼1</button>
+
+ </body>
+</html>

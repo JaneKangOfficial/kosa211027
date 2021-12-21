@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+   <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+  <script>
+  	$(function(){
+		$("#btn1").click(function(){
+			$("#tb").slideUp(100);
+		});
+		$("#btn2").click(function(){
+			$("#tb").slideDown(100);
+		});
+
+
+		$("#btn3").toggle(function(){		
+			$("#tb").css("border", "1px solid red");
+		},
+		function(){
+			$("#tb").css("border", "1px solid orange");
+		},
+		function(){
+			$("#tb").css("border", "1px solid yellow");
+		},
+		function(){
+			$("#tb").css("border", "1px solid green");
+		},
+		function(){
+			$("#tb").css("border", "1px solid blue");
+		});
+
+		$("#btn4").click(function(){		
+			$("#test>tbody").append("<tr><th>내용</th><td><input type='text' id='ttt' /></td></tr>");				
+		});
+
+	});
+
+	function ck() {		
+		if ($("#userName").val() == "") {
+			alert("이름 입력");
+			$("#userName").focus();
+			return false;
+		}
+		if ($("#userId").val() == "") {
+			alert("아이디 입력");
+			$("#userId").focus();
+			return false;
+		}
+		if ($("#userPw").val() == "") {
+			alert("비번 입력");
+			$("#userPw").focus();
+			return false;
+		}
+		if ($("#userPw").val() != $("#userPwCon").val()) {
+			alert("비번 다시");
+			$("#userPw").val("");
+			$("#userPwCon").val("");
+			$("#userPw").focus();
+			return false;
+		}		
+	};
+	
+	
+  </script>
+ </head>
+ <body>
+  <button type="button" id="btn1">slideUp</button>
+  <button type="button" id="btn2">slideDown</button>
+  <button type="button" id="btn3">color</button>
+  <button type="button" id="btn4">appd</button>
+  
+  <form name="frm" action="#" onsubmit="return ck()">	
+	<table border=1 id="test">
+	    <tbody>
+		<tr>
+			<th>이름</th>
+			<td><input type="text" id="userName" /></td>
+		</tr>
+		<tr>
+			<th>아이디</th>
+			<td><input type="text" id="userId" /></td>
+		</tr>
+		<tr>
+			<th>비밀번호</th>
+			<td><input type="password" id="userPw" /></td>
+		</tr>
+		<tr>
+			<th>비밀번호 확인</th>
+			<td><input type="password" id="userPwCon" /></td>
+		</tr>
+		</tbody>
+		<tfoot>
+		<tr>
+			<th colspan=2><input type="submit" id="submit" value="전송" /></th>
+		</tr>
+		</tfoot>
+	</table>
+  </form>
+ </body>
+</html>

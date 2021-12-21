@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8"> 
+  <title>fadeOut / fadeIn / fadeToggle / fadeTo</title>
+  <!-- toggle, slideToggle, fadeToggle : show, hide -->
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+  <script>
+	$(function(){
+		$("#btn7").click(function(){
+			$(this).parent().next().fadeOut(1000);			
+		});
+		$("#btn8").click(function(){
+			$(this).parent().next().fadeIn("fast");	// "normal"		
+		});
+		$("#btn9").click(function(){
+			$(this).parent().next().fadeToggle("slow");	// toggle : show, hide		
+		});
+
+		$("#btn10").click(function(){
+			$(this).parent().next().fadeTo("slow", 0.3); // fadeTo : 투명도	
+		});
+		$("#btn11").click(function(){
+			$(this).parent().next().fadeTo("fast", 1);			
+		});
+
+	});
+  </script>
+ </head>
+ <body>
+	<p>
+		<button id="btn7">fadeOut</button>	
+		<button id="btn8">fadeIn</button>	
+		<button id="btn9">fadeToggle</button>
+		<button id="btn10">fadeTo(0.3)</button>	
+		<button id="btn11">fadeTo(1)</button>	
+	</p>
+	<p>		
+		AI가 발명한 특허, 대박나면 문제되는 이유
+		[황동석 변리사의 #IP이슈리뷰-32] "AI(인공지능)이 발명자가 될 수 있을까요?" 최근 급속도로 변화하고 있는 지식재산(IP) 시장에 던져진 화두입니다. 특허와 상표, 디자인과 저작권 등 지식재산은 모두 인간이 만들어낸 창작물이기 때문입니다. 독점적 권리를 보장하는 법적 근거도 이를 기준으로 만들어져 있습니다. AI가 만든 지식재산에 대해 독점적 권리
+	</p>
+ </body>
+</html>

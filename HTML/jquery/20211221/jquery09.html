@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8"> 
+  <title>효과</title>
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+  <script>
+  $(function(){
+		$(".list1").hide("fast"); 
+		$("#listWrap").hover(function(){
+			$(".list1").toggle(1000); // show, hide
+		});
+
+		$("#textZone").css("display","none"); // 광고에서 많이 사용
+		$("#wrap").hover(function(){
+			$("#textZone").toggle(500);			
+		});
+
+	});
+  </script>
+ </head>
+ <body>
+	<div id="listWrap">
+		<h3>관련 사이트</h3>
+		<ul class="list1">
+			<li><a href="#">list1</a></li>
+			<li><a href="#">list2</a></li>
+			<li><a href="#">list3</a></li>
+			<li><a href="#">list4</a></li>		
+		</ul>		
+	</div>
+
+	<div id="wrap" style="border:2px solid red"> <!-- width도 잡아줘야 한다. -->
+		<h2>오늘의 이야기</h2>
+		<p id="textZone">		
+		AI가 발명한 특허, 대박나면 문제되는 이유
+		[황동석 변리사의 #IP이슈리뷰-32] "AI(인공지능)이 발명자가 될 수 있을까요?" 최근 급속도로 변화하고 있는 지식재산(IP) 시장에 던져진 화두입니다. 특허와 상표, 디자인과 저작권 등 지식재산은 모두 인간이 만들어낸 창작물이기 때문입니다. 독점적 권리를 보장하는 법적 근거도 이를 기준으로 만들어져 있습니다. AI가 만든 지식재산에 대해 독점적 권리
+		</p>
+	</div>
+
+ </body>
+</html>

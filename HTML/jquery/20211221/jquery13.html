@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8"> 
+  <title>rolling</title>
+  <style>
+  	*{
+		margin:0;
+		padding:0;
+	}
+	#wrap {
+		height:20px;
+		width:200px;
+		overflow:hidden;
+		border:1px solid red;		
+		padding:2px;
+	}
+  </style>
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+  <script>
+  	$(function(){
+		up_interval = setInterval(up_content, 1000);
+		
+		$("#right_content").mouseenter(function(){
+			clearInterval(up_interval);
+		});
+
+		$("#right_content").mouseleave(function(){
+			setInterval(up_content, 1000);
+		});
+	});
+	
+	function up_content(){
+		$("#right_content li:last").after($("#right_content li:first"));
+	}
+	
+	function down_content(){
+		$("#right_content li:first").before($("#right_content li:last"));
+	}
+	
+  </script>
+ </head>
+ <body>
+ <div id="wrap" >
+  <ul class="right_content" id="right_content">
+	<li><a href="#">가나다</a></li>
+	<li><a href="#">라마바</a></li>
+	<li><a href="#">사아자</a></li>
+	<li><a href="#">차카타</a></li>
+	<li><a href="#">파하하</a></li>
+  </ul>
+ </div>
+ </body>
+</html>

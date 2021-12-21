@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8"> 
+  <title>이벤트</title>
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+  <script>
+	$(function(){
+		$("#btn1").bind("mouseover focus", function(){ // bind : 하나의 selector에서 하나 이상의 이벤트를 사용할 때
+			$("#textZone").css("color","red");			
+		});
+		$("#btn2").mouseover(function(){
+			$("#textZone").css("color", "black");
+		});
+
+		$("#btn3").mouseenter(function(){
+			$("#textZone").css("border", "1px dotted aqua");
+		});
+		$("#btn3").mouseleave(function(){
+			$("#textZone").css("border", "none");
+		});
+
+		$("#textZone").mouseenter(function(){
+			$("#textZone").css("border", "1px dotted aqua");
+		});
+		$("#textZone").mouseleave(function(){
+			$("#textZone").css("border", "none");
+		});
+
+	});
+  </script>
+ </head>
+ <body>
+  <div id="wrap">
+  	<p id="textZone">		
+		AI가 발명한 특허, 대박나면 문제되는 이유
+		[황동석 변리사의 #IP이슈리뷰-32] "AI(인공지능)이 발명자가 될 수 있을까요?" 최근 급속도로 변화하고 있는 지식재산(IP) 시장에 던져진 화두입니다. 특허와 상표, 디자인과 저작권 등 지식재산은 모두 인간이 만들어낸 창작물이기 때문입니다. 독점적 권리를 보장하는 법적 근거도 이를 기준으로 만들어져 있습니다. AI가 만든 지식재산에 대해 독점적 권리
+	</p>
+	<p><button type="button" id="btn1">bind</button></p>
+	<p><button type="button" id="btn2">mouseover</button></p>
+	<p><button type="button" id="btn3">mouseenter/mouseleave</button></p>
+  </div>
+ </body>
+</html>
