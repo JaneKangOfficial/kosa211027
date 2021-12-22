@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" version="4.0">
+  <display-name>ServletTest</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+  	<servlet-name>member</servlet-name> <!-- 3. 찾았으면 (2,3의 이름은 같아야 한다.)-->
+  	<servlet-class>servlet.MemberServlet</servlet-class> <!-- 4. 이 클래스를 실행시켜라 (패키지명.클래스명) -->
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>member</servlet-name> <!-- 2. 이 이름을 찾아가 -->
+  	<url-pattern>/member</url-pattern> <!-- 1. 이 주소로 요청이 들어오면 -->  	
+  </servlet-mapping>
+</web-app>
