@@ -40,6 +40,7 @@ public class MemberDropController {
 			dao.memberDelete(dto.getMemNum());
 			String contextPath = request.getContextPath();
 			try {
+				session.invalidate(); // 로그아웃
 				response.sendRedirect(contextPath + "/");
 			} catch (Exception e) {
 				e.printStackTrace();

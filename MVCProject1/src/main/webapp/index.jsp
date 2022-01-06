@@ -1,6 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ page import="javax.servlet.http.Cookie" %>
+<%@ page import="model.DAO.*, model.DTO.*" %>
+<%
+	// 현재 웹브라우저에 있는 모든 쿠키를 request로 담아 서버에 보낸다.
+	Cookie[] cookies = request.getCookies();
+
+	if(cookies != null && cookies.length > 0) {
+		for(Cookie c: cookies) {
+			// 아이디 저장 체크박스 쿠키
+			if(c.getName().equals("storeId")) {
+				request.setAttribute("isId", c.getValue()); /* jsp에 값을 출력하는 방법은 request뿐 */
+			}
+			// 로그인 유지 쿠키
+			if(c.getName().equals("autoLogin")) {
+				LoginDAO dao = new LoginDAO();
+				AuthInfo authInfo = dao.loginCk(c.getValue(), "비밀번호");
+				session.setAttribute("authInfo", authInfo);
+			}
+		}
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,12 +37,13 @@
 	<tr>
 		<td colspan=2>
 			<input type="checkbox" value="autoLogin" name="autoLogin" />로그인 유지 |
-			<input type="checkbox" value="store" name="storeId" /> 아이디 저장
+			<input type="checkbox" value="store" name="storeId" <c:if test="${!empty isId}">checked</c:if> /> 아이디 저장
+			
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<input type="text" name="id" placeholder="아이디 입력"/>
+			<input type="text" name="id" placeholder="아이디 입력" value="${isId}" />
 		</td>
 		<td rowspan=2>
 			<input type="image" src="images/강아지2.jpg" width="50px" height="50px"/>

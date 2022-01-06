@@ -23,6 +23,7 @@ public class LoginProController {
 		HttpSession session = request.getSession(); // 세션 생성 (세션은 request로 만들어진다.)
 		
 		String storeId = request.getParameter("storeId");
+		String autoLogin = request.getParameter("autoLogin");
 		
 		if(authInfo == null) { // 아이디가 존재하지 않음 (i == -1)
 			request.setAttribute("idErr", "아이디가 존재하지 않습니다.");
@@ -31,8 +32,6 @@ public class LoginProController {
 		}else {
 			if (pw.equals(authInfo.getUserPw())) { // 로그인 성공 (i == 1)
 				session.setAttribute("authInfo", authInfo);
-				String contextPath = request.getContextPath();
-				response.sendRedirect(contextPath + "/"); 
 				
 				// 로그인 후 쿠키 생성 
 				if (storeId != null && storeId.equals("store")) {
@@ -49,9 +48,32 @@ public class LoginProController {
 					response.addCookie(cookie);
 				}
 				
+				if(autoLogin != null && autoLogin.equals("autoLogin")) {
+					Cookie cookie = new Cookie("autoLogin", id);
+					cookie.setPath("/");
+					cookie.setMaxAge(60*60*24*30);
+					response.addCookie(cookie);
+				}
+				
+				String contextPath = request.getContextPath();
+				response.sendRedirect(contextPath + "/"); 
+				
 			}else { // (i == 0)
 				request.setAttribute("pwErr", "비밀번호가 틀렸습니다.");
 				request.setAttribute("userId", id); 
+				
+				// 아이디 저장 체크박스 쿠키
+				//(먼저 로그인을 한 후에 쿠키를 생성시키고 / 다시 로그인해서 비밀번호 틀렸을 때 체크박스 표시 유지)
+				Cookie[] cookies = request.getCookies();
+
+				if(cookies != null && cookies.length > 0) {
+					for(Cookie c: cookies) {
+						if(c.getName().equals("storeId")) {
+							request.setAttribute("isId", c.getValue());  // jsp에 값을 출력하는 방법은 request뿐
+						}
+					}
+				}
+				
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
 				dispatcher.forward(request, response);
 			}

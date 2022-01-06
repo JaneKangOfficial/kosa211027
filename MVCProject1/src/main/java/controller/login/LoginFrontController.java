@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +22,12 @@ public class LoginFrontController extends HttpServlet implements Servlet{
 			LoginProController action = new LoginProController(); // id, pw 비교 확인
 			action.execute(request, response);
 		}else if(command.equals("/logout.login")) {
+			// 로그인 유지 쿠키 로그아웃
+			Cookie cookie = new Cookie("autoLogin","");
+			cookie.setPath("/");
+			cookie.setMaxAge(0);
+			response.addCookie(cookie);
+			
 			// session 객체 생성
 			// invalidate() : 로그아웃
 			HttpSession session = request.getSession();
