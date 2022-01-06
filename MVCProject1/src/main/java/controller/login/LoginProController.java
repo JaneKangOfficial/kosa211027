@@ -18,12 +18,12 @@ public class LoginProController {
 		String pw = request.getParameter("pw");
 		
 		LoginDAO dao = new LoginDAO();
-		AuthInfo authInfo = dao.loginCk(id, pw);
+		AuthInfo authInfo = dao.loginCk(id, pw); // 권한 확인
 		
 		HttpSession session = request.getSession(); // 세션 생성 (세션은 request로 만들어진다.)
 		
-		String storeId = request.getParameter("storeId");
-		String autoLogin = request.getParameter("autoLogin");
+		String storeId = request.getParameter("storeId"); // 아이디 저장
+		String autoLogin = request.getParameter("autoLogin"); // 자동 로그인
 		
 		if(authInfo == null) { // 아이디가 존재하지 않음 (i == -1)
 			request.setAttribute("idErr", "아이디가 존재하지 않습니다.");
@@ -74,6 +74,7 @@ public class LoginProController {
 					}
 				}
 				
+				// 쿠키 생성 후 이동
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
 				dispatcher.forward(request, response);
 			}

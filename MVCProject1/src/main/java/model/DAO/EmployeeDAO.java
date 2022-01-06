@@ -122,5 +122,4 @@ public class EmployeeDAO extends DataBaseInfo{
 			e.printStackTrace();
 		} finally {close();}
 	}
-	
 }
