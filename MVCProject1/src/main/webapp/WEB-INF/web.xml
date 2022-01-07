@@ -46,4 +46,13 @@
   	<url-pattern>*.login</url-pattern>  
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>goods</servlet-name>
+  	<servlet-class>controller.goods.GoodsFrontController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>goods</servlet-name>
+  	<url-pattern>*.gd</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

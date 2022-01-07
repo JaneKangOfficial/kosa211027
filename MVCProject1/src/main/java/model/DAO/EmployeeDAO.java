@@ -122,4 +122,22 @@ public class EmployeeDAO extends DataBaseInfo{
 			e.printStackTrace();
 		} finally {close();}
 	}
+	
+	public String selectEmpNum(String empId) {
+		String empNum = null;
+		con = getConnection();
+		String sql = "select emp_num from employees where emp_id = ?";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, empId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				empNum = rs.getString(1); // 1번값 가져오기
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {close();}
+		
+		return empNum;
+	}
 }

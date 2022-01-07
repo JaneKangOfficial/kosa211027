@@ -23,7 +23,7 @@
 			<span style="color:red">${idErr}</span>
 		</td>
 		<td rowspan=2>
-			<input type="image" src="images/강아지2.jpg" width="50px" height="50px"/>
+			<input type="image" src="images/img1.png" width="60px" height="60px"/>
 		</td>
 	</tr>
 	<tr>
