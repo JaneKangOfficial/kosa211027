@@ -10,6 +10,7 @@ import spring.dependencyTest4.DTO.RegisterRequest;
 public class MemberRegisterService {
 	// 생성자를 통해 의존객체(Dependency Object) 주입
 	MemberDAO memberDao;
+	
 	public MemberRegisterService(MemberDAO memberDao) {
 		this.memberDao = memberDao;
 	}

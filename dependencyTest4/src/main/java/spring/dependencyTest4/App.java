@@ -49,7 +49,7 @@ public class App {
 				
 			}else if(command.equals("list")) {
 				// 의존객체(Dependency Object) 주입
-				MemberListPrinter listPrint = ctx.getBean("memberListPrinter", MemberListPrinter.class);
+				MemberListPrinter listPrint = ctx.getBean("memberListPrinter", MemberListPrinter.class); // xml id명
 				listPrint.printAll();
 			}else if(command.startsWith("change ")) {
 				String[] arg = command.split(" ");
