@@ -16,7 +16,6 @@ public class QnaDetailService {
 	
 	public void execute(Integer qnaNum, Model model) {
 		QnaDTO dto = qnaMapper.selectOne(qnaNum);
-		System.out.println("AAAAAAAAA" + dto.getQnaRegiDate());
 		model.addAttribute("dto", dto);
 	}
 

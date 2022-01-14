@@ -19,6 +19,7 @@
 <select id="selectAll" resultType="springBootTest2.domain.QnaDTO">
 	select qna_num qnaNum, qna_subject qnaSubject, qna_content qnaContent
 	from qna
+	order by qna_num desc
 </select>
 
 <select id="selectOne" parameterType="Integer" resultType="springBootTest2.domain.QnaDTO">
