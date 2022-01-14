@@ -12,8 +12,8 @@
 </sql>
 
 <insert id="qnaInsert" parameterType="springBootTest2.domain.QnaDTO">
-	insert into qna(qna_num, qna_subject, qna_content)
-	values((<include refid="maxNum"/>), #{qnaSubject}, #{qnaContent})
+	insert into qna(qna_num, qna_subject, qna_content, qna_regi_date)
+	values((<include refid="maxNum"/>), #{qnaSubject}, #{qnaContent}, sysdate)
 </insert>
 
 <select id="selectAll" resultType="springBootTest2.domain.QnaDTO">
@@ -22,7 +22,7 @@
 </select>
 
 <select id="selectOne" parameterType="Integer" resultType="springBootTest2.domain.QnaDTO">
-	select qna_num qnaNum, qna_subject qnaSubject, qna_content qnaContent
+	select qna_num qnaNum, qna_subject qnaSubject, qna_content qnaContent, qna_regi_date qnaRegiDate
 	from qna
 	where qna_num = #{qnaNum}
 </select>

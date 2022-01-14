@@ -19,6 +19,7 @@ public class QnaWriteService {
 		dto.setQnaNum(qnaCommand.getQnaNum());
 		dto.setQnaSubject(qnaCommand.getQnaSubject());
 		dto.setQnaContent(qnaCommand.getQnaContent());
+		dto.setQnaRegiDate(qnaCommand.getQnaRegiDate());
 		
 		Integer i = qnaMapper.qnaInsert(dto);
 		System.out.println(i + "개 행이(가) 삽입되었습니다.");
