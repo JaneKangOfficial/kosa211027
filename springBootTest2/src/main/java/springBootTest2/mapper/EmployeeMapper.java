@@ -9,7 +9,7 @@ import springBootTest2.domain.EmployeeDTO;
 
 @Component
 @Repository(value = "springBootTest2.mapper.EmployeeMapper")
-public interface EmployeeMapper {
+public interface EmployeeMapper { // Mapper는 interface
 	// mapper.xml의 id명과 같아야 한다.
 	public Integer employeeInsert(EmployeeDTO dto);
 	public List<EmployeeDTO> selectAll();

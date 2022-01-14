@@ -1,4 +1,4 @@
-package springBootTest2.controller.main;
+package springBootTest2.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
