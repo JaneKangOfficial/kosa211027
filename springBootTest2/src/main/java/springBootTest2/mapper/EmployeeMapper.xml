@@ -33,7 +33,7 @@
 
 <update id="empUpdate" parameterType="springBootTest2.domain.EmployeeDTO">
 	update employees
-	set emp_name=#{empName}, emp_email = #{empEmail}, emp_salary = #{empSalary}, emp_phone = #{empPhone}
+	set emp_name = #{empName}, emp_email = #{empEmail}, emp_salary = #{empSalary}, emp_phone = #{empPhone}
 	where emp_num = #{empNum}
 </update>
 </mapper>
