@@ -9,5 +9,8 @@ import springBootTest2.domain.MemberDTO;
 @Repository(value="springBootTest2.mapper.MembershipMapper")
 public interface MembershipMapper {
 	public Integer memberInsert(MemberDTO dto);
-
+	public MemberDTO selectOne(String memId);
+	public Integer memberUpdate(MemberDTO dto);
+	public Integer updatePassword(MemberDTO dto);
+	public Integer memberDrop(String memId);
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="springBootTest2.mapper.LibraryMapper">
+<insert id="libInsert" parameterType="springBootTest2.domain.LibraryDTO">
+	insert into library (lib_num, lib_writer, lib_subject, lib_content, lib_pw, mem_id, ip_addr)
+	values (seq_num1.nextval, #{libWriter}, #{libSubject}, #{libContent}, #{libPw}, #{memId}, #{ipAddr})
+</insert>
+
+<select id="selectAll" resultType="springBootTest2.domain.LibraryDTO">
+	select lib_num libNum, lib_writer libWriter, lib_subject libSubject, 
+			lib_content libContent, lib_pw libPw, mem_id memId, ip_addr ipAddr
+	from library
+</select>
+
+<select id="selectOne" parameterType="Integer" resultType="springBootTest2.domain.LibraryDTO">
+	select lib_num libNum, lib_writer libWriter, lib_subject libSubject, 
+			lib_content libContent, lib_pw libPw, mem_id memId, ip_addr ipAddr
+	from library
+	where lib_num = #{libNum}
+</select>
+
+<delete id="libDel" parameterType="Integer">
+ 	delete from library
+ 	where lib_num = #{libNum}
+</delete>
+
+</mapper>

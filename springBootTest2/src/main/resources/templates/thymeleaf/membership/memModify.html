@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+멤버 수정 페이지<br />
+<br />
+
+<form action="memberInfoUpdate" method="post" id="frm" name="frm">
+	고객 번호 :<input type="text" th:value="${dto.memNum}" name="memNum" readonly="readonly" /> <br />
+	이름 : <input type="text" th:value="${dto.memName}" name="memName" /><br />
+	비밀번호 : <input type="password" name="memPw"/>
+			<span th:if="${session.err_pw} != null" th:text="${session.err_pw}" style="color:red"></span><br />
+	연락처 1 : <input type="tel" th:value="${dto.memPhone1}" name="memPhone1" /><br />
+	연락처 2 : <input type="tel" th:value="${dto.memPhone2}" name="memPhone2" /><br />
+	주소 : <input type="text" th:value="${dto.memAddr}" name="memAddr" /><br />
+	이메일 : <input type="email" th:value="${dto.memEmail}" name="memEmail" /><br />
+	성별 : <input type="radio" value="M" name="memGender"
+			th:checked="${dto.memGender == 'M'}" />남자
+		<input type="radio" value="F" name="memGender"
+			th:checked="${dto.memGender == 'F'}" />여자<br />
+	생년월일 : <input type="date" th:value="${dto.memBirth}" name="memBirth" /><br />
+	<input type="submit" value="내정보 수정하기" />
+</form>
+</body>
+</html>

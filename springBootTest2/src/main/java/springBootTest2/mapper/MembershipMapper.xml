@@ -14,4 +14,30 @@
 	values(concat('kosa',(<include refid="AutoNum" />)), #{memName}, sysdate, #{memId}, #{memPw},
 			#{memPhone1}, #{memPhone2}, #{memAddr}, #{memEmail}, #{memGender}, #{memBirth})
 </insert>
+
+<select id="selectOne" parameterType="String" resultType="springBootTest2.domain.MemberDTO">
+	select mem_num memNum, mem_name memName, mem_regi_date memRegiDate, 
+			mem_id memId, mem_pw memPw, mem_phone1 memPhone1, mem_phone2 memPhone2, 
+			mem_addr memAddr, mem_email memEmail, mem_gender memGender, mem_birth memBirth
+	from member
+	where mem_id = #{memId}				
+</select>
+
+<update id="memberUpdate" parameterType="springBootTest2.domain.MemberDTO">
+	update member
+	set mem_name = #{memName}, mem_phone1 = #{memPhone1}, mem_phone2 = #{memPhone2},
+		mem_addr = #{memAddr}, mem_email = #{memEmail}, mem_gender = #{memGender}, mem_birth = #{memBirth}
+	where mem_num = #{memNum}
+</update>
+
+<update id="updatePassword" parameterType="springBootTest2.domain.MemberDTO">
+	update member
+	set mem_pw = #{memPw}
+	where mem_id = #{memId}
+</update>
+
+<delete id="memberDrop" parameterType="String">
+ 	delete from member
+ 	where mem_id = #{memId}
+</delete>
 </mapper>

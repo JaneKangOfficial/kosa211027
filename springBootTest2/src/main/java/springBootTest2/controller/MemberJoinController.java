@@ -1,17 +1,35 @@
 package springBootTest2.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import springBootTest2.command.MemberCommand;
+import springBootTest2.domain.AuthInfo;
+import springBootTest2.service.membership.MemberDropService;
+import springBootTest2.service.membership.MemberInfoService2;
 import springBootTest2.service.membership.MemberJoinService;
+import springBootTest2.service.membership.MemberPasswordService;
+import springBootTest2.service.membership.MemberUpdateService2;
 
 @Controller
 @RequestMapping("membership") // 사용자 페이지
 public class MemberJoinController {
 	@Autowired
 	MemberJoinService memberJoinService;
+	@Autowired
+	MemberInfoService2 memberInfoService2;
+	@Autowired
+	MemberUpdateService2 memberUpdateService2;
+	@Autowired
+	MemberPasswordService memberPasswordService;
+	@Autowired
+	MemberDropService memberDropService;
 	
 	@RequestMapping("memberAgree")
 	public String memberAgree() {
@@ -29,4 +47,78 @@ public class MemberJoinController {
 		memberJoinService.execute(memberCommand);
 		return "thymeleaf/membership/welcome";
 	}
+	
+	@RequestMapping("memInfo")
+	public String memInfo(Model model, HttpSession session) {
+		memberInfoService2.execute(model, session);
+		return "thymeleaf/membership/memInfo";
+	}
+	
+	@RequestMapping("memberInfoModify")
+	public String memberInfoModify(Model model, HttpSession session) {
+		memberInfoService2.execute(model, session);
+		return "thymeleaf/membership/memModify";
+	}
+	
+	@RequestMapping(value="memberInfoUpdate", method=RequestMethod.POST)
+	public String memberInfoUpdate(MemberCommand memberCommand, HttpSession session) {
+		String path = memberUpdateService2.execute(memberCommand, session);
+		return path; 
+	}
+	
+	@RequestMapping("memberPass")
+	public String memberPass() {
+		return "thymeleaf/membership/memberPass";
+	}
+	
+	@RequestMapping(value="memberPasswordPro", method=RequestMethod.POST)
+	public String memberPasswordPro(@RequestParam(value="memPw") String pw, HttpSession session, Model model) {
+		AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
+		if(authInfo.getUserPw().equals(pw)) {
+			return "thymeleaf/membership/memberPassCon";
+		}else {
+			model.addAttribute("err_pw", "비밀번호가 일치하지 않습니다.");
+			return "thymeleaf/membership/memberPass";
+		}
+	}
+	
+	@RequestMapping(value="memberPassModify", method=RequestMethod.POST)
+	public String memberPassModify(@RequestParam(value="memPw") String oldPw,
+									@RequestParam(value="newMemPw") String newPw,
+									@RequestParam(value="newMemPwCon") String newPwCon,
+									HttpSession session, Model model) {
+		AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
+		if(authInfo.getUserPw().equals(oldPw)) {
+			if(newPw.equals(newPwCon)) {
+				memberPasswordService.execute(authInfo.getUserId(), newPw);
+				authInfo.setUserPw(newPw); // session에 있는 authInfo의 pw 변경
+				return "redirect:memInfo";
+			}else {
+				model.addAttribute("err_pwCon", "비밀번호 확인이 일치하지 않습니다.");
+				return "thymeleaf/membership/memberPassCon";
+			}
+		}else {
+			model.addAttribute("err_pw", "비밀번호가 일치하지 않습니다.");
+			return "thymeleaf/membership/memberPassCon";
+		}
+	}
+	
+	@RequestMapping("memberDrop")
+	public String memberDrop() {
+		return "thymeleaf/membership/memberDrop";
+	}
+	
+	@RequestMapping(value="memberDropOk", method=RequestMethod.POST)
+	public String memberDropOk(@RequestParam(value="memPw") String memPw,
+								HttpSession session, Model model) {
+		AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
+		if(authInfo.getUserPw().equals(memPw)) {
+			memberDropService.execute(authInfo.getUserId());
+			return "redirect:/logout";
+		}else {
+			model.addAttribute("err_pw", "비밀번호가 일치하지 않습니다.");
+			return "thymeleaf/membership/memberDrop";
+		}
+	}
+	
 }

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+상세보기<br /><br />
+아이디 : [[${dto.memId}]] | 아이피 : [[${dto.ipAddr}]]<br />
+번호 : [[${dto.libNum}]]<br />
+글쓴이 : [[${dto.libWriter}]]<br />
+제목 : [[${dto.libSubject}]]<br />
+내용 : [[${dto.libContent}]]<br />
+
+<a th:href="@{libUpdate(num=${dto.libNum})}">수정</a>	| 
+<a th:href="@{libDel(num=${dto.libNum})}">삭제</a> |
+<a href="libList">자료실 목록</a>
+</body>
+</html>
