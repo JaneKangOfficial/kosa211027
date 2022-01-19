@@ -14,25 +14,30 @@ import springBootTest2.mapper.LibraryMapper;
 
 @Component
 @Service
-public class LibraryDelService {
+public class LibraryUpdateService {
 	@Autowired
 	LibraryMapper libraryMapper;
 	
 	public String execute(LibraryCommand libraryCommand, Model model, HttpSession session) {
-		String path = null;
+		
+		String path = "thymeleaf/lib/libUpdate";
 		Integer libNum = libraryCommand.getLibNum();
 		LibraryDTO dto = libraryMapper.selectOne(libNum);
 		AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
 		
 		if(dto.getLibPw().equals(libraryCommand.getLibPw()) && dto.getMemId().equals(authInfo.getUserId())) {
-			session.removeAttribute("err_pw");
-			libraryMapper.libDel(libNum);
-			path = "redirect:/logout";
+			dto.setLibNum(libraryCommand.getLibNum());
+			dto.setLibWriter(libraryCommand.getLibWriter());
+			dto.setLibSubject(libraryCommand.getLibSubject());
+			dto.setLibContent(libraryCommand.getLibContent());
+			dto.setLibPw(libraryCommand.getLibPw());
+			libraryMapper.libUpdate(dto);
+			path = "redirect:libInfo?num="+libraryCommand.getLibNum();
 		}else {
-			session.setAttribute("err_pw","비밀번호가 일치하지 않거나 작성자가 아닙니다.");
-			path = "redirect:libDelPass?num="+dto.getLibNum();
-		//session.removeAttribute("err_pw")를 하기 위해서는 redirect보다는 html 파일을 불러오는 것(thymeleaf)이 좋다.
+			model.addAttribute("dto", libraryCommand);
+			model.addAttribute("err_pw", "비밀번호가 일치하지 않거나 작성자가 아닙니다.");
 		}
 		return path;
+	
 	}
 }

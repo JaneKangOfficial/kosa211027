@@ -11,9 +11,21 @@
 글쓴이 : [[${dto.libWriter}]]<br />
 제목 : [[${dto.libSubject}]]<br />
 내용 : [[${dto.libContent}]]<br />
-
+파일 : [[${dto.originalFileName}]] <br />
+<div th:each="file, idx : ${#strings.arraySplit(dto.originalFileName,'`')}">
+<!-- 
+	웹브라우저에서 읽히는 html(사진 등)은 그냥 열리고, 읽히지 않는 파일은(.hwp) <a>태그를 이용해서 다운 받는다.
+	th:href => 주소일 경우 "@{}"를 사용하지만 주소가 아닐 경우 "|" 파이프를 사용한다.
+-->
+	<a th:href="|/lib/${#strings.arraySplit(dto.storeFileName,'`')[idx.index]}|">
+	[[${file}]]</a> ||
+ 	size : [[${#numbers.formatInteger(
+ 				#strings.arraySplit(dto.fileSize,'`')[idx.index],0,'COMMA'
+ 			)}]]Byte
+</div>
+ <br />
 <a th:href="@{libUpdate(num=${dto.libNum})}">수정</a>	| 
-<a th:href="@{libDel(num=${dto.libNum})}">삭제</a> |
+<a th:href="@{libDelPass(num=${dto.libNum})}">삭제</a> |
 <a href="libList">자료실 목록</a>
 </body>
 </html>

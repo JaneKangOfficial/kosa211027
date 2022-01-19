@@ -14,4 +14,5 @@ public interface LibraryMapper {
 	public List<LibraryDTO> selectAll();
 	public LibraryDTO selectOne(Integer libNum);
 	public Integer libDel(Integer libNum);
+	public Integer libUpdate(LibraryDTO dto);
 }

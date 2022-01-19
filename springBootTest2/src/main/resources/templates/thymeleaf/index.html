@@ -21,7 +21,12 @@
 				<span th:if="${err_id != null}" th:text="${err_id}" style="color:red"></span>
 			</td>
 			<td rowspan=2>
-				<input type="submit" width="50px" height="50px" value="로그인" />
+				<!-- <input type="submit" width="50px" height="50px" value="로그인" /> -->
+				<input type="image" src="/static/images/img1.png" width="80px" height="80px" value="로그인" />
+				<!-- 
+					resources/static/ 밑에 있는 폴더는 경로설정이 자동으로 되어있기 때문에 설정없이 사용이 가능하지만
+					다른 폴더는 webConfig 설정을 해줘야 사용이 가능하다.
+				 -->
 			</td>
 		</tr>
 		<tr>

@@ -5,19 +5,25 @@
 
 <mapper namespace="springBootTest2.mapper.LibraryMapper">
 <insert id="libInsert" parameterType="springBootTest2.domain.LibraryDTO">
-	insert into library (lib_num, lib_writer, lib_subject, lib_content, lib_pw, mem_id, ip_addr)
-	values (seq_num1.nextval, #{libWriter}, #{libSubject}, #{libContent}, #{libPw}, #{memId}, #{ipAddr})
+	insert into library (lib_num, lib_writer, lib_subject, lib_content, lib_pw, mem_id,
+						 ip_addr, original_file_name, store_file_name, file_size)
+	values (seq_num1.nextval, #{libWriter}, #{libSubject}, #{libContent}, #{libPw}, #{memId}, 
+			#{ipAddr}, #{originalFileName}, #{storeFileName}, #{fileSize})
 </insert>
 
 <select id="selectAll" resultType="springBootTest2.domain.LibraryDTO">
 	select lib_num libNum, lib_writer libWriter, lib_subject libSubject, 
-			lib_content libContent, lib_pw libPw, mem_id memId, ip_addr ipAddr
+			lib_content libContent, lib_pw libPw, mem_id memId, ip_addr ipAddr,
+			original_file_name originalFileName, store_file_name storeFileName, file_size fileSize
+			
 	from library
+	order by lib_num desc
 </select>
 
 <select id="selectOne" parameterType="Integer" resultType="springBootTest2.domain.LibraryDTO">
 	select lib_num libNum, lib_writer libWriter, lib_subject libSubject, 
-			lib_content libContent, lib_pw libPw, mem_id memId, ip_addr ipAddr
+			lib_content libContent, lib_pw libPw, mem_id memId, ip_addr ipAddr,
+			original_file_name originalFileName, store_file_name storeFileName, file_size fileSize
 	from library
 	where lib_num = #{libNum}
 </select>
@@ -26,5 +32,12 @@
  	delete from library
  	where lib_num = #{libNum}
 </delete>
+
+<update id="libUpdate" parameterType="springBootTest2.domain.LibraryDTO" >
+	update library
+	set lib_writer = #{libWriter}, lib_subject = #{libSubject}, 
+		lib_content = #{libContent}, lib_pw = #{libPw}
+	where lib_num = #{libNum}
+</update>
 
 </mapper>

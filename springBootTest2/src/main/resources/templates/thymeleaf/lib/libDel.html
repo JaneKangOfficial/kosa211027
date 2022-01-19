@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="libDel" method="post" name="frm" id="frm">
+	<input type="text" name="libNum" th:value="${aaa}" readonly="readonly"/><br />
+	비밀번호 : <input type="password" name="libPw" />
+	<span th:if="${session.err_pw != null}" th:text="${session.err_pw}" style="color:red"></span><br />
+	<input type="submit" value="삭제하기" />
+</form>
+</body>
+</html>
