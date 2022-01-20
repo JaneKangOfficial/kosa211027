@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+상세정보<br />
+
+제품번호 : [[${dto.goodsNum}]]<br /> 
+제품이름 : [[${dto.goodsName}]]<br />			
+제품가격 : [[${dto.goodsPrice}]]<br />			
+제조일 : <span th:text="${#dates.format(dto.goodsDate,'yyyy-MM-dd')}"></span><br />
+제품설명 : [[${dto.goodsContent}]]<br />			
+수량 : [[${dto.goodsQty}]]<br />			
+제조사 : [[${dto.goodsCompany}]]<br />
+직원번호 : [[${dto.empNum}]]<br />
+
+<a th:href="@{goodsUpdate(num=${dto.goodsNum})}">수정</a>	| 
+<a th:href="@{goodsDelete(num=${dto.goodsNum})}">삭제</a>	| 
+<a href="goodsList">제품 리스트</a>
+</body>
+</html>

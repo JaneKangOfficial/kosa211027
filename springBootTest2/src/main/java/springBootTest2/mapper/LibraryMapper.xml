@@ -36,7 +36,9 @@
 <update id="libUpdate" parameterType="springBootTest2.domain.LibraryDTO" >
 	update library
 	set lib_writer = #{libWriter}, lib_subject = #{libSubject}, 
-		lib_content = #{libContent}, lib_pw = #{libPw}
+		lib_content = #{libContent}, lib_pw = #{libPw},
+		original_file_name = #{originalFileName}, store_file_name = #{storeFileName}, 
+		file_size = #{fileSize}
 	where lib_num = #{libNum}
 </update>
 

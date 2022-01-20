@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>goodsList.html</title>
+</head>
+<body>
+상품 리스트<br />
+<table border=1>
+	<tr>
+		<td>제품번호</td>
+		<td>제품명</td>
+		<td>수량</td>
+	</tr>
+	<th:block th:each="dto : ${list}">
+	<tr>
+		<td><a th:href="@{goodsInfo(num=${dto.goodsNum})}">[[${dto.goodsNum}]]</a></td>
+		<td><a th:href="@{goodsInfo(num=${dto.goodsNum})}">[[${dto.goodsName}]]</a></td>
+		<td>[[${dto.goodsQty}]]</td>
+	</tr>
+	</th:block>
+</table>
+
+<a href="goodsWrite">상품 등록</a>
+</body>
+</html>

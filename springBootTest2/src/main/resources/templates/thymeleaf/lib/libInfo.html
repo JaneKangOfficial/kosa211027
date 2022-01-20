@@ -10,19 +10,31 @@
 번호 : [[${dto.libNum}]]<br />
 글쓴이 : [[${dto.libWriter}]]<br />
 제목 : [[${dto.libSubject}]]<br />
-내용 : [[${dto.libContent}]]<br />
+<!--  T(System).getProperty('line.separator') 사용시 오류가 생기는 경우 -> model에서 가져온 newLineChar 사용 -->
+내용 : <span th:utext="${#strings.replace(
+							dto.libContent
+							, newLineChar
+							,'&lt;br /&gt;')}"></span><br />
 파일 : [[${dto.originalFileName}]] <br />
 <div th:each="file, idx : ${#strings.arraySplit(dto.originalFileName,'`')}">
 <!-- 
 	웹브라우저에서 읽히는 html(사진 등)은 그냥 열리고, 읽히지 않는 파일은(.hwp) <a>태그를 이용해서 다운 받는다.
 	th:href => 주소일 경우 "@{}"를 사용하지만 주소가 아닐 경우 "|" 파이프를 사용한다.
--->
+
 	<a th:href="|/lib/${#strings.arraySplit(dto.storeFileName,'`')[idx.index]}|">
-	[[${file}]]</a> ||
+	[[${file}]]</a>
+	
+	다운 받기 위해 필요한 저장된 이름 storeFileName,
+	다운 후 원래의 이름으로 변경하기 위해 필요한 원래의 이름 originalFileName 
+-->
+	<a th:href="@{fileDown(
+						sfile=${#strings.arraySplit(dto.storeFileName,'`')[idx.index]} 
+						, ofile=${file})}" >[[${file}]]</a> ||
  	size : [[${#numbers.formatInteger(
  				#strings.arraySplit(dto.fileSize,'`')[idx.index],0,'COMMA'
  			)}]]Byte
 </div>
+<!-- th:변환함수 => #dates, #numbers, #strings -->
  <br />
 <a th:href="@{libUpdate(num=${dto.libNum})}">수정</a>	| 
 <a th:href="@{libDelPass(num=${dto.libNum})}">삭제</a> |

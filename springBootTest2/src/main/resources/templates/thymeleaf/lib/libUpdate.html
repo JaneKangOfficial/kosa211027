@@ -7,13 +7,19 @@
 <body>
 수정<br />
 
-<form action="libUpdateOk" method="post">	
+<form action="libUpdateOk" method="post" enctype="multipart/form-data">	
 	번호 : <input type="text" name="libNum" th:value="${dto.libNum}" readonly="readonly"/><br /> 
 	글쓴이 : <input type="text" name="libWriter" th:value="${dto.libWriter}" required="required" /><br /> 
 	제목 : <input type="text" name="libSubject" th:value="${dto.libSubject}"required="required" /><br /> 
 	내용 : <textarea rows="6" cols="50" name="libContent" required="required" >[[${dto.libContent}]]</textarea><br /> 
+	파일 : <input type="file" name="report" multiple="multiple" /><br />
+	<div th:each="file, idx : ${#strings.arraySplit(dto.originalFileName,'`')}" >
+		[[${file}]] || size : ${#strings.arraySplit(dto.fileSize,'`')[idx.index]}
+	</div>
+
 	비밀번호 : <input type="password" name="libPw" required="required" /><br />
 	<span th:if="${err_pw} != null" th:text="${err_pw}" style="color:red"></span><br />
+	
 	<input type="submit" value="수정 완료" /> 
 </form>
 </body>

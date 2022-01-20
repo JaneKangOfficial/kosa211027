@@ -1,6 +1,7 @@
 package springBootTest2.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import springBootTest2.command.LibraryCommand;
+import springBootTest2.service.library.FileDownLoadService;
 import springBootTest2.service.library.LibraryDelService;
 import springBootTest2.service.library.LibraryInfoService;
 import springBootTest2.service.library.LibraryInsertService;
@@ -29,6 +31,8 @@ public class LibraryController {
 	LibraryDelService libraryDelService;
 	@Autowired
 	LibraryUpdateService libraryUpdateService;
+	@Autowired
+	FileDownLoadService fileDownLoadService;
 	
 	@RequestMapping("libList")
 	public String libList(Model model) {
@@ -50,6 +54,7 @@ public class LibraryController {
 	@RequestMapping("libInfo")
 	public String libInfo(@RequestParam(value="num") Integer libNum, Model model,
 			HttpSession session) {
+		model.addAttribute("newLineChar", '\n');
 		libraryInfoService.execute(libNum, model);
 		session.removeAttribute("err_pw");
 		return "thymeleaf/lib/libInfo";
@@ -75,8 +80,15 @@ public class LibraryController {
 	
 	@RequestMapping("libUpdateOk")
 	public String libUpdateOk(LibraryCommand libraryCommand, Model model, HttpSession session) {
+		model.addAttribute("newLineChar", '\n');
 		String path = libraryUpdateService.execute(libraryCommand, model, session);
 		return path;
 	}
 	
+	@RequestMapping("fileDown")
+	public void fileDown(@RequestParam(value="sfile") String sfileName,
+							@RequestParam(value="ofile") String ofileName,
+							HttpServletRequest request, HttpServletResponse response) {
+		fileDownLoadService.fileDownLoad(sfileName, ofileName, request, response);
+	}
 }

@@ -47,12 +47,21 @@
 
 <th:block th:if="${session.authInfo}">
 	<!-- 로그인 되었을 때 -->
-	<a href="/emp/employeesList">직원리스트</a> |
 	<a href="/lib/libList">자료실</a> |
 	<a href="/qna/qnaList">QnA 목록</a> |
-	<a href="/mem/memberList">회원리스트</a> |
-	<a href="/membership/memInfo">내정보 보기</a> |
-	<a href="/logout">로그아웃</a>
+	<a href="/logout">로그아웃</a> |
+	
+	<!-- 관리자(emp)와 고객(mem)이 로그인했을 때 볼 수 있는 게시판이 다르다. -->
+	<div th:switch="${session.authInfo.grade}" >
+		<span th:case="emp">
+			<a href="/emp/employeesList">직원 리스트</a> |
+			<a href="/goods/goodsList">상품 리스트</a> |
+			<a href="/mem/memberList">회원 리스트</a> |
+		</span>
+		<span th:case="mem">
+			<a href="/membership/memInfo">내정보 보기</a> |
+		</span>
+	</div>
 </th:block>
 </body>
 </html>

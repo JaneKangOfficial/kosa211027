@@ -1,5 +1,7 @@
 package springBootTest2.service.library;
 
+import java.io.File;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +28,26 @@ public class LibraryDelService {
 		
 		if(dto.getLibPw().equals(libraryCommand.getLibPw()) && dto.getMemId().equals(authInfo.getUserId())) {
 			session.removeAttribute("err_pw");
-			libraryMapper.libDel(libNum);
-			path = "redirect:/logout";
+			Integer i = libraryMapper.libDel(libNum);
+			if(i > 0 && dto.getStoreFileName() != null) {
+				// split을 하면 배열이 된다. -> for문으로 출력
+				String[] fileNames = dto.getStoreFileName().split("`");
+				
+				// filePath로 fileDir을 가져온다.
+				String filePath = "/view/lib";
+				String fileDir = session.getServletContext().getRealPath(filePath);
+				
+				File file = null;  // 파일 객체
+				try {
+					for(String fileName : fileNames) {
+						file = new File(fileDir + "/" + fileName); // 파일
+						if(file.exists()) file.delete(); // 파일이 존재하면 삭제
+					}
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			path = "redirect:libList";
 		}else {
 			session.setAttribute("err_pw","비밀번호가 일치하지 않거나 작성자가 아닙니다.");
 			path = "redirect:libDelPass?num="+dto.getLibNum();
