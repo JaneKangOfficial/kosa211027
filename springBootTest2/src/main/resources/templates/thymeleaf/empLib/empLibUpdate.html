@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+수정 <br />
+
+<form action="libUpdateOk" method="post">
+	번호 : <input type="text" name="libNum" th:value="${dto.libNum}" readonly="readonly" /><br />			
+	직원번호 : <input type="text" name="empNum" th:value="${dto.empNum}" /><br />			
+	글쓴이 : <input type="text" name="libWriter" th:value="${dto.libWriter}" /><br />			
+	제목 : <input type="text" name="libSubject" th:value="${dto.libSubject}" /><br />			
+	내용 : <textarea rows="6" cols="50" name="libContent">[[${dto.libContent}]]</textarea><br />			
+	게시글 비밀번호 : <input type="password" name="libPw"  /><br />
+	<span th:if="${err_pw} != null" th:text="${err_pw}" style="color:red"></span><br />
+	<input type="submit" value="수정 완료" />
+</form>
+</body>
+</html>

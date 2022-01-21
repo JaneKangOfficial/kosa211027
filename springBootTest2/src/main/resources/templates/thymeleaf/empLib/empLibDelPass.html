@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="libDeleteOk">
+	<input type="text" name=libNum readonly="readonly" th:value="${aaa}"/><br />
+	<input type="password" name="libPw" /><br />
+	<span th:if="${session.err_pw} != null" th:text="${session.err_pw}" style="color:red"></span><br />
+	<input type="submit" value="확인" />
+</form>
+</body>
+</html>

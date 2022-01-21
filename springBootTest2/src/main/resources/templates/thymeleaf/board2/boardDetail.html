@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+상세정보 <br />
+
+아이피 : [[${dto.writerIp}]]<br />
+글쓴이 : [[${dto.boardWriter}]]<br />
+제목 : [[${dto.boardSubject}]]<br />
+내용 : [[${dto.boardContent}]]<br />
+날짜 : [[${dto.boardDate}]]<br />
+ 
+<a th:href="@{boardUpdate(num=${dto.boardNum})}">수정</a> |
+<a th:href="@{boardDelete(num=${dto.boardNum})}">삭제</a>
+</body>
+</html>
