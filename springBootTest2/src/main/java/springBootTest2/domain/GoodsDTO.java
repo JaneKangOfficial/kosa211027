@@ -14,4 +14,5 @@ public class GoodsDTO {
 	Integer goodsQty;
 	String goodsCompany;
 	Integer empNum;
+	String goodsImage; // storeFileName
 }

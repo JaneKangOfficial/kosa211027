@@ -5,8 +5,8 @@
 
 <mapper namespace="springBootTest2.mapper.EmpLibMapper">
 <insert id="empLibInsert" parameterType="springBootTest2.domain.EmpLibDTO">
-	insert into emp_library (lib_num, lib_writer, lib_subject, lib_content, lib_pw, emp_num, ip_addr)
-	values (seq_num1.nextval, #{libWriter}, #{libSubject}, #{libContent}, #{libPw}, #{empNum}, #{ipAddr})
+	insert into emp_library (lib_num, lib_writer, lib_subject, lib_content, lib_pw, emp_num, ip_addr, original_file_name, store_file_name, file_size)
+	values (seq_num1.nextval, #{libWriter}, #{libSubject}, #{libContent}, #{libPw}, #{empNum}, #{ipAddr}, #{originalFileName}, #{storeFileName}, #{fileSize})
 </insert>
 
 <select id="selectEmpNum" resultType="integer" parameterType="string">
@@ -16,19 +16,20 @@
 </select>
 
 <select id="selectAll" resultType="springBootTest2.domain.EmpLibDTO">
-	select lib_num libNum, lib_writer libWriter, lib_subject libSubject, lib_content libContent, lib_pw libPw, emp_num empNum, ip_addr ipAddr
+	select lib_num libNum, lib_writer libWriter, lib_subject libSubject, lib_content libContent, lib_pw libPw, emp_num empNum, ip_addr ipAddr, original_file_name originalFileName, store_file_name storeFileName, file_size fileSize
 	from emp_library
+	order by lib_num desc
 </select>
 
 <select id="selectOne" parameterType="integer" resultType="springBootTest2.domain.EmpLibDTO">
- 	select lib_num libNum, lib_writer libWriter, lib_subject libSubject, lib_content libContent, lib_pw libPw, emp_num empNum, ip_addr ipAddr
+ 	select lib_num libNum, lib_writer libWriter, lib_subject libSubject, lib_content libContent, lib_pw libPw, emp_num empNum, ip_addr ipAddr, original_file_name originalFileName, store_file_name storeFileName, file_size fileSize
 	from emp_library
 	where lib_num = #{libNum}
 </select>
 
 <update id="libUpdate" parameterType="springBootTest2.domain.EmpLibDTO">
 	update emp_library
-	set lib_writer = #{libWriter}, lib_subject = #{libSubject}, lib_content = #{libContent}, lib_pw = #{libPw}, emp_num = #{empNum}
+	set lib_writer = #{libWriter}, lib_subject = #{libSubject}, lib_content = #{libContent}, lib_pw = #{libPw}, emp_num = #{empNum}, original_file_name = #{originalFileName}, store_file_name = #{storeFileName}, file_size = #{fileSize}
 	where lib_num = #{libNum}
 </update>
 

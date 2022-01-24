@@ -12,6 +12,39 @@
 글쓴이 : [[${dto.libWriter}]]<br />
 제목 : [[${dto.libSubject}]]<br />
 내용 : [[${dto.libContent}]]<br />
+파일 : 	
+<!-- 
+	[[${dto.originalFileName}]] <br />
+	[[${dto.storeFileName}]] <br />
+	[[${dto.fileSize}]] <br />
+ -->		
+ 
+<!-- split을 해야 배열이 된다. split을 하지 않으면 그냥 문자열이다. -->		
+<div th:each="file, idx : ${#strings.arraySplit(dto.originalFileName,'`')}">
+	
+	<!-- 읽지 못하는 파일은 다운 / 읽을 수 있는 파일은 열기 -->
+<!-- 
+	<a th:href="|/empLib/${#strings.arraySplit(dto.storeFileName,'`')[idx.index]}|" >
+		[[${file}]]
+	</a> |
+ --> 
+ 
+ 	<!-- 무조건 다운 -->
+ 	<a th:href="@{
+ 					fileDown(sfile=${#strings.arraySplit(dto.storeFileName,'`')[idx.index]}, 
+ 					  ofile=${file})
+ 				}">[[${file}]]</a> |
+	[[${#strings.arraySplit(dto.storeFileName,'`')[idx.index]}]] |
+	[[${#numbers.formatInteger(
+			#strings.arraySplit(dto.fileSize,'`')[idx.index],0,'COMMA'
+		)
+	}]] Byte
+<!--	
+	[[${idx}]]<br />  {index = 0, count = 1, size = 1, current = apple.jpg} 
+	[[${idx.current}]] <br />
+	[[${idx.index}]] <br />
+-->	
+</div>
 
 <a th:href="@{libUpdate(num=${dto.libNum})}">수정</a> |
 <a th:href="@{libDelete(num=${dto.libNum})}">삭제</a> |

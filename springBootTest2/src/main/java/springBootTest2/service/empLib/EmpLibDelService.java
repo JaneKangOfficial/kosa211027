@@ -1,5 +1,7 @@
 package springBootTest2.service.empLib;
 
+import java.io.File;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +30,19 @@ public class EmpLibDelService {
 		Integer empNum = empLibMapper.selectEmpNum(empId);
 
 		if(dto.getLibPw().equals(empLibCommand.getLibPw()) && dto.getEmpNum().equals(empNum)) {
-			System.out.println("oooooooooooooooooo");
-			empLibMapper.libDel(libNum);
+			Integer i = empLibMapper.libDel(libNum);
+			
+			if(i > 0 ) {
+				String storeFileNames[] = dto.getStoreFileName().split("`");
+				String fileDir = session.getServletContext().getRealPath("/view/empLib");
+				
+				for(String fileName : storeFileNames) {
+					File file = new File(fileDir + "/" + fileName);
+					if(file.exists()) file.delete();
+				}
+			}
 			path = "redirect:libList";
 		}else {
-			System.out.println("xxxxxxxxxxxxxxxxxx");
-			//model.addAttribute("dto", dto);
-			//model.addAttribute("err_pw", "비밀번호가 일치하지 않습니다.");
 			session.setAttribute("err_pw", "비밀번호가 일치하지 않거나 작성자가 아닙니다.");
 			path =  "redirect:libDelete?num="+empLibCommand.getLibNum();
 		}

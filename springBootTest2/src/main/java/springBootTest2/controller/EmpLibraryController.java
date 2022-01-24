@@ -1,6 +1,7 @@
 package springBootTest2.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import springBootTest2.service.empLib.EmpLibInfoService;
 import springBootTest2.service.empLib.EmpLibInsertService;
 import springBootTest2.service.empLib.EmpLibListService;
 import springBootTest2.service.empLib.EmpLibUpdateService;
+import springBootTest2.service.empLib.FileDownService;
 
 @Controller
 @RequestMapping("empLib")
@@ -29,6 +31,8 @@ public class EmpLibraryController {
 	EmpLibUpdateService empLibUpdateService;
 	@Autowired
 	EmpLibDelService empLibDelService;
+	@Autowired
+	FileDownService fileDownService;
 	
 	@RequestMapping("libList")
 	public String libList(Model model) {
@@ -75,5 +79,11 @@ public class EmpLibraryController {
 	public String libDelete(EmpLibCommand empLibCommand, Model model, HttpSession session) {
 		String path = empLibDelService.execute(empLibCommand, model, session);
 		return path;
+	}
+	
+	@RequestMapping("fileDown")
+	public void fileDown(@RequestParam("sfile") String sfile, @RequestParam("ofile") String ofile,
+						HttpServletRequest request, HttpServletResponse response) {
+		fileDownService.execute(sfile, ofile, request, response);
 	}
 }

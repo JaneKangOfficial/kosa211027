@@ -1,5 +1,8 @@
 package springBootTest2.service.empLib;
 
+import java.io.File;
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -7,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import springBootTest2.command.EmpLibCommand;
 import springBootTest2.domain.AuthInfo;
@@ -38,7 +42,56 @@ public class EmpLibUpdateService {
 			dto.setLibContent(empLibCommand.getLibContent());
 			dto.setLibPw(empLibCommand.getLibPw());
 	
-			empLibMapper.libUpdate(dto);
+			//====================
+			// 옛날 정보 불러오기
+			String [] storeFileNames = null;
+			if(dto.getStoreFileName() != null ) {
+				storeFileNames = dto.getStoreFileName().split("`");
+			}
+			
+			// 파일 저장
+			String originalTotal = "";
+			String storeTotal = "";
+			String fileSizeTotal = "";
+			String filePath = "/view/empLib";
+			String fileDir = request.getServletContext().getRealPath(filePath);
+			
+			for(MultipartFile mf : empLibCommand.getReport()) {
+				String originalFile = mf.getOriginalFilename();
+				String extension = originalFile.substring(originalFile.lastIndexOf("."));
+			
+				String store = UUID.randomUUID().toString().replace("-", "");
+				String storeFileName = store+extension;
+				String fileSize = (Long.toString(mf.getSize()));
+				
+				File file = new File(fileDir + "/" + storeFileName);
+				
+				try {
+					mf.transferTo(file);
+				} catch (Exception e) {
+					e.printStackTrace();
+				} 
+				
+				originalTotal += originalFile + "`";
+				storeTotal += storeFileName+ "`";
+				fileSizeTotal += fileSize + "`";
+			}
+			
+			dto.setOriginalFileName(originalTotal);
+			dto.setStoreFileName(storeTotal);
+			dto.setFileSize(fileSizeTotal);
+			
+			Integer i = empLibMapper.libUpdate(dto);
+			
+			if(i > 0) {
+				// 파일 삭제
+				for(String fileName : storeFileNames) {
+					File file = new File(fileDir + "/" + fileName);
+					
+					if(file.exists()) file.delete();
+				}
+			}
+			
 			path = "redirect:libInfo?num="+empLibCommand.getLibNum();
 		}else {
 			model.addAttribute("dto", dto);

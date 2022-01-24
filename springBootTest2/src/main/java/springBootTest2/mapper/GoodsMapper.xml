@@ -5,7 +5,7 @@
 
 <mapper namespace="springBootTest2.mapper.GoodsMapper">
 <sql id="baseColumns">
-	select goods_num, goods_name, goods_price, goods_date, goods_content, goods_qty, goods_company, emp_num
+	select goods_num, goods_name, goods_price, goods_date, goods_content, goods_qty, goods_company, emp_num, goods_image
 	from goods
 </sql>
 
@@ -26,25 +26,25 @@
 </select>
 
 <insert id="goodsInsert" parameterType="springBootTest2.domain.GoodsDTO">
-	insert into goods(goods_num, goods_name, goods_price, goods_date, goods_content, goods_qty, goods_company, emp_num)
-	values((<include refid="maxNum"/>), #{goodsName}, #{goodsPrice}, #{goodsDate}, #{goodsContent}, #{goodsQty}, #{goodsCompany}, #{empNum})
+	insert into goods(goods_num, goods_name, goods_price, goods_date, goods_content, goods_qty, goods_company, emp_num, goods_image)
+	values((<include refid="maxNum"/>), #{goodsName}, #{goodsPrice}, #{goodsDate}, #{goodsContent}, #{goodsQty}, #{goodsCompany}, #{empNum}, #{goodsImage})
 </insert>
 
 <select id="selectAll" resultType="springBootTest2.domain.GoodsDTO">
-	select goods_num goodsNum, goods_name goodsName, goods_price goodsPrice, goods_date goodsDate, goods_content goodsContent, goods_qty goodsQty, goods_company goodsCompany, emp_num empNum
+	select goods_num goodsNum, goods_name goodsName, goods_price goodsPrice, goods_date goodsDate, goods_content goodsContent, goods_qty goodsQty, goods_company goodsCompany, emp_num empNum, goods_image goodsImage
 	from goods
 	order by goods_num desc
 </select>
 
 <select id="selectOne" parameterType="String" resultType="springBootTest2.domain.GoodsDTO">
-	select goods_num goodsNum, goods_name goodsName, goods_price goodsPrice, goods_date goodsDate, goods_content goodsContent, goods_qty goodsQty, goods_company goodsCompany, emp_num empNum
+	select goods_num goodsNum, goods_name goodsName, goods_price goodsPrice, goods_date goodsDate, goods_content goodsContent, goods_qty goodsQty, goods_company goodsCompany, emp_num empNum, goods_image goodsImage
 	from goods
 	where goods_num = #{goodsNum}
 </select>
 
 <update id="goodsUpdate" parameterType="springBootTest2.domain.GoodsDTO">
 	update goods
-	set goods_name = #{goodsName}, goods_price = #{goodsPrice}, goods_date = #{goodsDate}, goods_content = #{goodsContent}, goods_qty = #{goodsQty}, goods_company = #{goodsCompany}
+	set goods_name = #{goodsName}, goods_price = #{goodsPrice}, goods_date = #{goodsDate}, goods_content = #{goodsContent}, goods_qty = #{goodsQty}, goods_company = #{goodsCompany}, goods_image = #{goodsImage}
 	where goods_num = #{goodsNum}
 </update>
 

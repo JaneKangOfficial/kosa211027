@@ -11,12 +11,18 @@
 		<td>제품번호</td>
 		<td>제품명</td>
 		<td>수량</td>
+		<td>이미지</td>
 	</tr>
 	<th:block th:each="dto : ${list}">
 	<tr>
 		<td><a th:href="@{goodsInfo(num=${dto.goodsNum})}">[[${dto.goodsNum}]]</a></td>
 		<td><a th:href="@{goodsInfo(num=${dto.goodsNum})}">[[${dto.goodsName}]]</a></td>
 		<td>[[${dto.goodsQty}]]</td>
+		<td>
+			<th:block th:if="${dto.goodsImage} != null" >
+				<img th:src="|/goods/${#strings.arraySplit(dto.goodsImage,'`')[0]}|" width="50"/> 
+			</th:block>
+		</td>
 	</tr>
 	</th:block>
 </table>

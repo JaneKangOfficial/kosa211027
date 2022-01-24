@@ -15,7 +15,16 @@
 수량 : [[${dto.goodsQty}]]<br />			
 제조사 : [[${dto.goodsCompany}]]<br />
 직원번호 : [[${dto.empNum}]]<br />
+파일 :
 
+<th:block th:if="${dto.goodsImage} != null">
+	<div th:each="file, idx : ${#strings.arraySplit(dto.goodsImage,'`')}" >
+		<img th:src="|/goods/${#strings.arraySplit(dto.goodsImage,'`')[idx.index]}|" width=50/>
+	</div>
+</th:block>
+
+
+<br />
 <a th:href="@{goodsUpdate(num=${dto.goodsNum})}">수정</a>	| 
 <a th:href="@{goodsDelete(num=${dto.goodsNum})}">삭제</a>	| 
 <a href="goodsList">제품 리스트</a>

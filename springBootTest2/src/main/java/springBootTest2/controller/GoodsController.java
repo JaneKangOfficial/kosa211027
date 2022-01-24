@@ -1,11 +1,13 @@
 package springBootTest2.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import springBootTest2.command.GoodsCommand;
@@ -44,9 +46,9 @@ public class GoodsController {
 		return "thymeleaf/goods/goodsForm";
 	}
 	
-	@RequestMapping("goodsRegist")
-	public String goodsRegist(GoodsCommand goodsCommand, HttpSession session) {
-		goodsRegistService.execute(goodsCommand, session);
+	@RequestMapping(value="goodsRegist", method=RequestMethod.POST)
+	public String goodsRegist(GoodsCommand goodsCommand, HttpSession session, HttpServletRequest request) {
+		goodsRegistService.execute(goodsCommand, session, request);
 		return "redirect:goodsList";
 	}
 	
@@ -62,15 +64,15 @@ public class GoodsController {
 		return "thymeleaf/goods/goodsUpdate";
 	}
 	
-	@RequestMapping("goodsUpdateOk")
-	public String goodsUpdateOk(GoodsCommand goodsCommand) {
-		goodsUpdateService.execute(goodsCommand);
+	@RequestMapping(value="goodsUpdateOk", method=RequestMethod.POST)
+	public String goodsUpdateOk(GoodsCommand goodsCommand, HttpServletRequest request) {
+		goodsUpdateService.execute(goodsCommand, request);
 		return "redirect:goodsList";
 	}
 	
 	@RequestMapping("goodsDelete")
-	public String goodsDelete(@RequestParam(value="num") String goodsNum) {
-		goodsDelService.execute(goodsNum);
+	public String goodsDelete(@RequestParam(value="num") String goodsNum, HttpSession session) {
+		goodsDelService.execute(goodsNum, session);
 		return "redirect:goodsList";
 	}
 }
