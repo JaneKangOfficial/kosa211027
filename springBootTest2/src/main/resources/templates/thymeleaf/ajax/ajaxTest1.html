@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ajaxTest1.html</title>
+<!-- jquery안에 ajax가 있기 때문에 jquery가 먼저 있어야 한다. -->
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+
+<script>
+	function testDiv(num) {
+		// 동기식
+		//location.href="ajax2?num="+num;
+		
+		// 비동기식
+		$.ajax({	
+			type:"post",
+			url:"ajax2",
+			data:"num="+num,	// data = parameter
+			dataType:"html",
+			success: function(result) {
+				$("#notice_content").html(result);
+			},
+			error : function() {
+				alert('에러 발생');
+				return;
+			}
+		}); 
+	}
+
+	function testDiv1(num) {
+		options = {	
+				type:"post",
+				url:"ajax2",
+				data:"num="+num,	// data = parameter
+				dataType:"html",
+				success: function(result) {
+					$("#notice_content").html(result);
+				},
+				error : function() {
+					alert('에러 발생');
+					return;
+				}
+			  }
+		$.ajax(options);
+	}	
+	
+	
+function beforeTest() {
+	if($("#n").val() == "") {
+		alert("값을 입력해주세요.");
+		$("#n").focus();
+		return false;
+	}
+}	
+
+function okTest(result, statusText, xhr, $form) {
+	if(statusText == "success") {
+		$("#notice_content").html(result);
+		$form.css('background','red');
+	}
+}
+
+function errorTest() {
+	alert('에러 발생');
+	return false;
+}
+	
+	$(function(){
+		$("#btn1").click(function(){
+			// <form>태그 전부를 전송하면서 data도 같이 전송되기 때문에 "data : '' "는 전송하지 않아도 된다.
+			$("#frm").ajaxSubmit({ 
+				type:"post",
+				dataType:"html",
+				// submit 전
+				beforeSubmit : beforeTest, // 자바스크립트 함수명
+				// submit 후
+				success: okTest,
+				error : errorTest
+			});
+		});
+		
+		bbb = {
+				type:"post",
+				dataType:"html",
+				// submit 전
+				beforeSubmit : beforeTest, // 자바스크립트 함수명
+				// submit 후
+				success: okTest,
+				error : errorTest
+			}
+		$("#btn2").click(function(){
+			$("#frm").ajaxSubmit(bbb);
+		});
+		
+		$("#btn").click(function(){
+			$("#frm").ajaxSubmit({
+				type : "post",
+				dataType : "html",
+				// submit 전
+				beforeSubmit : function() { // beforeSubmit : <form> 태그에서 submit 전에 유효성 검사
+					if($("#n").val() == "") {
+						alert("값을 입력해주세요.");
+						$("#n").focus();
+						return false;
+					}
+				},
+				// submit 후
+				success: function(result) {
+					$("#notice_content").html(result);
+				},
+				error : function() {
+					alert('에러 발생');
+					return;
+				}
+			});
+		});
+	});
+	
+</script>
+</head>
+<body>
+<ul>
+	<li onclick="testDiv(1)">TV</li>
+	<li onclick="testDiv(2)">맛집</li>
+	<li onclick="testDiv(3)">뷰티</li>
+</ul>
+
+<div id="notice_content">
+</div>
+
+<form action="ajax2" id="frm">
+	<input type="text" id="n" name="num" />
+</form>
+<button type="button" id="btn">전송</button>
+<button type="button" id="btn1">전송1</button>
+<button type="button" id="btn2">전송2</button>
+
+</body>
+</html>
