@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+수정 <br />
+<form action="empUpdate" method="post" id="frm">
+	아이디 : <input type="text" name="empId" th:value="${employeeCommand.empId}" readonly="readonly"/><br />
+	비밀번호 : <input type="password" name="empPw" />
+	<span th:if="${err_pw} != null" th:text="${err_pw}" style="color:red"></span><br />
+	이름 : <input type="text" name="empName" th:value="${employeeCommand.empName}"/><br />
+	주소 : <input type="text" name="empAddr" th:value="${employeeCommand.empAddr}"/><br />
+	연락처 : <input type="tel" name="empPhone" th:value="${employeeCommand.empPhone}"/><br />
+	<input type="submit" value="수정완료" />
+</form>
+</body>
+</html>

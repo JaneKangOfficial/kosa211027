@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="empPassUpdate" method="post">
+	<input type="text" name="empId" th:value="${employeeCommand.empId}" readonly="readonly"/><br />
+	현재 비밀번호 : <input type="password" name="empPw" /><br />
+	<span th:if="${err_pw} != null" th:text="${err_pw}" style="color:red"></span><br />
+	<input type="submit" value="확인" />
+</form>
+</body>
+</html>
