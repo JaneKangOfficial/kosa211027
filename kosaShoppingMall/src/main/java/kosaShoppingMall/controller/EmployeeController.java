@@ -3,6 +3,9 @@ package kosaShoppingMall.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,6 +37,12 @@ public class EmployeeController {
 	@Autowired
 	EmployeePassChangService employeePassChangService;
 	
+	@ModelAttribute
+	// command가 필요한 곳(html에서 th:object)에 전부 command를 전송하겠습니다.
+	// 같은 내용 = model.addAttribute("employeeCommmand", new EmployeeCommand());
+	EmployeeCommand setEmployeeCommand() {
+		return new EmployeeCommand();
+	}
 	
 	@RequestMapping("empList")
 	public String empList(Model model) {
@@ -43,6 +52,8 @@ public class EmployeeController {
 	
 	@RequestMapping("empJoin")
 	public String empJoin() {
+		// 위에 @ModelAttribute 내용과 같다.
+		// model.addAttribute("employeeCommmand", new EmployeeCommand());
 		return "thymeleaf/employee/empForm";
 	}
 	
@@ -51,9 +62,16 @@ public class EmployeeController {
 		return "thymeleaf/employee/empForm";
 	}
 	
+	// BindingResult가 Validated을 사용하기 위해서는 무조건 Command 바로 뒤에 있어야 한다.
+	// validated에 error가 있으면 result가 command에 담아서 error 메세지를 출력한다. 따라서 메시지 출력을 위해서는 command가 있어야 한다.
 	@RequestMapping(value="empWrite", method=RequestMethod.POST)
-	public String empWrite(EmployeeCommand employeeCommand) {
+	public String empWrite(@Validated EmployeeCommand employeeCommand, BindingResult result) {
+		if(result.hasErrors()) {
+			return "thymeleaf/employee/empForm";
+		}
+		
 		if(!employeeCommand.isEmpPwEqualsEmpPwCon()) {
+			result.rejectValue("empPwCon", "employeeCommand.empPwCon", "비밀번호 확인이 다릅니다.");
 			return "thymeleaf/employee/empForm";
 		}
 		employeeWriteService.execute(employeeCommand);
@@ -66,15 +84,18 @@ public class EmployeeController {
 		return "thymeleaf/employee/empInfo";
 	}
 	
+	// command가 아닌 db(dto)에서 값을 받아오는 경우는 model을 사용한다.
 	@RequestMapping("empModify")
 	public String empModify(@RequestParam(value="num") String empId, Model model) {
 		employeeInfoService.execute(empId, model);
 		return "thymeleaf/employee/empModify";
 	}
 	
+	// Command 값은 model이 받지 않아도 html로 전달할 수 있다.
+	// BindingResult : 항상 Command 뒤에 있어야 한다. error를 확인하고 메세지를 html페이지로 전달할 수 있는 객체. redirect 안된다.
 	@RequestMapping(value="empUpdate", method=RequestMethod.POST)
-	public String empUpdate(EmployeeCommand employeeCommand, Model model) {
-		String path = employeeUpdateService.execute(employeeCommand, model);
+	public String empUpdate(EmployeeCommand employeeCommand, BindingResult result) {
+		String path = employeeUpdateService.execute(employeeCommand, result);
 		System.out.println(path);
 		return path;
 	}
@@ -98,8 +119,8 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping("empPassUpdate")
-	public String empPassUpdate(EmployeeCommand employeeCommand, Model model) {
-		String path = employeePassUpdateService.execute(employeeCommand, model);
+	public String empPassUpdate(EmployeeCommand employeeCommand, BindingResult result) {
+		String path = employeePassUpdateService.execute(employeeCommand, result);
 		return path;
 	}
 	

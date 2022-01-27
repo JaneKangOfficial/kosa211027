@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+상세정보 <br />
+
+번호 : [[${memberCommand.memberNum}]]<br />
+아이디 : [[${memberCommand.memberId}]]<br />
+이름 : [[${memberCommand.memberName}]]<br />
+주소 : [[${memberCommand.memberAddr}]]<br />
+등록일 : [[${memberCommand.memberRegist}]]<br />
+성별 : <span th:if="${memberCommand.gender=='F'}">여자</span>
+	  <span th:if="${memberCommand.gender=='M'}">남자</span><br />
+전화번호 : [[${memberCommand.memberPhone}]]<br />
+생일 : [[${memberCommand.memberBirth}]]<br />
+이메일 : [[${memberCommand.memberEmail}]]<br />
+<a th:href="memList">목록</a> |
+<a th:href="@{memModify(num=${memberCommand.memberNum})}">수정</a> |
+<a th:href="@{memDelete(num=${memberCommand.memberNum})}">삭제</a>
+</body>
+</html>

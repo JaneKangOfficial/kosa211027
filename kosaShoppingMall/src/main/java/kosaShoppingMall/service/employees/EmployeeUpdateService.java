@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
 import kosaShoppingMall.command.EmployeeCommand;
 import kosaShoppingMall.domain.EmployeeDTO;
@@ -18,8 +19,7 @@ public class EmployeeUpdateService {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	
-	public String execute(EmployeeCommand employeeCommand, Model model) {
-		//String path = "redirect:empModify?num="+employeeCommand.getEmpId();
+	public String execute(EmployeeCommand employeeCommand, BindingResult result) {
 		String path = "thymeleaf/employee/empModify";
 		
 		EmployeeDTO dto = new EmployeeDTO();
@@ -40,7 +40,9 @@ public class EmployeeUpdateService {
 			path = "redirect:empInfo?num="+employeeCommand.getEmpId();
 		}else {
 			System.out.println("xxxxxxxxxxxxxx");
-			model.addAttribute("err_pw", "비밀번호가 일치하지 않습니다.");
+			// result.rejectValue(필드명, 오브젝트, 출력메세지)
+			// result.addError(new FiledError("employeeCommand", "empPw", "비밀번호가 일치하지 않습니다."));
+			result.rejectValue("empPw", "employeeCommand.empPw", "비밀번호가 일치하지 않습니다.");
 		}
 		return path;
 	}

@@ -17,6 +17,5 @@ public class EmployeeInfoService {
 	public void execute(String empId, Model model) {
 		EmployeeDTO dto = employeeMapper.selectOne(empId);
 		model.addAttribute("employeeCommand", dto);
-		
 	}
 }

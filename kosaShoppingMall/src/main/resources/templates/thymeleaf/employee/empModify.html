@@ -6,10 +6,15 @@
 </head>
 <body>
 수정 <br />
-<form action="empUpdate" method="post" id="frm">
+<!-- 
+	controller에서 service로 command를 사용해서 넘겨주고 command가 html로 값을 전달한다. 
+		=> <form>에 th:object="${employeeCommand}"를 적어준다. 
+ -->
+<form action="empUpdate" method="post" id="frm" th:object="${employeeCommand}">
 	아이디 : <input type="text" name="empId" th:value="${employeeCommand.empId}" readonly="readonly"/><br />
 	비밀번호 : <input type="password" name="empPw" />
-	<span th:if="${err_pw} != null" th:text="${err_pw}" style="color:red"></span><br />
+	<!-- th:if= empPw라는 filed에 error가 있다면 th:errors= empPw에 해당하는 에러 메세지를 출력 -->
+	<span th:if="${#fields.hasErrors('empPw')}" th:errors="*{empPw}"></span><br />
 	이름 : <input type="text" name="empName" th:value="${employeeCommand.empName}"/><br />
 	주소 : <input type="text" name="empAddr" th:value="${employeeCommand.empAddr}"/><br />
 	연락처 : <input type="tel" name="empPhone" th:value="${employeeCommand.empPhone}"/><br />
