@@ -3,13 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+
+<script type="text/javascript">
+/* jquery 사용 */
+	$(function(){
+		$("#delete").click(function(){
+			//location.href="../empDelete?num=[[${employeeCommand.empId}]]";
+			$.ajax({
+				type : "post",
+				url : "empDeleteOk",
+				data : {"empId" : "[[${employeeCommand.empId}]]",
+						"empPw" : $("#empPw").val()},
+				dataType : "text",
+				success : function(result){
+					if(result.trim() == '1') {
+						alert("정상 삭제");
+						location.href="empList";
+					}else {
+						alert("삭제되지 않았습니다.");
+						$("#errPw").html("비밀번호가 틀렸습니다.");
+						return false;
+					}
+				},
+				error : function() {
+					alert("페이지 열리지 않음, ERROR!!!");
+					return;
+				}
+			});
+		});
+	});
+
+/* 함수 사용 */
+	function del() {
+		
+	};
+</script>
+
 </head>
 <body>
 <form action="empDeleteOk" method="post">
 	<input type="text" name="empId" th:value="${employeeCommand.empId}" readonly="readonly"/><br />
-	현재 비밀번호 : <input type="password" name="empPw" /><br />
+	현재 비밀번호 : <input type="password" name="empPw" id="empPw" /><br />
 	<span th:if="${err_pw} != null" th:text="${err_pw}" style="color:red"></span><br />
+	<span id="errPw"></span><br />
 	<input type="submit" value="확인" />
+
+<hr />
+	<a href="javascript:del();">삭제</a>
+	<input type="hidden" value="empId" th:value="${employeeCommand.empId}" />
+	<input type="submit" value="수정"/>
+	<input type="button" value="jquery삭제" id="delete"/>
+	<input type="button" value="function삭제" onclick="del();"/>
 </form>
 </body>
 </html>

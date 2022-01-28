@@ -28,6 +28,7 @@ public class MemberUpdateService {
 		dto.setMemberAddr(memberCommand.getMemberAddr());
 		dto.setMemberEmail(memberCommand.getMemberEmail());
 		dto.setMemberBirth(memberCommand.getMemberBirth());
+		dto.setMemberRegist(memberCommand.getMemberRegist());
 		dto.setGender(memberCommand.getGender());
 		dto.setMemberPhone(memberCommand.getMemberPhone());
 		

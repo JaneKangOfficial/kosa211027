@@ -26,8 +26,9 @@ public class EmployeeDeleteService {
 		String seEmpPw = dto.getEmpPw();
 		
 		if(passwordEncoder.matches(empPw, seEmpPw)) {
-			employeeMapper.empDel(employeeCommand.getEmpId());
-			path = "redirect:/";
+			Integer i = employeeMapper.empDel(employeeCommand.getEmpId());
+			model.addAttribute("num",i);
+			path = "thymeleaf/employee/empDel";
 		}else {
 			model.addAttribute("employeeCommand", dto);
 			model.addAttribute("err_pw","비밀번호가 일치하지 않습니다.");

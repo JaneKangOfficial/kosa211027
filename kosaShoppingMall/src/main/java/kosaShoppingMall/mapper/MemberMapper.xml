@@ -4,14 +4,14 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kosaShoppingMall.mapper.MemberMapper">
-<sql id="AutoNum">
+<select id="memberAutoNum" resultType="String">
 	select concat('kosa',nvl(max(substr(member_num,5)), 100000) + 1)
 	from member
-</sql>
+</select>
 
 <insert id="memberInsert" parameterType="memDTO">
 	insert into member (member_num, member_id, member_name, member_pw, member_addr, member_birth, member_email, gender, member_regist, member_phone)
-	values ((<include refid="AutoNum"/>), #{memberId}, #{memberName}, #{memberPw}, #{memberAddr}, #{memberBirth}, #{memberEmail}, #{gender}, sysdate, #{memberPhone})
+	values (#{memberNum}, #{memberId}, #{memberName}, #{memberPw}, #{memberAddr}, #{memberBirth}, #{memberEmail}, #{gender}, #{memberRegist}, #{memberPhone})
 </insert>
 
 <select id="selectAll" resultType="memDTO">
@@ -28,7 +28,7 @@
 
 <update id="memberUpdate" parameterType="memDTO">
 	update member
-	set member_id = #{memberId}, member_pw = #{memberPw}, member_name = #{memberName}, member_addr = #{memberAddr}, gender = #{gender}, member_phone = #{memberPhone}, member_birth = #{memberBirth}, member_email = #{memberEmail}
+	set member_id = #{memberId}, member_pw = #{memberPw}, member_name = #{memberName}, member_addr = #{memberAddr}, gender = #{gender}, member_phone = #{memberPhone}, member_birth = #{memberBirth}, member_email = #{memberEmail}, member_regist = #{memberRegist}
 	where member_num = #{memberNum}
 </update>
 

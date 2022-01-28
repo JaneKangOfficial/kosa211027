@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>empInfo.html</title>
+
 </head>
 <body>
 상세 정보<br />
@@ -12,9 +13,11 @@
 주소 : [[${employeeCommand.empAddr}]] <br />
 연락처 : [[${employeeCommand.empPhone}]] <br />
 <br />
-<a th:href="empList">리스트</a> | 
+<a href="empList">리스트</a> | 
 <a th:href="@{empModify(num=${employeeCommand.empId})}">수정</a> | 
 <a th:href="@{empPassModify(num=${employeeCommand.empId})}">비번수정</a> | 
 <a th:href="@{empDelete(num=${employeeCommand.empId})}">삭제</a>
+
+
 </body>
 </html>

@@ -6,6 +6,8 @@
 </head>
 <body>
 회원 관리 <br />
+
+회원수 : [[${list.size()}]]
 <table border=1>
 	<tr>
 		<td>번호</td>
@@ -15,7 +17,9 @@
 	</tr>
 	<th:block th:each="dto : ${list}">
 	<tr>
-		<td><a th:href="@{memberInfo(num=${dto.memberNum})}">[[${dto.memberNum}]]</a></td>
+		<!-- Query String이 없을 경우에는 양쪽 끝에 파이프 "|" -->
+		<!-- ${dto.memberNum}: PathVariable -->
+		<td><a th:href="|memberInfo/${dto.memberNum}|">[[${dto.memberNum}]]</a></td>
 		<td>[[${dto.memberName}]]</td>
 		<td>[[${dto.memberId}]]</td>
 		<td>[[${dto.memberPhone}]]</td>

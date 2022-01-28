@@ -30,7 +30,7 @@ public class MemberInsertService {
 		dto.setMemberBirth(memberCommand.getMemberBirth());
 		dto.setGender(memberCommand.getGender());
 		dto.setMemberPhone(memberCommand.getMemberPhone());
-		
+		dto.setMemberRegist(memberCommand.getMemberRegist());
 		memberMapper.memberInsert(dto);
 	}
 }
