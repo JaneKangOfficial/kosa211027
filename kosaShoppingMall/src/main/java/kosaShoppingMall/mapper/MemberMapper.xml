@@ -36,4 +36,37 @@
  	delete from member
  	where member_num = #{memberNum}
 </delete>
+
+<insert id="memberJoin" parameterType="memDTO">
+ 	insert into member (member_num, member_id, member_name, member_pw, member_addr, member_birth, member_email, gender, member_phone, member_regist)
+	values (#{memberNum}, #{memberId}, #{memberName}, #{memberPw}, #{memberAddr}, #{memberBirth}, #{memberEmail}, #{gender}, #{memberPhone}, #{memberRegist})
+</insert>
+
+<select id="loginSelect" parameterType="String" resultType="kosaShoppingMall.domain.AuthInfo">
+	select member_id userId, member_pw userPw, 'mem' grade
+	from member
+	where member_id = #{userId}
+	union
+	select emp_id, emp_pw, 'emp'
+	from employees
+	where emp_id = #{userId}
+</select>
+
+<select id="selectOneById" resultType="memDTO" parameterType="String">
+	select member_num memberNum, member_id memberId, member_pw memberPw, member_name memberName, member_addr memberAddr, member_birth memberBirth, member_phone memberPhone, member_regist memberRegist, gender, member_email memberEmail
+	from member
+	where member_id = #{memberId}
+</select>
+
+<update id="memberModify">
+	update member
+	set member_id = #{memberId}, member_pw = #{memberPw}, member_name = #{memberName}, member_addr = #{memberAddr}, gender = #{gender}, member_phone = #{memberPhone}, member_birth = #{memberBirth}, member_email = #{memberEmail}, member_regist = #{memberRegist}
+	where member_num = #{memberNum}
+</update>
+
+<update id="pwUpdate" parameterType="memDTO">
+ 	update member
+	set member_pw = #{memberPw}
+	where member_num = #{memberNum}
+</update>
 </mapper>

@@ -40,6 +40,9 @@ public class MemberCommand {
 	@NotBlank(message="이메일 입력!!!")
 	String memberEmail;
 	
+	String oldPw;
+	String newPw;
+	
 	public boolean isEmpPwEqualsEmpPwCon() {
 		return memberPw.equals(memberPwCon);
 	}

@@ -37,7 +37,27 @@
 
 /* 함수 사용 */
 	function del() {
-		
+		$.ajax({
+			type : "post", // 보내는 방식
+			url : "empDeleteOk", // 보내는 주소
+			data : {"empId" : "[[${employeeCommand.empId}]]",//보낼 쿼리스트링
+					"empPw" : $("#empPw").val()},
+			dataType : "text", //가져오는 타입 html text
+			success : function(result){ //result
+				if(result.trim() == '1') {
+					alert("정상 삭제");
+					location.href="empList";
+				}else {
+					alert("삭제되지 않았습니다.");
+					$("#errPw").html("비밀번호가 틀렸습니다.");
+					return false;
+				}
+			},
+			error : function() {
+				alert("페이지 열리지 않음, ERROR!!!");
+				return;
+			}
+		});
 	};
 </script>
 
@@ -46,7 +66,6 @@
 <form action="empDeleteOk" method="post">
 	<input type="text" name="empId" th:value="${employeeCommand.empId}" readonly="readonly"/><br />
 	현재 비밀번호 : <input type="password" name="empPw" id="empPw" /><br />
-	<span th:if="${err_pw} != null" th:text="${err_pw}" style="color:red"></span><br />
 	<span id="errPw"></span><br />
 	<input type="submit" value="확인" />
 
