@@ -5,14 +5,15 @@
 <title>Insert title here</title>
 <style type="text/css">
 	#leftMenu {
-		background-color: #999;
 		width: 25%;
 		float: left;
+		border-right: 1px solid gray;
+		height:500px;
 	}
-	
 	#memberInfo {
 		width: 70%;
 		float: right;
+		padding-left: 30px;
 	}
 </style>
 </head>
@@ -31,12 +32,12 @@
 번호 : [[${memberCommand.memberNum}]]<br />
 아이디 : [[${memberCommand.memberId}]]<br />
 이름 : [[${memberCommand.memberName}]]<br />
-생년월일 : [[${memberCommand.memberBirth}]]<br />
+생년월일 : [[${#dates.format(memberCommand.memberBirth,'yyyy-MM-dd')}]]<br />
 성별 : [[${memberCommand.gender}]]<br />
 이메일 : [[${memberCommand.memberEmail}]]<br />
 연락처 : [[${memberCommand.memberPhone}]]<br />
 주소 : [[${memberCommand.memberAddr}]]<br />
-등록일 : [[${memberCommand.memberRegist}]]<br />
+등록일 : [[${#dates.format(memberCommand.memberRegist,'yyyy-MM-dd')}]]<br />
 	
 </div>
 </body>

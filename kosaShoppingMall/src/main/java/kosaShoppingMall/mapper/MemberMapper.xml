@@ -39,10 +39,10 @@
 
 <insert id="memberJoin" parameterType="memDTO">
  	insert into member (member_num, member_id, member_name, member_pw, member_addr, member_birth, member_email, gender, member_phone, member_regist)
-	values (#{memberNum}, #{memberId}, #{memberName}, #{memberPw}, #{memberAddr}, #{memberBirth}, #{memberEmail}, #{gender}, #{memberPhone}, #{memberRegist})
+	values (#{memberNum}, #{memberId}, #{memberName}, #{memberPw}, #{memberAddr}, #{memberBirth}, #{memberEmail}, #{gender}, #{memberPhone}, sysdate)
 </insert>
 
-<select id="loginSelect" parameterType="String" resultType="kosaShoppingMall.domain.AuthInfo">
+<select id="loginSelect" parameterType="String" resultType="authInfo">
 	select member_id userId, member_pw userPw, 'mem' grade
 	from member
 	where member_id = #{userId}
@@ -69,4 +69,5 @@
 	set member_pw = #{memberPw}
 	where member_num = #{memberNum}
 </update>
+
 </mapper>

@@ -1,5 +1,6 @@
 package kosaShoppingMall.command;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -8,7 +9,7 @@ import lombok.Data;
 
 @Data
 public class EmployeeCommand {
-	@Size(min = 4, max = 12, message = "아이디는 4 ~ 12!!!")
+	@Size(min = 3, max = 12, message = "아이디는 3 ~ 12!!!")
 	String empId;
 	
 	// NotEmpty : 공백 가능, 비어있지만 않으면 가능
@@ -29,6 +30,9 @@ public class EmployeeCommand {
 	
 	@NotEmpty(message = "연락처!!!")
 	String empPhone;
+	@Email(message = "이메일 형식!!!")
+	@NotBlank(message="이메일!!!")
+	String empEmail;
 	
 	public boolean isEmpPwEqualsEmpPwCon() {
 		return empPw.equals(empPwCon);

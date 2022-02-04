@@ -8,7 +8,6 @@
 		width: 25%;
 		float: left;
 	}
-	
 	#memberInfo {
 		width: 70%;
 		float: right;
@@ -18,19 +17,17 @@
 </style>
 </head>
 <body>
-<div id="leftMenu" >
+<div id="leftMenu">
 	<ul>
-		<li><a href="memberDetail">내 정보 보기</a></li>
-		<li><a href="memberPw">내 정보 수정</a></li>
-		<li><a href="memberPwForm">비밀번호 수정</a></li>
-		<li><a href="memberUserDel">회원 탈퇴</a></li>
+		<li><a href="empDetail">내 정보 보기</a></li>
+		<li><a href="empUpdate">내 정보 수정</a></li>
+		<li><a href="empPwUpdate">비밀번호 수정</a></li>
 	</ul>
 </div>
-
 <div id="memberInfo">
-<form action="memberPwForm" method="post">
-	<input type="text" name="memberNum" th:value="${memberCommand.memberNum}" readonly="readonly"/><br />
-	현재 비밀번호 : <input type="password" name="oldPw" /><br /> 
+<form action="empPwUpdate" method="post" >
+	아이디 : <input type="text" name="empId" th:value="${employeeCommand.empId}" readonly="readonly"/><br />
+	현재 비밀번호 : <input type="password" name="empPw" /><br /> 
 	새로운 비밀번호 : <input type="password" name="newPw" /><br />
 	<input type="submit" value="수정" /> 
 </form>

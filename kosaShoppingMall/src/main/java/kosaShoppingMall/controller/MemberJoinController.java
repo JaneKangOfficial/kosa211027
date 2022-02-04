@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kosaShoppingMall.command.MemberCommand;
-import kosaShoppingMall.service.member.MemberJoinService;
 import kosaShoppingMall.service.member.MemberNumService;
+import kosaShoppingMall.service.memberJoin.MemberJoinService;
 
 @Controller
 @RequestMapping("register")

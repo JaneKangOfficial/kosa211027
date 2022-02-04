@@ -1,0 +1,30 @@
+@charset "UTF-8";
+/* 	body {
+		margin : 0 auto;
+	}
+	#leftMenu {
+		background-color: #999;
+		float: left;
+		margin-right: 50px;
+		height: 500px;
+	}
+	
+	#memberInfo {
+		float: left;
+		border-left: 1px solid gray;
+		padding-left: 50px;
+		height: 500px;
+	} 
+*/
+	
+	#leftMenu {
+		width: 25%;
+		float: left;
+	}
+	
+	#memberInfo {
+		width: 70%;
+		float: right;
+		border-left: 1px solid gray;
+		padding-left: 30px;
+	}

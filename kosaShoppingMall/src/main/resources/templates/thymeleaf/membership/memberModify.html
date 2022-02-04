@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- <link href="memMypage.css" rel="stylesheet" type="text/css" />  -->
 <style type="text/css">
 	#leftMenu {
-		background-color: #999;
 		width: 25%;
 		float: left;
 	}
@@ -13,6 +13,8 @@
 	#memberInfo {
 		width: 70%;
 		float: right;
+		border-left: 1px solid gray;
+		padding-left: 30px;
 	}
 </style>
 </head>
@@ -87,7 +89,7 @@
 				<label for="memberBirth">생년월일</label>
 			</th>
 			<td>
-				<input type="date" name="memberBirth" id="memberBirth" placeholder="1999-12-30" th:value="${memberCommand.memberBirth}"/>
+				<input type="date" name="memberBirth" id="memberBirth" placeholder="1999-12-30" th:value="${#dates.format(memberCommand.memberBirth,'yyyy-MM-dd')}"/>
 				<span th:if="${#fields.hasErrors('memberBirth')}" th:errors="*{memberBirth}"></span><br />
 			</td>
 		</tr>

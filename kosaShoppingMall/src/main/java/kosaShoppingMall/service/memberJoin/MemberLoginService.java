@@ -1,4 +1,4 @@
-package kosaShoppingMall.service.member;
+package kosaShoppingMall.service.memberJoin;
 
 import javax.servlet.http.HttpSession;
 

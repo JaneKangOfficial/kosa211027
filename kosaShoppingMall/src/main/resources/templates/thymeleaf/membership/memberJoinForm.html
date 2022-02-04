@@ -6,7 +6,6 @@
 </head>
 <body>
 <form action="memberJoinAction" method="post" name="frm" id="frm" th:object="${memberCommand}">
-<input type="hidden" name="memberNum" th:value="${memberCommand.memberNum}" readonly="readonly" />
 <input type="hidden" name="memberRegist" value="2022-01-01" />
 <fieldset>
 	<legend>회원가입 정보</legend>
@@ -23,6 +22,14 @@
 		</tfoot>
 		<tbody>
 		<tr>
+			<th> 
+				<label>사용자 번호</label> 
+			</th>
+			<td>
+				<input type="text" name="memberNum" th:value="${memberCommand.memberNum}" readonly="readonly" />
+			</td>
+		</tr>
+		<tr>
 			<th colspan="2">사용자 ID와 비밀번호 입력</th>
 		</tr>
 		<tr>
@@ -32,7 +39,6 @@
 			<td>
 				<input type="text" name="memberId" id="memberId" size="15" maxlength="12" autofocus="autofocus"/>
 				<span th:if="${#fields.hasErrors('memberId')}" th:errors="*{memberId}"></span><br />
-				
 			</td>
 		</tr>
 		<tr>
@@ -70,7 +76,7 @@
 				<label for="memberBirth">생년월일</label>
 			</th>
 			<td>
-				<input type="date" name="memberBirth" id="memberBirth" placeholder="1999-12-30"/>
+				<input type="date" name="memberBirth" id="memberBirth" placeholder="1999-12-30" th:value="${#dates.format(memberCommand.memberBirth,'yyyy-MM-dd')}"/>
 				<span th:if="${#fields.hasErrors('memberBirth')}" th:errors="*{memberBirth}"></span><br />
 			</td>
 		</tr>

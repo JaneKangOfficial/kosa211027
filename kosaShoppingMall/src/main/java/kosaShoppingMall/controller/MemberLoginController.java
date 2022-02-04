@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import kosaShoppingMall.command.LoginCommand;
-import kosaShoppingMall.service.member.MemberLoginService;
+import kosaShoppingMall.service.memberJoin.MemberLoginService;
 
 @Controller
 public class MemberLoginController {

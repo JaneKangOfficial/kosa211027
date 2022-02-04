@@ -25,6 +25,7 @@ public class EmployeesWriteService {
 		dto.setEmpId(employeeCommand.getEmpId());
 		dto.setEmpName(employeeCommand.getEmpName());
 		dto.setEmpPhone(employeeCommand.getEmpPhone());
+		dto.setEmpEmail(employeeCommand.getEmpEmail());
 		dto.setEmpPw(empPw);
 		
 		employeeMapper.empInsert(dto);

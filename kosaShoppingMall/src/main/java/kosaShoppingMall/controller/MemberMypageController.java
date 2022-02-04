@@ -1,6 +1,7 @@
 package kosaShoppingMall.controller;
 
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import kosaShoppingMall.command.MemberCommand;
+import kosaShoppingMall.domain.AuthInfo;
 import kosaShoppingMall.service.member.MemberDeleteService;
 import kosaShoppingMall.service.member.MemberNumService;
 import kosaShoppingMall.service.mypage.DelService;
@@ -34,7 +36,7 @@ public class MemberMypageController {
 	MemberDeleteService memberDeleteService;
 	@Autowired
 	DelService delService;
-	
+ 
 	@ModelAttribute
 	public MemberCommand setMemberCommand() {
 		return new MemberCommand();

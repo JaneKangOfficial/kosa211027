@@ -1,4 +1,4 @@
-package kosaShoppingMall.service.member;
+package kosaShoppingMall.service.memberJoin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,9 +31,6 @@ public class MemberJoinService {
 		dto.setMemberEmail(memberCommand.getMemberEmail());
 		dto.setMemberAddr(memberCommand.getMemberAddr());
 		dto.setMemberPhone(memberCommand.getMemberPhone());
-		dto.setMemberRegist(memberCommand.getMemberRegist());
-		
-		System.out.println("dtoooooooooo " + dto);
 		
 		memberMapper.memberJoin(dto);
 		
