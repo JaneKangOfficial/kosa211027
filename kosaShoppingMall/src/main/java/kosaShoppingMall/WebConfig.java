@@ -1,9 +1,10 @@
 package kosaShoppingMall;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import kosaShoppingMall.interceptor.CertificationInterceptor;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer{
@@ -31,4 +32,16 @@ public class WebConfig implements WebMvcConfigurer{
 		return source;
 	}
 */	
+	
+	// Spring boot : 로그인하지 않아도 들어올 수 있는 주소 / Spring은 로그인해야 들어올 수 있는 주소
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new CertificationInterceptor())
+				.addPathPatterns("/**/*") // 모든 주소
+				.excludePathPatterns("/static/**/*")
+				.excludePathPatterns("/register/**/*")
+				.excludePathPatterns("/help/**/*")
+				.excludePathPatterns("/login/**/*");
+		// 로그인 세션이 없어도 되는 주소들을 적는다.
+	}
 }

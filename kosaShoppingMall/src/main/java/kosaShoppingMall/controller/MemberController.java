@@ -36,8 +36,6 @@ public class MemberController {
 	MemberNumService memberNumService;
 
 	@ModelAttribute
-	// command가 필요한 곳(html에서 th:object)에 전부 command를 전송하겠습니다.
-	// 같은 내용 = model.addAttribute("memberCommand", new MemberCommand());
 	MemberCommand setMemberCommand() {
 		return new MemberCommand();
 	}
@@ -45,27 +43,28 @@ public class MemberController {
 	@RequestMapping("memList")
 	public String memList(Model model) {
 		memberListService.execute(model);
-		return "thymeleaf/member/memberList";
+		//return "thymeleaf/member/memberList"; // html 사용
+		return "member/memberList"; // jsp 사용
 	}
 	
 	@RequestMapping(value="memberRegist", method=RequestMethod.GET)
-	public String memberForm1(MemberCommand memberCommand) {
-		memberNumService.execute(memberCommand);
-		return "thymeleaf/member/memberForm";
+	public String memberForm1(MemberCommand memberCommand, Model model) {
+		memberNumService.execute(memberCommand, model);
+		//return "thymeleaf/member/memberForm"; // html, command 사용 - spring boot
+		return "member/memberForm"; // jsp, model 사용 - spring
 	}
 	
-	// BindingResult는 error 값을 command에 저장해서 받아온다.
-	// command 값을 저장하기 위해서는 redirect가 아닌 thymeleaf에서 html로 받아온다.
-	// command의 error 메세지를 사용하기 위해서는 validated를 사용해야 한다. 
 	@RequestMapping(value="memberRegist", method=RequestMethod.POST)
 	public String memberForm(@Validated MemberCommand memberCommand, BindingResult result) {
 		if(result.hasErrors()) {
-			return "thymeleaf/member/memberForm";
+			//return "thymeleaf/member/memberForm";
+			return "member/memberForm";
 		}
 		
 		if(!memberCommand.isEmpPwEqualsEmpPwCon()) {
 			result.rejectValue("memberPw", "memberCommand.memberPw", "비밀번호 확인이 일치하지 않습니다.");
-			return "thymeleaf/member/memberForm";
+			//return "thymeleaf/member/memberForm";
+			return "member/memberForm";
 		}
 		memberInsertService.execute(memberCommand);
 		return "redirect:memList";
@@ -76,20 +75,23 @@ public class MemberController {
 	@RequestMapping("memberInfo/{id}")
 	public String memberInfo(@PathVariable(value="id") String memberNum, Model model){
 		memberInfoService.execute(memberNum, model);
-		return "thymeleaf/member/memberInfo";
+		//return "thymeleaf/member/memberInfo";
+		return "member/memberInfo";
 	}
 	
 	@RequestMapping(value="memModify", method=RequestMethod.GET)
 	public String memModify(@RequestParam(value="num") String memberNum, Model model) {
 		memberInfoService.execute(memberNum, model);
-		return "thymeleaf/member/memberUpdate";
+		//return "thymeleaf/member/memberUpdate";
+		return "member/memberUpdate";
 	}
 	
 	@RequestMapping(value="memModify", method=RequestMethod.POST)
 	public String memModify(@Validated MemberCommand memberCommand, BindingResult result) {
 		// Validated 검사시 result.hasErrors 사용해서 error 확인하기!
 		if(result.hasErrors()) {
-			return "thymeleaf/member/memberForm";
+			//return "thymeleaf/member/memberForm";
+			return "member/memberForm";
 		}
 		memberUpdateService.execute(memberCommand);
 		return "redirect:memberInfo/"+memberCommand.getMemberNum();
@@ -100,7 +102,8 @@ public class MemberController {
 	public String memDelete(@RequestParam(value="num") String memberNum, Model model) {
 		memberDeleteService.execute(memberNum, model);
 		//return "redirect:memList";
-		return "thymeleaf/member/memberDel";
 		// ajax 사용시 redirect는 사용할 수 없다. next page(.html)가 필요하다.
+		//return "thymeleaf/member/memberDel";
+		return "member/memberDel";
 	}
 }

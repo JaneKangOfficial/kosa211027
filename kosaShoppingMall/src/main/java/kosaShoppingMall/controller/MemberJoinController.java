@@ -2,6 +2,7 @@ package kosaShoppingMall.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -38,14 +39,14 @@ public class MemberJoinController {
 	}
 	
 	@RequestMapping(value="regist", method = RequestMethod.POST)
-	public String regist(@RequestParam(value="agree", defaultValue = "false") Boolean agree, MemberCommand memberCommand) {
+	public String regist(@RequestParam(value="agree", defaultValue = "false") Boolean agree, MemberCommand memberCommand, Model model) {
 		System.out.println(agree);
 		
 		if(agree == false) {
 			return "thymeleaf/membership/agree";
 		}
 		
-		memberNumService.execute(memberCommand);
+		memberNumService.execute(memberCommand, model);
 		return "thymeleaf/membership/memberJoinForm";
 	}
 	

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kosaShoppingMall.mapper.GoodsMapper">
+<sql id="base">
+	goods_num goodsNum, goods_name goodsName, goods_price goodsPrice, goods_content goodsContent, delivery_cost deliveryCost, goods_images goodsImages, goods_main goodsMain, visit_count visitCount
+</sql>
+
+<select id="autoNum" resultType="String">
+	select concat('goods',nvl(max(substr(goods_num,6)),10000) + 1)
+	from goods
+</select>
+
+<insert id="goodsInsert" parameterType="goodsDTO">
+	insert into goods(goods_num, goods_name, goods_price, goods_content, delivery_cost)
+	values(#{goodsNum},#{goodsName},#{goodsPrice},#{goodsContent},#{deliveryCost})
+</insert>
+
+<select id="selectAll" resultType="goodsDTO">
+	select <include refid="base" />
+	from goods
+	order by goods_num desc
+</select>
+
+<select id="selectOne" parameterType="String" resultType="goodsDTO">
+	select <include refid="base" />
+	from goods
+	where goods_num = #{goodsNum}
+</select>
+
+<update id="goodsUpdate" parameterType="goodsDTO">
+ 	update goods
+ 	set goods_name=#{goodsName}, goods_price=#{goodsPrice}, delivery_cost=#{deliveryCost}
+ 	where goods_num = #{goodsNum}
+</update>
+
+<delete id="goodsDel" parameterType="String">
+ 	delete from goods
+ 	where goods_num = #{goodsNum}
+</delete>
+
+<update id="visitCount" parameterType="String">
+	update goods
+	set visit_count = nvl(visit_count,0) + 1
+	where goods_num = #{goodsNum}
+</update>
+
+<select id="searchGoods" parameterType="String" resultType="goodsDTO">
+	select <include refid="base"/>
+	from goods
+	where goods_name like '%'||#{goodsWord}||'%' or goods_content like '%'||#{goodsWord}||'%'
+</select>
+
+</mapper>

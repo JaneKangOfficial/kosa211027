@@ -22,12 +22,12 @@ public class MemberLoginController {
 		return new LoginCommand();
 	}
 
-	@RequestMapping(value="loginPro", method = RequestMethod.GET)
+	@RequestMapping(value="/login/loginPro", method = RequestMethod.GET)
 	public String home() {
 		return "redirect:/";
 	}
 	
-	@RequestMapping(value="loginPro", method = RequestMethod.POST)
+	@RequestMapping(value="/login/loginPro", method = RequestMethod.POST)
 	public String loginPro(@Validated LoginCommand loginCommand, BindingResult result, HttpSession session) {
 		if(result.hasErrors()) {
 			return "thymeleaf/index";
@@ -37,7 +37,7 @@ public class MemberLoginController {
 		return path;
 	}
 	
-	@RequestMapping("/main/logout")
+	@RequestMapping("/login/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";

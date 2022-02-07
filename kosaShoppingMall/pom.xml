@@ -80,7 +80,7 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!--  jstl, form spring fmt core  -->
+		<!--  jstl : form, spring, fmt, core, functions -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
@@ -93,7 +93,7 @@
 			<artifactId>spring-boot-devtools</artifactId>
 		</dependency>
 
-		<!-- 스링부트 setter/getter 자동 생 -->
+		<!-- 스프링부트 setter/getter 자동 생성 -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>

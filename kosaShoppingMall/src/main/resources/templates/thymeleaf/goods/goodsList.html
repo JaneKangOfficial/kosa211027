@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<p>상품 조회
+<form action="goodsSearch" method="get">
+	<input type="search" name="goodsWord" size="50" />
+	<input type="submit" value="검색" />
+</form>
+
+<table border="1" width="800">
+	<caption><strong>상품 관리</strong></caption>
+	<tr>
+		<th colspan="3">상품 리스트</th>
+		<th width="150">상품 개수 : [[${list.size()}]] </th>
+	</tr>
+	<tr>
+		<th>상품 번호</th>
+		<th>상품명</th>
+		<th>가격</th>
+		<th>조회수</th>
+	</tr>
+	<th:block th:each="goodsCommand : ${list}">
+	<tr>
+		<td><a th:href="|goodsDetail/${goodsCommand.goodsNum}|">[[${goodsCommand.goodsNum}]]</a></td>
+		<td>[[${goodsCommand.goodsName}]]</td>
+		<td>[[${goodsCommand.goodsPrice}]]</td>
+		<td>[[${goodsCommand.visitCount}]]</td>
+	</tr>
+	</th:block>
+</table>
+<a href="goodsRegist">상품 등록</a>
+</body>
+</html>

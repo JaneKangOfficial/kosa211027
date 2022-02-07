@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+조회수 : [[${goodsCommand.visitCount}]] <br />
+상품 번호 : [[${goodsCommand.goodsNum}]] <br />
+상품명 : [[${goodsCommand.goodsName}]] <br />
+상품 가격 : [[${goodsCommand.goodsPrice}]] <br />
+상품 설명 : [[${goodsCommand.goodsContent}]] <br />
+배송비 : [[${goodsCommand.deliveryCost}]] <br />
+<a href="../goodsList">목록</a> |
+<a th:href="@{../goodsModify(num=${goodsCommand.goodsNum})}">수정</a> |
+<a th:href="@{../goodsDel(num=${goodsCommand.goodsNum})}">삭제</a>
+</body>
+</html>
