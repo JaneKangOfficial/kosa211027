@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="goodsIpgoModify" method="post" th:object="${goodsIpgoCommand}">
+<table border=1>
+	<tr>
+		<td>제품번호</td>
+		<td>
+			<input type="text" name="goodsNum" th:value="${goodsIpgoGoodsCommand.goodsNum}">
+			<span th:if="${#fields.hasErrors('goodsNum')}" th:errors="*{goodsNum}"></span>
+		</td>
+	</tr>
+	<tr>
+		<td>제품명</td>
+		<td>[[${goodsIpgoGoodsCommand.goodsName}]]</td>
+	</tr>
+	<tr>
+		<td>가격</td>
+		<td>[[${goodsIpgoGoodsCommand.goodsPrice}]]</td>
+	</tr>
+	<tr>
+		<td>내용</td>
+		<td>[[${goodsIpgoGoodsCommand.goodsContent}]]</td>
+	</tr>
+	<tr>
+		<td>배송비</td>
+		<td>[[${goodsIpgoGoodsCommand.deliveryCost}]]</td>
+	</tr>
+	<tr>
+		<td>조회수</td>
+		<td>[[${goodsIpgoGoodsCommand.visitCount}]]</td>
+	</tr>
+	<tr>
+		<td>입고일</td>
+		<td>
+			<input type="date" name="ipgoDate" th:value="${#dates.format(goodsIpgoGoodsCommand.goodsIpgoDTO.ipgoDate, 'yyyy-MM-dd')}" readonly="readonly"/>
+			<span th:if="${#fields.hasErrors('ipgoDate')}" th:errors="*{ipgoDate}"></span>
+		</td>
+	</tr>
+	<tr>
+		<td>입고수량</td>
+		<td>
+			<input type="number" name="ipgoQty" th:value="${goodsIpgoGoodsCommand.goodsIpgoDTO.ipgoQty}" min="1" />
+			<span th:if="${#fields.hasErrors('ipgoQty')}" th:errors="*{ipgoQty}"></span>
+		</td>
+	</tr>
+	<tr>
+		<td>제조일</td>
+		<td>
+			<input type="datetime-local" name="madeDate" th:value="${#strings.replace(goodsIpgoGoodsCommand.goodsIpgoDTO.madeDate,' ', 'T')}" />
+			<span th:if="${#fields.hasErrors('madeDate')}" th:errors="*{madeDate}"></span>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" align="center">
+			<input type="submit" value="수정완료" />
+		</td>
+	</tr>
+</table>
+</form>
+</body>
+</html>

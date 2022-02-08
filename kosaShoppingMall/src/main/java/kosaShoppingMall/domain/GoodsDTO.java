@@ -15,4 +15,6 @@ public class GoodsDTO {
 	Integer visitCount;
 	String goodsImages;
 	String goodsMain;
+	
+	GoodsIpgoDTO goodsIpgoDTO;
 }

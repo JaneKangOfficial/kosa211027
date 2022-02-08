@@ -53,4 +53,89 @@
 	where goods_name like '%'||#{goodsWord}||'%' or goods_content like '%'||#{goodsWord}||'%'
 </select>
 
+<!-- goodsIpgo -->
+<select id="goodsItems" parameterType="String" resultType="goodsDTO">
+	select <include refid="base"/>
+	from goods
+	where goods_name like '%'||#{goodsName}||'%'
+</select>
+
+<insert id="ipgoInsert" parameterType="goodsIpgoDTO">
+ 	insert into goods_ipgo(ipgo_date, goods_num, ipgo_qty, made_date)
+ 	values(#{ipgoDate}, #{goodsNum}, #{ipgoQty}, #{madeDate})
+</insert>
+
+<select id="ipgoSelect" resultType="goodsIpgoDTO">
+	select ipgo_date ipgoDate, goods_num goodsNum, ipgo_qty ipgoQty, made_date madeDate
+	from goods_ipgo
+	order by goods_num desc, ipgo_date desc
+</select>
+
+<!-- ============= resultMap =============
+	<association> 대 <association> == 1 대 1
+ 	<id>는 primary key
+	property는 멤버필드명
+	javaType은 클래스 주소
+	jdbcType은 대문자!
+	type은 Alias 사용 가능
+ -->
+<!-- join일 경우 dto가 없기 때문에 resultMap을 사용 -->
+<resultMap type="kosaShoppingMall.domain.GoodsIpgoGoodsDTO" id="goodsIpgoGoodsMap">
+	<association property="goodsDTO" javaType="kosaShoppingMall.domain.GoodsDTO">
+		<id column="goods_num" jdbcType="VARCHAR" property="goodsNum"/>
+		<result column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
+		<result column="goods_price" jdbcType="BIGINT" property="goodsPrice"/>
+		<result column="goods_content" jdbcType="VARCHAR" property="goodsContent"/>
+		<result column="delivery_cost" jdbcType="BIGINT" property="deliveryCost"/>
+		<result column="visit_count" jdbcType="BIGINT" property="visitCount"/>
+	</association>
+	<association property="goodsIpgoDTO" javaType="kosaShoppingMall.domain.GoodsIpgoDTO">
+		<id column="goods_num" jdbcType="VARCHAR" property="goodsNum"/>	
+		<id column="ipgo_date" jdbcType="DATE" property="ipgoDate"/>	
+		<result column="ipgo_qty" jdbcType="BIGINT" property="ipgoQty"/>	
+		<result column="made_date" jdbcType="TIMESTAMP" property="madeDate"/>	
+	</association>
+</resultMap>
+<select id="ipgoDetail" resultType="goodsIpgoDTO" resultMap="goodsIpgoGoodsMap">
+	select g.goods_num, g.goods_name, g.goods_price, g.goods_content, g.delivery_cost, g.visit_count,
+	        i.ipgo_date, i.ipgo_qty, i.made_date
+	from goods g, goods_ipgo i 
+	where g.goods_num = i.goods_num and g.goods_num = #{goodsNum} 
+									and i.ipgo_date = #{ipgoDate}
+</select>
+
+<!-- GoodsDTO안에 있는 GoodsIpgoDTO는 <association>안에 적어준다. -->
+<resultMap type="kosaShoppingMall.domain.GoodsDTO" id="goodsIpgoGoodsResultMap">
+	<id column="goods_num" jdbcType="VARCHAR" property="goodsNum"/>
+	<result column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
+	<result column="goods_price" jdbcType="BIGINT" property="goodsPrice"/>
+	<result column="goods_content" jdbcType="VARCHAR" property="goodsContent"/>
+	<result column="delivery_cost" jdbcType="BIGINT" property="deliveryCost"/>
+	<result column="visit_count" jdbcType="BIGINT" property="visitCount"/>
+	<association property="goodsIpgoDTO" javaType="kosaShoppingMall.domain.GoodsIpgoDTO">
+		<id column="goods_num" jdbcType="VARCHAR" property="goodsNum"/>	
+		<id column="ipgo_date" jdbcType="DATE" property="ipgoDate"/>	
+		<result column="ipgo_qty" jdbcType="BIGINT" property="ipgoQty"/>	
+		<result column="made_date" jdbcType="TIMESTAMP" property="madeDate"/>	
+	</association>
+</resultMap>
+<select id="getGoodsIpgoInfo" parameterType="goodsIpgoDTO" resultMap="goodsIpgoGoodsResultMap">
+	select g.goods_num, g.goods_name, g.goods_price, g.goods_content, g.delivery_cost, g.visit_count,
+	        i.ipgo_date, i.ipgo_qty, i.made_date
+	from goods g, goods_ipgo i 
+	where g.goods_num = i.goods_num and g.goods_num = #{goodsNum} 
+									and i.ipgo_date = #{ipgoDate}
+</select>
+<!-- ============= resultMap ============= -->
+
+<update id="goodsIpgoUpdate" parameterType="goodsIpgoDTO">
+ 	update goods_ipgo
+ 	set ipgo_qty = #{ipgoQty}, ipgo_date = #{ipgoDate}, made_date = #{madeDate}
+ 	where goods_num = #{goodsNum} and ipgo_date = #{ipgoDate}
+</update>
+
+<delete id="goodsIpgoDel" parameterType="kosaShoppingMall.command.GoodsIpgoCommand">
+ 	delete from goods_ipgo
+ 	where goods_num = #{goodsNum} and ipgo_date = #{ipgoDate}
+</delete>
 </mapper>

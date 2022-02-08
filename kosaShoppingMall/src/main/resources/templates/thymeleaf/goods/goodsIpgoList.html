@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div id="wrapper">
+   <div id="leftMenu">
+      <ul>
+         <li><a href="goodsList">상품리스트</a></li>
+         <li><a href="goodsRegist">상품등록</a></li>
+         <li><a href="goodsIpgoList">상품입고현황</a></li>
+         <li><a href="goodsIpgo">상품입고</a></li>
+      </ul>   
+   </div>
+
+	<div id="memberInfo">
+	<h2>입고 현황</h2>	
+	<table border=1 width="600">
+		<tr>
+			<th>순서</th>
+			<th>상품번호</th>
+			<th>입고일</th>
+			<th>수량</th>
+			<th>제조일</th>
+		</tr>
+		<tr th:each="goodsCommand, idx : ${list}">
+		<!-- ${idx.index} : index는 0부터 시작 -->
+			<th>[[${idx.count}]]</th> <!-- count : 1부터 시작 -->
+			<th><a th:href="@{goodsIpgoDetail(goodsNum=${goodsCommand.goodsNum}, ipgoDate=${#dates.format(goodsCommand.ipgoDate, 'yyyy-MM-dd')})}">
+				[[${goodsCommand.goodsNum}]]</a>
+			</th>
+			<th>[[${#dates.format(goodsCommand.ipgoDate, 'yyyy-MM-dd')}]]</th>
+			<th>[[${goodsCommand.ipgoQty}]]</th>
+			<th>[[${#dates.format(goodsCommand.madeDate, 'yyyy-MM-dd')}]]</th>
+		</tr>
+	</table>
+	</div>
+</div>
+</body>
+</html>
