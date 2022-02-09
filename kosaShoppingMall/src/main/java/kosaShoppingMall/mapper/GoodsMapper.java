@@ -1,6 +1,7 @@
 package kosaShoppingMall.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -22,6 +23,14 @@ public interface GoodsMapper {
 	public Integer goodsDel(String goodsNum);
 	public Integer visitCount(String goodsNum);
 	public List<GoodsDTO> searchGoods(String goodsWord);
+	// 여러개 삭제
+	// 1. 배열을 이용한 방법
+	public Integer goodsDels(String[] deletes);
+	// 2. 리스트를 이용한 방법
+	public Integer goodsDeletes(List<String> cs);
+	// 3. Map을 이용한 방법
+	public Integer goodsRemove(Map<String, Object> condition);
+	
 	
 	// goodsIpgo
 	public List<GoodsDTO> goodsItems(String goodsName);
@@ -33,5 +42,8 @@ public interface GoodsMapper {
 	public GoodsDTO getGoodsIpgoInfo(GoodsIpgoDTO idto);
 	public Integer goodsIpgoUpdate(GoodsIpgoDTO dto);
 	public Integer goodsIpgoDel(GoodsIpgoCommand goodsIpgoCommand);
+	// 여러개 삭제
+	// 1. 리스트 사용
+	public Integer goodsIpgoDels(List<String[]> condition);
 
 }

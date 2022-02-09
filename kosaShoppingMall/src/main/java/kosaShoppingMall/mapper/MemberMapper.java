@@ -1,6 +1,7 @@
 package kosaShoppingMall.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -22,5 +23,12 @@ public interface MemberMapper {
 	public MemberDTO selectOneById(String memberId);
 	public Integer memberModify(MemberDTO dto);
 	public Integer pwUpdate(MemberDTO dto);
+	// 여러개 삭제
+	// 1. 배열 이용
+	public Integer memDels(String[] deletes);
+	// 2. 리스트 이용
+	public Integer memDels2(List<String> cs);
+	// 3. map 이용
+	public Integer memDels3(Map<String, Object> condition);
 
 }

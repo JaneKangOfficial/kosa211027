@@ -1,6 +1,7 @@
 package kosaShoppingMall.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -16,5 +17,12 @@ public interface EmployeeMapper {
 	public Integer empUpdate(EmployeeDTO dto);
 	public Integer empDel(String empId);
 	public Integer empPassUpdate(EmployeeDTO dto);
+	// 여러개 삭제
+	// 1. 배열 이용
+	public Integer empDels(String[] deletes);
+	// 2. 리스트 이용
+	public Integer empDels2(List<String> cs);
+	// 3. Map을 이용
+	public Integer empDels3(Map<String, Object> condition);
 	
 }

@@ -17,6 +17,7 @@
 
 	<div id="memberInfo">
 	<h2>입고 현황</h2>	
+	<form action="goodsIpgoDels" method="post">
 	<table border=1 width="600">
 		<tr>
 			<th>순서</th>
@@ -24,6 +25,7 @@
 			<th>입고일</th>
 			<th>수량</th>
 			<th>제조일</th>
+			<th><input type="submit" value="삭제" /></th>
 		</tr>
 		<tr th:each="goodsCommand, idx : ${list}">
 		<!-- ${idx.index} : index는 0부터 시작 -->
@@ -34,8 +36,10 @@
 			<th>[[${#dates.format(goodsCommand.ipgoDate, 'yyyy-MM-dd')}]]</th>
 			<th>[[${goodsCommand.ipgoQty}]]</th>
 			<th>[[${#dates.format(goodsCommand.madeDate, 'yyyy-MM-dd')}]]</th>
+			<th><input type="checkbox" name="delete" th:value="${goodsCommand.goodsNum}+'`'+${#dates.format(goodsCommand.ipgoDate, 'yyyy-MM-dd')}" /></th>
 		</tr>
 	</table>
+	</form>
 	</div>
 </div>
 </body>

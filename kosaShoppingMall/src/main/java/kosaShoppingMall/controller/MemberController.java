@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kosaShoppingMall.command.MemberCommand;
 import kosaShoppingMall.service.member.MemberDeleteService;
+import kosaShoppingMall.service.member.MemberDelsService;
 import kosaShoppingMall.service.member.MemberInfoService;
 import kosaShoppingMall.service.member.MemberInsertService;
 import kosaShoppingMall.service.member.MemberListService;
@@ -34,6 +35,8 @@ public class MemberController {
 	MemberDeleteService memberDeleteService;
 	@Autowired
 	MemberNumService memberNumService;
+	@Autowired
+	MemberDelsService memberDelsService;
 
 	@ModelAttribute
 	MemberCommand setMemberCommand() {
@@ -43,8 +46,8 @@ public class MemberController {
 	@RequestMapping("memList")
 	public String memList(Model model) {
 		memberListService.execute(model);
-		//return "thymeleaf/member/memberList"; // html 사용
-		return "member/memberList"; // jsp 사용
+		return "thymeleaf/member/memberList"; // html 사용
+		//return "member/memberList"; // jsp 사용
 	}
 	
 	@RequestMapping(value="memberRegist", method=RequestMethod.GET)
@@ -105,5 +108,11 @@ public class MemberController {
 		// ajax 사용시 redirect는 사용할 수 없다. next page(.html)가 필요하다.
 		//return "thymeleaf/member/memberDel";
 		return "member/memberDel";
+	}
+	
+	@RequestMapping(value="memDels", method=RequestMethod.POST)
+	public String memDels(@RequestParam(value="delete") String[] deletes) {
+		memberDelsService.execute(deletes);
+		return "redirect:memList";
 	}
 }

@@ -70,4 +70,39 @@
 	where member_num = #{memberNum}
 </update>
 
+<!-- ======== 여러개 삭제 ========= -->
+<!-- 1. 배열을 이용 -->
+<delete id="memDels" parameterType="hashMap">
+ 	delete from member
+ 	<where>
+ 	member_num in
+ 	<foreach collection="deletes" item="memberNum" index="index" open="(" close=")" separator=",">
+ 		#{memberNum}
+ 	</foreach>
+ 	</where>
+</delete>
+
+<!-- 2. 리스트 이용 -->
+<delete id="memDels2" parameterType="hashMap">
+ 	delete from member
+ 	<where>
+ 	member_num in
+ 	<foreach collection="cs" item="memberNum" index="index" open="(" close=")" separator=",">
+ 		#{memberNum}
+ 	</foreach>
+ 	</where>
+</delete>
+
+<!-- 2. map 이용 -->
+<delete id="memDels3" parameterType="hashMap">
+ 	delete from member
+ 	<where>
+ 	member_num in
+ 	<foreach collection="memberNums" item="memberNum" index="index" open="(" close=")" separator=",">
+ 		#{memberNum}
+ 	</foreach>
+ 	</where>
+</delete>
+
+
 </mapper>

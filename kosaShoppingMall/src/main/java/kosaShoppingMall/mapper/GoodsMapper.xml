@@ -53,7 +53,41 @@
 	where goods_name like '%'||#{goodsWord}||'%' or goods_content like '%'||#{goodsWord}||'%'
 </select>
 
-<!-- goodsIpgo -->
+<!-- =========== foreach 사용으로 여러개 삭제 goods ===========  -->
+<!-- 1. 배열 사용 -->
+<delete id="goodsDels" parameterType="hashMap">
+ 	delete from goods
+ 	<where>
+ 	goods_num in
+ 	<foreach collection="deletes" item="goodsNum" index="index" open="(" close=")" separator="," >
+ 		#{goodsNum}
+ 	</foreach>
+ 	</where>
+</delete>
+
+<!-- 2. 리스트 사용 -->
+<delete id="goodsDeletes" parameterType="hashMap">
+ 	delete from goods
+ 	<where>
+ 	goods_num in
+ 	<foreach collection="cs" item="goodsNum" index="index" open="(" close=")" separator="," >
+ 		#{goodsNum}
+ 	</foreach>
+ 	</where>
+</delete>
+
+<!-- 3. HashMap 사용 -->
+<delete id="goodsRemove" parameterType="hashMap">
+ 	delete from goods
+ 	<where>
+ 	goods_num in
+ 	<foreach collection="goodsNums" item="goodsNum" index="index" open="(" close=")" separator="," >
+ 		#{goodsNum}
+ 	</foreach>
+ 	</where>
+</delete>
+
+<!-- ================================= goodsIpgo ======================================-->
 <select id="goodsItems" parameterType="String" resultType="goodsDTO">
 	select <include refid="base"/>
 	from goods
@@ -71,7 +105,7 @@
 	order by goods_num desc, ipgo_date desc
 </select>
 
-<!-- ============= resultMap =============
+<!-- ============= resultMap 시작 =============
 	<association> 대 <association> == 1 대 1
  	<id>는 primary key
 	property는 멤버필드명
@@ -126,7 +160,7 @@
 	where g.goods_num = i.goods_num and g.goods_num = #{goodsNum} 
 									and i.ipgo_date = #{ipgoDate}
 </select>
-<!-- ============= resultMap ============= -->
+<!-- ============= resultMap 끝 ============= -->
 
 <update id="goodsIpgoUpdate" parameterType="goodsIpgoDTO">
  	update goods_ipgo
@@ -138,4 +172,17 @@
  	delete from goods_ipgo
  	where goods_num = #{goodsNum} and ipgo_date = #{ipgoDate}
 </delete>
+
+<!--  =========== 여러개 삭제 goods_ipgo  =========== -->
+<delete id="goodsIpgoDels" parameterType="hashMap">
+ delete from goods_ipgo
+ where (goods_num, ipgo_date) in
+ <foreach collection="condition" item="nums" index="index" open="(" close=")" separator=",">
+ 	<foreach collection="nums" item="num" index="index" open="(" close=")" separator=",">
+ 		${num}
+ 	</foreach>
+ </foreach>
+</delete>
+
+
 </mapper>

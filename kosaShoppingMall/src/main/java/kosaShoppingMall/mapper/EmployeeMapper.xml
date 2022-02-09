@@ -38,4 +38,35 @@
  	where emp_id = #{empId}
 </update>
 
+<!--  =========== 여러개 삭제 ===========  -->
+<!-- 1. 배열 사용 -->
+<delete id="empDels" parameterType="hashMap">
+ 	delete from employees
+ 	<where> emp_id in
+ 	<foreach collection="deletes" item="empId" index="index" open="(" close=")" separator=",">
+ 		#{empId}
+ 	</foreach>
+ 	</where> 
+</delete>
+
+<!-- 2. 리스트 사용 -->
+<delete id="empDels2" parameterType="hashMap">
+ 	delete from employees
+ 	<where> emp_id in
+ 	<foreach collection="cs" item="empId" index="index" open="(" close=")" separator=",">
+ 		#{empId}
+ 	</foreach>
+ 	</where> 
+</delete>
+
+<!-- 3. Map 사용 -->
+<delete id="empDels3" parameterType="hashMap">
+ 	delete from employees
+ 	<where> emp_id in
+ 	<foreach collection="empIds" item="empId" index="index" open="(" close=")" separator=",">
+ 		#{empId}
+ 	</foreach>
+ 	</where> 
+</delete>
+
 </mapper>

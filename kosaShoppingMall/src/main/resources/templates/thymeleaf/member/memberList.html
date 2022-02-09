@@ -5,27 +5,35 @@
 <title>Insert title here</title>
 </head>
 <body>
-회원 관리 <br />
 
-회원수 : [[${list.size()}]]
+<form action="memDels" method="post">
 <table border=1>
 	<tr>
-		<td>번호</td>
-		<td>이름</td>
-		<td>아이디</td>
-		<td>전화번호</td>
+		<th colspan="5" width="500">회원 리스트</th>
+		<th width="100">회원수 : [[${list.size()}]]</th>
 	</tr>
-	<th:block th:each="dto : ${list}">
 	<tr>
+		<th>번호</th>
+		<th>회원 번호</th>
+		<th>이름</th>
+		<th>아이디</th>
+		<th>전화번호</th>
+		<th><input type="submit" value="삭제" /></th>
+	</tr>
+	<th:block th:each="dto, idx : ${list}">
+	<tr>
+		<th>[[${idx.count}]]</th>
 		<!-- Query String이 없을 경우에는 양쪽 끝에 파이프 "|" -->
 		<!-- ${dto.memberNum}: PathVariable -->
 		<td><a th:href="|memberInfo/${dto.memberNum}|">[[${dto.memberNum}]]</a></td>
 		<td>[[${dto.memberName}]]</td>
 		<td>[[${dto.memberId}]]</td>
 		<td>[[${dto.memberPhone}]]</td>
+		<th><input type="checkbox" name="delete" th:value="${dto.memberNum}" /></th>
 	</tr>
 	</th:block>
 </table>
+</form>
 <a href="memberRegist">회원 등록</a>
 </body>
 </html>

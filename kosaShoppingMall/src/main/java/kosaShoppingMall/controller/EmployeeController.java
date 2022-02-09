@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kosaShoppingMall.command.EmployeeCommand;
+import kosaShoppingMall.service.employees.EmpDelsService;
 import kosaShoppingMall.service.employees.EmployeeDeleteService;
 import kosaShoppingMall.service.employees.EmployeeInfoService;
 import kosaShoppingMall.service.employees.EmployeeListService;
@@ -36,6 +37,8 @@ public class EmployeeController {
 	EmployeePassUpdateService employeePassUpdateService;
 	@Autowired
 	EmployeePassChangService employeePassChangService;
+	@Autowired
+	EmpDelsService empDelsService;
 	
 	@ModelAttribute
 	// command가 필요한 곳(html에서 th:object)에 전부 command를 전송하겠습니다.
@@ -128,6 +131,13 @@ public class EmployeeController {
 	public String empPassUpdateOk(EmployeeCommand employeeCommand) {
 		employeePassChangService.execute(employeeCommand);
 		return "redirect:empInfo?num="+employeeCommand.getEmpId();
+	}
+	
+	// 여러개 삭제
+	@RequestMapping(value="empDels", method=RequestMethod.POST)
+	public String empDels(@RequestParam(value="delete") String[] deletes) {
+		empDelsService.execute(deletes);
+		return "redirect:empList";
 	}
 	
 }

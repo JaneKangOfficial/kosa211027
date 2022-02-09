@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kosaShoppingMall.command.GoodsCommand;
 import kosaShoppingMall.command.GoodsIpgoCommand;
 import kosaShoppingMall.service.goods.GoodsDelService;
+import kosaShoppingMall.service.goods.GoodsDelsService;
 import kosaShoppingMall.service.goods.GoodsDetailService;
 import kosaShoppingMall.service.goods.GoodsInsertService;
 import kosaShoppingMall.service.goods.GoodsIpgoDelService;
+import kosaShoppingMall.service.goods.GoodsIpgoDelsService;
 import kosaShoppingMall.service.goods.GoodsIpgoDetailService;
 import kosaShoppingMall.service.goods.GoodsIpgoListService;
 import kosaShoppingMall.service.goods.GoodsIpgoModifyService;
@@ -61,6 +63,10 @@ public class GoodsController {
 	GoodsIpgoUpdateService goodsIpgoUpdateService;
 	@Autowired
 	GoodsIpgoDelService goodsIpgoDelService;
+	@Autowired
+	GoodsDelsService goodsDelsService;
+	@Autowired
+	GoodsIpgoDelsService goodsIpgoDelscService;
 	
 	@RequestMapping("goodsSearch")
 	public String goodsSearch(@RequestParam(value="goodsWord") String goodsWord, Model model) {
@@ -116,6 +122,14 @@ public class GoodsController {
 		goodsDelService.execute(goodsNum);
 		return "redirect:goodsList";
 	}
+	
+	// 한번에 여러개 삭제
+	@RequestMapping(value="goodsDels", method=RequestMethod.POST)
+	public String goodsDels(@RequestParam(value="delete") String [] deletes) {
+		goodsDelsService.execute(deletes);
+		return "redirect:goodsList";
+	}
+	
 	
 	//============== goodsIpgo
 	
@@ -189,6 +203,13 @@ public class GoodsController {
 	@RequestMapping("goodsIpgoDel")
 	public String goodsIpgoDel(GoodsIpgoCommand goodsIpgoCommand) {
 		goodsIpgoDelService.execute(goodsIpgoCommand);
+		return "redirect:goodsIpgoList";
+	}
+	
+	// 한번에 여러개 삭제
+	@RequestMapping(value="goodsIpgoDels", method=RequestMethod.POST)
+	public String goodsIpgoDels(@RequestParam(value="delete") String[] deletes) {
+		goodsIpgoDelscService.execute(deletes);
 		return "redirect:goodsIpgoList";
 	}
 	

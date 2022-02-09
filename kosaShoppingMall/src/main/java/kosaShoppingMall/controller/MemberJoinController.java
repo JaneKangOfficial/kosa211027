@@ -64,4 +64,5 @@ public class MemberJoinController {
 		memberJoinService.execute(memberCommand);
 		return "redirect:/";
 	}
+	
 }
