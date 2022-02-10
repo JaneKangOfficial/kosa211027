@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-latest.js"></script>
-<script>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
 /*
 	$(function(){
 		$("#frm").submit(function(){
@@ -15,12 +15,58 @@
 		});
 	});
 */
+
+$(function(){
+	$("#empId").keyup(function(){
+		$.ajax({
+			type : "post",
+			url : "empIdCheck",
+			dataType : "text",
+			data : {"empId" : $("#empId").val()},
+			success : function(result){
+				$("#idCheck").html(result);
+				if(result == "사용 가능한 id입니다.") {
+					$('#idCheck').css("color","blue");
+				}else {
+					$('#idCheck').css("color","red");
+				}
+			},
+			error : function(){
+				alert("error 발생");
+				return;
+			}
+		});
+	});
+	
+	$("#empEmail").keyup(function(){
+		$.ajax({
+			type : "post",
+			url : "empEmailCheck",
+			dataType : "text",
+			data : {"empEmail" : $("#empEmail").val()},
+			success : function(result){
+				$("#emailCheck").html(result);
+				if(result == "사용 가능한 email입니다.") {
+					$('#emailCheck').css("color","blue");
+				}else {
+					$('#emailCheck').css("color","red");
+				}
+			},
+			error : function(){
+				alert("error 발생");
+				return;
+			}
+		});
+	});
+	
+});
 </script>
 </head>
 <body>
 등록 <br />
 <form action="empWrite" method="post" id="frm" th:object="${employeeCommand}">
-	아이디 : <input type="text" name="empId" th:value="${employeeCommand.empId}" />
+	아이디 : <input type="text" name="empId" id="empId" th:value="${employeeCommand.empId}" />
+	<span id="idCheck"></span>
 	<span th:if="${#fields.hasErrors('empId')}" th:errors="*{empId}"></span><br />
 	비밀번호 : <input type="password" name="empPw" id="empPw" th:value="${employeeCommand.empPw}" />
 	<span th:if="${#fields.hasErrors('empPw')}" th:errors="*{empPw}"></span><br />
@@ -32,7 +78,8 @@
 	<span th:if="${#fields.hasErrors('empAddr')}" th:errors="*{empAddr}"></span><br />
 	연락처 : <input type="tel" name="empPhone" th:value="${employeeCommand.empPhone}" />
 	<span th:if="${#fields.hasErrors('empPhone')}" th:errors="*{empPhone}"></span><br />
-	이메일 : <input type="tel" name="empEmail" th:value="${employeeCommand.empEmail}" />
+	이메일 : <input type="tel" name="empEmail" id="empEmail" th:value="${employeeCommand.empEmail}" />
+	<span id="emailCheck"></span>
 	<span th:if="${#fields.hasErrors('empEmail')}" th:errors="*{empEmail}"></span><br />
 	<input type="submit" value="등록" />
 </form>

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kosaShoppingMall.command.EmployeeCommand;
 import kosaShoppingMall.service.employees.EmpDelsService;
+import kosaShoppingMall.service.employees.EmpEmailCheckService;
+import kosaShoppingMall.service.employees.EmpIdCheckService;
 import kosaShoppingMall.service.employees.EmployeeDeleteService;
 import kosaShoppingMall.service.employees.EmployeeInfoService;
 import kosaShoppingMall.service.employees.EmployeeListService;
@@ -39,6 +41,11 @@ public class EmployeeController {
 	EmployeePassChangService employeePassChangService;
 	@Autowired
 	EmpDelsService empDelsService;
+	@Autowired
+	EmpIdCheckService empIdCheckService;
+	@Autowired
+	EmpEmailCheckService empEmailCheckService;
+
 	
 	@ModelAttribute
 	// command가 필요한 곳(html에서 th:object)에 전부 command를 전송하겠습니다.
@@ -48,8 +55,8 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping("empList")
-	public String empList(Model model) {
-		employeeListService.execute(model);
+	public String empList(@RequestParam(value="page", defaultValue = "1", required = false)Integer page, Model model) {
+		employeeListService.execute(model,page);
 		return "thymeleaf/employee/empList";
 	}
 	
@@ -77,6 +84,19 @@ public class EmployeeController {
 			result.rejectValue("empPwCon", "employeeCommand.empPwCon", "비밀번호 확인이 다릅니다.");
 			return "thymeleaf/employee/empForm";
 		}
+		
+		Integer i = empIdCheckService.execute(employeeCommand.getEmpId());
+		if(i == 1) {
+			result.rejectValue("empId", "employeeCommand.empId", "중복 아이디입니다.");
+			return "thymeleaf/employee/empForm";
+		}
+		
+		i = empEmailCheckService.execute(employeeCommand.getEmpEmail());
+		if(i == 1) {
+			result.rejectValue("empEmail", "employeeCommand.empEmail", "중복 이메일입니다.");
+			return "thymeleaf/employee/empForm";
+		}
+		
 		employeeWriteService.execute(employeeCommand);
 		return "redirect:/";
 	}
@@ -139,5 +159,7 @@ public class EmployeeController {
 		empDelsService.execute(deletes);
 		return "redirect:empList";
 	}
+	
+
 	
 }

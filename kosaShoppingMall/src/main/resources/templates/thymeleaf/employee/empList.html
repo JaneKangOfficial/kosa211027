@@ -9,8 +9,9 @@
 <table border=1>
 <caption><strong>직원 관리</strong></caption>
 		<tr>
-			<th colspan="3" width="300">직원 리스트</th>
-			<th width="100">사원수 : [[${list.size()}]]</th>
+			<th colspan="2" width="300">직원 리스트</th>
+			<th width="100">총 사원수 : [[${count}]]</th>
+			<th width="100">현재 페이지 사원수 : [[${list.size()}]]</th>
 		</tr>
 	<tr>
 		<th>번호</th>
@@ -26,6 +27,29 @@
 		<th><input type="checkbox" name="delete" th:value="${dto.empId}" /></th>
 	</tr>
 	</th:block>
+	
+	<tr>
+		<th colspan="4">
+			<th:block th:if="${page <= 1}">
+				[이전]
+			</th:block>
+			<th:block th:if="${page > 1}">
+				<a th:href="@{empList(page=${page-1})}">[이전]</a>
+			</th:block>
+			
+			<th:block th:each="i : ${#numbers.sequence(startPage, endPage)}" >
+				[<a th:href="@{empList(page=${i})}" ><th:block th:text="${i}" ></th:block></a>]
+			</th:block>
+				
+			<th:block th:if="${page < maxPage}">	
+				<a th:href="@{empList(page=${page+1})}">[이후]</a>
+			</th:block>
+			<th:block th:if="${page >= maxPage}">	
+				[이후]
+			</th:block>
+		</th>
+	</tr>
+	
 </table>
 </form>
 <a href="empJoin">직원 등록</a>

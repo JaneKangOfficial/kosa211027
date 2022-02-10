@@ -6,13 +6,15 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import kosaShoppingMall.domain.AuthInfo;
 import kosaShoppingMall.domain.EmployeeDTO;
+import kosaShoppingMall.domain.StartEndPageDTO;
 
 @Component
 @Repository(value="kosaShoppingMall.mapper.EmployeeMapper")
 public interface EmployeeMapper {
 	public Integer empInsert(EmployeeDTO dto);
-	public List<EmployeeDTO> selectAll();
+	public List<EmployeeDTO> selectAll(StartEndPageDTO dto);
 	public EmployeeDTO selectOne(String empId);
 	public Integer empUpdate(EmployeeDTO dto);
 	public Integer empDel(String empId);
@@ -25,4 +27,6 @@ public interface EmployeeMapper {
 	// 3. Map을 이용
 	public Integer empDels3(Map<String, Object> condition);
 	
+	// 전체 count
+	public int empCount();
 }

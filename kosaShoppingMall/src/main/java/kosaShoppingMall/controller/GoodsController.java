@@ -75,8 +75,8 @@ public class GoodsController {
 	}
 	
 	@RequestMapping("goodsList")
-	public String goodsList(Model model) {
-		goodsListService.execute(model);
+	public String goodsList(@RequestParam(value="page", defaultValue = "1", required = false) Integer page, Model model) {
+		goodsListService.execute(model,page);
 		return "thymeleaf/goods/goodsList";
 	}
 	
@@ -168,8 +168,8 @@ public class GoodsController {
 	}
 	
 	@RequestMapping("goodsIpgoList")
-	public String goodsIpgoList(Model model) {
-		goodsIpgoListService.execute(model);
+	public String goodsIpgoList(@RequestParam(value="page", defaultValue = "1", required = false) Integer page, Model model) {
+		goodsIpgoListService.execute(model, page);
 		return "thymeleaf/goods/goodsIpgoList";
 	}
 	

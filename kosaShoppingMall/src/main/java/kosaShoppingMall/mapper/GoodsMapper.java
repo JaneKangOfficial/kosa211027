@@ -10,6 +10,7 @@ import kosaShoppingMall.command.GoodsIpgoCommand;
 import kosaShoppingMall.domain.GoodsDTO;
 import kosaShoppingMall.domain.GoodsIpgoDTO;
 import kosaShoppingMall.domain.GoodsIpgoGoodsDTO;
+import kosaShoppingMall.domain.StartEndPageDTO;
 
 @Component
 @Repository("kosaShoppingMall.mapper.GoodsMapper")
@@ -17,7 +18,7 @@ public interface GoodsMapper {
 	// goods
 	public String autoNum();
 	public Integer goodsInsert(GoodsDTO dto);
-	public List<GoodsDTO> selectAll();
+	public List<GoodsDTO> selectAll(StartEndPageDTO dto);
 	public GoodsDTO selectOne(String goodsNum);
 	public Integer goodsUpdate(GoodsDTO dto);
 	public Integer goodsDel(String goodsNum);
@@ -31,11 +32,12 @@ public interface GoodsMapper {
 	// 3. Map을 이용한 방법
 	public Integer goodsRemove(Map<String, Object> condition);
 	
+	public int goodsCount();
 	
 	// goodsIpgo
 	public List<GoodsDTO> goodsItems(String goodsName);
 	public Integer ipgoInsert(GoodsIpgoDTO dto);
-	public List<GoodsIpgoDTO> ipgoSelect();
+	public List<GoodsIpgoDTO> ipgoSelect(StartEndPageDTO dto);
 	// 1 대 1 정보 / GoodsIpgoGoodsDTO에서 GoodsDTO 하나에 GoodsIpgoDTO 하나
 	// 1 대 1은 xml에서 resultMap
 	public GoodsIpgoGoodsDTO ipgoDetail(GoodsIpgoDTO dto); 
@@ -46,4 +48,5 @@ public interface GoodsMapper {
 	// 1. 리스트 사용
 	public Integer goodsIpgoDels(List<String[]> condition);
 
+	public int goodsIpgoCount();
 }

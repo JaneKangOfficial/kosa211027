@@ -3,6 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+	#leftMenu {
+		width: 25%;
+		float: left;
+		border-right: 1px solid gray;
+		height:500px;
+	}
+	#memberInfo {
+		width: 70%;
+		float: right;
+		padding-left: 30px;
+	}
+</style>
 </head>
 <body>
 <div id="wrapper">
@@ -19,6 +32,11 @@
 	<h2>입고 현황</h2>	
 	<form action="goodsIpgoDels" method="post">
 	<table border=1 width="600">
+		<tr>
+			<th colspan="4">입고 현황 목록</th>
+			<th>총 입고상품수 : [[${count}]]</th>
+			<th>현재페이지 상품수 : [[${list.size()}]]</th>
+		</tr>
 		<tr>
 			<th>순서</th>
 			<th>상품번호</th>
@@ -37,6 +55,28 @@
 			<th>[[${goodsCommand.ipgoQty}]]</th>
 			<th>[[${#dates.format(goodsCommand.madeDate, 'yyyy-MM-dd')}]]</th>
 			<th><input type="checkbox" name="delete" th:value="${goodsCommand.goodsNum}+'`'+${#dates.format(goodsCommand.ipgoDate, 'yyyy-MM-dd')}" /></th>
+		</tr>
+		
+		<tr>
+			<th colspan="6">
+				<th:block th:if="${page <= 1}">
+					[이전]
+				</th:block>
+				<th:block th:if="${page > 1}">
+					<a th:href="@{goodsIpgoList(page=${page-1})}">[이전]</a>
+				</th:block>
+				
+				<th:block th:each="i : ${#numbers.sequence(startPage, endPage)}" >
+					[<a th:href="@{goodsIpgoList(page=${i})}" ><th:block th:text="${i}" ></th:block></a>]
+				</th:block>
+					
+				<th:block th:if="${page < maxPage}">	
+					<a th:href="@{goodsIpgoList(page=${page+1})}">[이후]</a>
+				</th:block>
+				<th:block th:if="${page >= maxPage}">	
+					[이후]
+				</th:block>
+			</th>
 		</tr>
 	</table>
 	</form>

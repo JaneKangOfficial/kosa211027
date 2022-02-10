@@ -7,9 +7,31 @@
 <select id="findId" parameterType="String" resultType="authInfo">
 	select member_phone phone, member_id userId
 	from member
-	where member_email = #{email}
+	where lower(member_email) = lower(#{email})
 	union
 	select emp_phone, emp_id 
+	from employees
+	where lower(emp_email) = lower(#{email})
+</select>
+
+<!-- id 중복 체크 -->
+<select id="checkId" parameterType="String" resultType="authInfo">
+	select member_name name, member_id userId
+	from member
+	where member_id = #{userId}
+	union
+	select emp_name, emp_id
+	from employees
+	where emp_id = #{userId}
+</select>
+
+<!-- email 중복 체크 -->
+<select id="checkEmail" parameterType="String" resultType="authInfo">
+	select member_name name, member_id userId
+	from member
+	where member_email = #{email}
+	union
+	select emp_name, emp_id
 	from employees
 	where emp_email = #{email}
 </select>

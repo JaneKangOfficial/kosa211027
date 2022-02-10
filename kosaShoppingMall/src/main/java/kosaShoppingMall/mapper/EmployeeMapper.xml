@@ -10,9 +10,11 @@
 	values (#{empId},#{empPw},#{empName},#{empAddr},#{empPhone},#{empEmail})
 </insert>
 
-<select id="selectAll" resultType="empDTO">
-	select emp_id empId, emp_pw empPw, emp_name empName, emp_addr empAddr, emp_phone empPhone, emp_email empEmail
-	from employees
+<select id="selectAll" resultType="empDTO" parameterType="startEndPageDTO">
+	select *
+	from (select rownum rn, emp_id empId, emp_pw empPw, emp_name empName, emp_addr empAddr, emp_phone empPhone, emp_email empEmail 
+			from employees)
+	where rn between #{startRow} and #{endRow}
 </select>
 
 <select id="selectOne" parameterType="String" resultType="empDTO">
@@ -69,4 +71,8 @@
  	</where> 
 </delete>
 
+<!-- 전체 count -->
+<select id="empCount" resultType="int">
+	select count(*) from employees
+</select>
 </mapper>

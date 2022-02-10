@@ -13,8 +13,9 @@
 
 <table border=1 width="70%">
 	<tr valign="middle">
-		<td colspan="4">회원리스트</td>
-		<td align="center">회원수 : ${list.size()}</td>
+		<td colspan="3">회원리스트</td>
+		<td align="center">총 회원수 : ${count}</td>
+		<td align="center">현재 페이지 회원수 : ${list.size()}</td>
 	</tr>
 	<tr>
 		<th>회원 아이디</th>
@@ -34,6 +35,28 @@
 		<td align="center"><fmt:formatDate value="${dto.memberRegist}" pattern="yyyy-MM-dd"/></td>
 	</tr>
 	</c:forEach>
+	
+	<tr>
+		<th colspan="5">
+			<c:if test="${page <= 1}">
+				[이전]
+			</c:if>
+			<c:if test="${page > 1}">
+				<a href="memList?page=${page - 1}">[이전]</a>
+			</c:if>
+			
+			<c:forEach begin="${startPage}" end="${endPage}" var="i" step="1">
+				[<a href="memList?page=${i}">${i}</a>]
+			</c:forEach>
+			
+			<c:if test="${page < maxPage}">
+				<a href="memList?page=${page + 1}">[이후]</a>
+			</c:if>
+			<c:if test="${page >= maxPage}">
+				[이후]
+			</c:if>
+		</th>
+	</tr>
 </table>
 <a href="memberRegist">회원등록</a>
 </body>

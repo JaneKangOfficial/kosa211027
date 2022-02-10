@@ -18,10 +18,12 @@
 	values(#{goodsNum},#{goodsName},#{goodsPrice},#{goodsContent},#{deliveryCost})
 </insert>
 
-<select id="selectAll" resultType="goodsDTO">
-	select <include refid="base" />
-	from goods
-	order by goods_num desc
+<select id="selectAll" resultType="goodsDTO" parameterType="startEndPageDTO">
+	select *
+	from (select rownum rn, <include refid="base" />
+			from goods
+			order by goods_num desc)
+	where rn between #{startRow} and #{endRow}
 </select>
 
 <select id="selectOne" parameterType="String" resultType="goodsDTO">
@@ -87,6 +89,10 @@
  	</where>
 </delete>
 
+<select id="goodsCount" resultType="int">
+ 	select count(*) from goods
+</select>
+
 <!-- ================================= goodsIpgo ======================================-->
 <select id="goodsItems" parameterType="String" resultType="goodsDTO">
 	select <include refid="base"/>
@@ -99,10 +105,12 @@
  	values(#{ipgoDate}, #{goodsNum}, #{ipgoQty}, #{madeDate})
 </insert>
 
-<select id="ipgoSelect" resultType="goodsIpgoDTO">
-	select ipgo_date ipgoDate, goods_num goodsNum, ipgo_qty ipgoQty, made_date madeDate
-	from goods_ipgo
-	order by goods_num desc, ipgo_date desc
+<select id="ipgoSelect" resultType="goodsIpgoDTO" parameterType="startEndPageDTO">
+	select *
+	from 	(select rownum rn, ipgo_date ipgoDate, goods_num goodsNum, ipgo_qty ipgoQty, made_date madeDate
+				from goods_ipgo
+				order by goods_num desc, ipgo_date desc)
+	where rn between #{startRow} and #{endRow}	
 </select>
 
 <!-- ============= resultMap 시작 =============
@@ -184,5 +192,7 @@
  </foreach>
 </delete>
 
-
+<select id="goodsIpgoCount" resultType="int">
+	select count(*) from goods_ipgo
+</select>
 </mapper>

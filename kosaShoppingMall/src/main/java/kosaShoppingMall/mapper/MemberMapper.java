@@ -8,12 +8,13 @@ import org.springframework.stereotype.Repository;
 
 import kosaShoppingMall.domain.AuthInfo;
 import kosaShoppingMall.domain.MemberDTO;
+import kosaShoppingMall.domain.StartEndPageDTO;
 
 @Component
 @Repository("kosaShoppingMall.mapper.MemberMapper")
 public interface MemberMapper {
 	public Integer memberInsert(MemberDTO dto);
-	public List<MemberDTO> selectAll();
+	public List<MemberDTO> selectAll(StartEndPageDTO dto);
 	public MemberDTO selectOne(String memberNum);
 	public Integer memberUpdate(MemberDTO dto);
 	public Integer memberDel(String memberNum);
@@ -30,5 +31,7 @@ public interface MemberMapper {
 	public Integer memDels2(List<String> cs);
 	// 3. map 이용
 	public Integer memDels3(Map<String, Object> condition);
+	
+	public int memberCount();
 
 }

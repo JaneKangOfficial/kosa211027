@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kosaShoppingMall.command.MemberCommand;
+import kosaShoppingMall.service.EmailCheckService;
+import kosaShoppingMall.service.IdCheckService;
 import kosaShoppingMall.service.member.MemberNumService;
 import kosaShoppingMall.service.memberJoin.MemberJoinService;
 
@@ -22,6 +24,10 @@ public class MemberJoinController {
 	MemberJoinService memberJoinService;
 	@Autowired
 	MemberNumService memberNumService;
+	@Autowired
+	IdCheckService idCheckService;
+	@Autowired
+	EmailCheckService emailCheckService;
 	
 	@ModelAttribute
 	public MemberCommand setMemberCommand() {
@@ -61,6 +67,19 @@ public class MemberJoinController {
 			result.rejectValue("memberPwCon", "memberCommand.memberPwCon", "비밀번호 확인이 일치하지 않습니다.");
 			return "thymeleaf/membership/memberJoinForm";
 		}
+		
+		Integer i = idCheckService.execute(memberCommand.getMemberId());
+		if(i == 1) {
+			result.rejectValue("memberId", "memberCommand.memberId", "중복 아이디입니다.");
+			return "thymeleaf/membership/memberJoinForm";
+		}
+		
+		i = emailCheckService.execute(memberCommand.getMemberEmail());
+		if(i == 1) {
+			result.rejectValue("memberEmail", "memberCommand.memberEmail", "중복 이메일입니다.");
+			return "thymeleaf/membership/memberJoinForm";
+		}
+		
 		memberJoinService.execute(memberCommand);
 		return "redirect:/";
 	}

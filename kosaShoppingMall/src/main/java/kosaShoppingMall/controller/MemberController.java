@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kosaShoppingMall.command.MemberCommand;
 import kosaShoppingMall.service.member.MemberDeleteService;
 import kosaShoppingMall.service.member.MemberDelsService;
+import kosaShoppingMall.service.member.MemberEmailCheckService;
+import kosaShoppingMall.service.member.MemberIdCheckService;
 import kosaShoppingMall.service.member.MemberInfoService;
 import kosaShoppingMall.service.member.MemberInsertService;
 import kosaShoppingMall.service.member.MemberListService;
@@ -37,38 +39,56 @@ public class MemberController {
 	MemberNumService memberNumService;
 	@Autowired
 	MemberDelsService memberDelsService;
+	@Autowired
+	MemberIdCheckService memberIdCheckService;
+	@Autowired
+	MemberEmailCheckService memberEmailCheckService;
 
 	@ModelAttribute
 	MemberCommand setMemberCommand() {
 		return new MemberCommand();
 	}
 	
+	// required=false 는 쿼리스트링이 없어도 된다. defaultValue로 1을 주겠다.
 	@RequestMapping("memList")
-	public String memList(Model model) {
-		memberListService.execute(model);
-		return "thymeleaf/member/memberList"; // html 사용
-		//return "member/memberList"; // jsp 사용
+	public String memList(@RequestParam(value="page", defaultValue = "1", required = false)Integer page, Model model) {
+		memberListService.execute(model, page);
+		// return "thymeleaf/member/memberList"; // html 사용
+		return "member/memberList"; // jsp 사용
 	}
 	
 	@RequestMapping(value="memberRegist", method=RequestMethod.GET)
 	public String memberForm1(MemberCommand memberCommand, Model model) {
 		memberNumService.execute(memberCommand, model);
-		//return "thymeleaf/member/memberForm"; // html, command 사용 - spring boot
-		return "member/memberForm"; // jsp, model 사용 - spring
+		return "thymeleaf/member/memberForm"; // html, command 사용 - spring boot
+		//return "member/memberForm"; // jsp, model 사용 - spring
 	}
 	
 	@RequestMapping(value="memberRegist", method=RequestMethod.POST)
 	public String memberForm(@Validated MemberCommand memberCommand, BindingResult result) {
 		if(result.hasErrors()) {
-			//return "thymeleaf/member/memberForm";
-			return "member/memberForm";
+			return "thymeleaf/member/memberForm";
+			//return "member/memberForm";
 		}
 		
 		if(!memberCommand.isEmpPwEqualsEmpPwCon()) {
 			result.rejectValue("memberPw", "memberCommand.memberPw", "비밀번호 확인이 일치하지 않습니다.");
-			//return "thymeleaf/member/memberForm";
-			return "member/memberForm";
+			return "thymeleaf/member/memberForm";
+			//return "member/memberForm";
 		}
+		
+		Integer i = memberIdCheckService.execute(memberCommand.getMemberId());
+		if(i == 1) {
+			result.rejectValue("memberId", "memberCommand.memberId", "중복 아이디입니다.");
+			return "thymeleaf/member/memberForm";
+		}
+		
+		i = memberEmailCheckService.execute(memberCommand.getMemberEmail());
+		if(i == 1) {
+			result.rejectValue("memberEmail", "memberCommand.memberEmail", "중복 이메일입니다.");
+			return "thymeleaf/member/memberForm";
+		}
+		
 		memberInsertService.execute(memberCommand);
 		return "redirect:memList";
 	}

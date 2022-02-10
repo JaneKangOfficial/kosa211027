@@ -3,6 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+	#leftMenu {
+		width: 25%;
+		float: left;
+		border-right: 1px solid gray;
+		height:500px;
+	}
+	#memberInfo {
+		width: 70%;
+		float: right;
+		padding-left: 30px;
+	}
+</style>
 </head>
 <body>
 <div id="wrapper">
@@ -26,8 +39,9 @@
 	<table border="1" width="800">
 		<caption><strong>상품 관리</strong></caption>
 		<tr>
-			<th colspan="5">상품 리스트</th>
-			<th width="150">상품 개수 : [[${list.size()}]] </th>
+			<th colspan="4">상품 리스트</th>
+			<th width="150">총 상품 개수 : [[${count}]] </th>
+			<th width="150">현재 페이지 상품 개수 : [[${list.size()}]] </th>
 		</tr>
 		<tr>
 			<th>번호</th>
@@ -47,6 +61,29 @@
 			<th><input type="checkbox" th:value="${goodsCommand.goodsNum}" name="delete" /></th>
 		</tr>
 		</th:block>
+		
+		<tr>
+			<th colspan="6">
+				<th:block th:if="${page <= 1}">
+					[이전]
+				</th:block>
+				<th:block th:if="${page > 1}">
+					<a th:href="@{goodsList(page=${page-1})}">[이전]</a>
+				</th:block>
+				
+				<th:block th:each="i : ${#numbers.sequence(startPage, endPage)}" >
+					[<a th:href="@{goodsList(page=${i})}" ><th:block th:text="${i}" ></th:block></a>]
+				</th:block>
+					
+				<th:block th:if="${page < maxPage}">	
+					<a th:href="@{goodsList(page=${page+1})}">[이후]</a>
+				</th:block>
+				<th:block th:if="${page >= maxPage}">	
+					[이후]
+				</th:block>
+			</th>
+		</tr>
+			
 	</table>
 	</form>
 	<a href="goodsRegist">상품 등록</a>

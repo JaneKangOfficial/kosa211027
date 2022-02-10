@@ -14,10 +14,12 @@
 	values (#{memberNum}, #{memberId}, #{memberName}, #{memberPw}, #{memberAddr}, #{memberBirth}, #{memberEmail}, #{gender}, #{memberRegist}, #{memberPhone})
 </insert>
 
-<select id="selectAll" resultType="memDTO">
-	select member_num memberNum, member_id memberId, member_pw memberPw, member_name memberName, member_addr memberAddr, member_birth memberBirth, member_phone memberPhone, member_regist memberRegist, gender, member_email memberEmail
-	from member
-	order by member_num desc
+<select id="selectAll" resultType="memDTO" parameterType="startEndPageDTO">
+select *
+from (select rownum rn, member_num memberNum, member_id memberId, member_pw memberPw, member_name memberName, member_addr memberAddr, member_birth memberBirth, member_phone memberPhone, member_regist memberRegist, gender, member_email memberEmail
+	 from member
+	 order by member_num desc)
+where rn between #{startRow} and #{endRow}
 </select>
 
 <select id="selectOne" resultType="memDTO" parameterType="String">
@@ -104,5 +106,9 @@
  	</where>
 </delete>
 
+<!-- 페이징에 필요한 전체개수 -->
+<select id="memberCount" resultType="int">
+select count(*) from member
+</select>
 
 </mapper>
