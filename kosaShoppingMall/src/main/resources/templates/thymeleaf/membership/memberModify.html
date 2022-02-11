@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+
 <!-- <link href="memMypage.css" rel="stylesheet" type="text/css" />  -->
 <style type="text/css">
 	#leftMenu {
@@ -17,12 +19,37 @@
 		padding-left: 30px;
 	}
 </style>
+
+<script type="text/javascript">
+$(function(){
+	$("#memberEmail").keyup(function(){
+		$.ajax({
+			type: "post",
+			url : "memEmailCheck",
+			dataType : "text",
+			data : {"memberEmail" : $("#memberEmail").val()},
+			success : function(result){
+				$("#emailCheck").html(result);
+				if(result == "사용 가능한 email입니다.") {
+					$('#emailCheck').css("color","blue");
+				}else {
+					$('#emailCheck').css("color","red");
+				}
+			},
+			error : function(){
+				alert("error 발생");
+				return;
+			}
+		});
+	});
+});
+</script>
 </head>
 <body>
 <div id="leftMenu" >
 	<ul>
 		<li><a href="memberDetail">내 정보 보기</a></li>
-		<li><a href="memberPw">내 정보 수정</a></li>
+		<li><a href="memberModify">내 정보 수정</a></li>
 		<li><a href="memberPwForm">비밀번호 수정</a></li>
 		<li><a href="memberUserDel">회원 탈퇴</a></li>
 	</ul>
@@ -112,6 +139,7 @@
 			</th>
 			<td>
 				<input type="email" name="memberEmail" id="memberEmail" th:value="${memberCommand.memberEmail}"/>
+				<span id="emailCheck"></span>
 				<span th:if="${#fields.hasErrors('memberEmail')}" th:errors="*{memberEmail}"></span><br />
 			</td>
 		</tr>

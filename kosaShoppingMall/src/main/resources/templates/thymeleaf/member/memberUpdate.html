@@ -3,6 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#memberEmail").keyup(function(){
+		$.ajax({
+			type: "post",
+			url : "memEmailCheck",
+			dataType : "text",
+			data : {"memberEmail" : $("#memberEmail").val()},
+			success : function(result){
+				$("#emailCheck").html(result);
+				if(result == "사용 가능한 email입니다.") {
+					$('#emailCheck').css("color","blue");
+				}else {
+					$('#emailCheck').css("color","red");
+				}
+			},
+			error : function(){
+				alert("error 발생");
+				return;
+			}
+		});
+	});
+});
+</script>
 </head>
 <body>
 수정 <br />
@@ -14,7 +39,7 @@
 	번호 : <input type="text" name="memberNum" th:value="${memberCommand.memberNum}" readonly="readonly"/><br />
 	<span th:if="${#fields.hasErrors('memberNum')}" th:errors="*{memberNum}"></span><br />
 	
-	회원 아이디 : <input type="text" name="memberId" th:value="${memberCommand.memberId}" /><br />
+	회원 아이디 : <input type="text" id="memberId" name="memberId" th:value="${memberCommand.memberId}" readonly="readonly" /><br />
 	<span th:if="${#fields.hasErrors('memberId')}" th:errors="*{memberId}"></span><br />
 	
 	회원 이름 : <input type="text" name="memberName" th:value="${memberCommand.memberName}" /><br />
@@ -34,7 +59,8 @@
 	생년월일 : <input type="date" name="memberBirth" th:value="${#dates.format(memberCommand.memberBirth,'yyyy-MM-dd')}"/><br />
 	<span th:if="${#fields.hasErrors('memberBirth')}" th:errors="*{memberBirth}"></span><br />
 	
-	회원 이메일 : <input type="email" name="memberEmail" th:value="${memberCommand.memberEmail}"/><br />
+	회원 이메일 : <input type="email" id="memberEmail" name="memberEmail" th:value="${memberCommand.memberEmail}"/>
+	<span id="emailCheck"></span>
 	<span th:if="${#fields.hasErrors('memberEmail')}" th:errors="*{memberEmail}"></span><br />
 	
 	등록일 : <input type="date" name="memberRegist" th:value="${#dates.format(memberCommand.memberRegist,'yyyy-MM-dd')}"/>

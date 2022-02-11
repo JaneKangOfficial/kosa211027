@@ -15,6 +15,33 @@
 		padding-left: 30px;
 	}
 </style>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#empEmail").keyup(function(){
+		$.ajax({
+			type : "post",
+			url : "empEmailCheck",
+			dataType : "text",
+			data : {"empEmail" : $("#empEmail").val()},
+			success : function(result){
+				$("#emailCheck").html(result);
+				if(result == "사용 가능한 email입니다.") {
+					$('#emailCheck').css("color","blue");
+				}else {
+					$('#emailCheck').css("color","red");
+				}
+			},
+			error : function(){
+				alert("error 발생");
+				return;
+			}
+		});
+	});
+	
+});
+</script>
 </head>
 <body>
 <div id="leftMenu">
@@ -84,6 +111,7 @@
 			</th>
 			<td>
 				<input type="email" name="empEmail" id="empEmail" th:value="${employeeCommand.empEmail}"/>
+				<span id="emailCheck"></span>
 				<span th:if="${#fields.hasErrors('empEmail')}" th:errors="*{empEmail}"></span><br />
 			</td>
 		</tr>

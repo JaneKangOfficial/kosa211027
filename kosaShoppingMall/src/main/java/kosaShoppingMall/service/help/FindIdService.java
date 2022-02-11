@@ -17,6 +17,8 @@ public class FindIdService {
 	LoginMapper loginMapper;
 	
 	public String execute(FindIdCommand findIdCommand, BindingResult result, Model model) {
+
+		// id 찾기
 		AuthInfo authInfo = loginMapper.findId(findIdCommand.getMemberEmail());
 		
 		if(authInfo == null) {
@@ -34,5 +36,6 @@ public class FindIdService {
 				
 			}
 		}
+
 	}
 }

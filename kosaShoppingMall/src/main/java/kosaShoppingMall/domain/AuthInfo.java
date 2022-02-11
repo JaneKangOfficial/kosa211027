@@ -13,4 +13,6 @@ public class AuthInfo {
 	String grade;
 	
 	String phone;
+	
+	String memberOk;
 }

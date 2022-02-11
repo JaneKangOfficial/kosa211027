@@ -12,9 +12,7 @@ public class MemberEmailCheckService {
 	LoginMapper loginMapper;
 	
 	public Integer execute(String memberEmail) {
-		System.out.println("111 " + memberEmail);
 		AuthInfo authInfo = loginMapper.checkEmail(memberEmail);
-		System.out.println("222 " + authInfo);
 		
 		if(authInfo != null) {
 			return 1;

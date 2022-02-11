@@ -71,6 +71,16 @@ public class CheckController {
 		}
 	}
 	
+	@RequestMapping(value="/empMypage/empEmailCheck", method=RequestMethod.POST)
+	public String empEmailCheck2(@RequestParam(value="empEmail") String empEmail) {
+		Integer i = empEmailCheckService.execute(empEmail);
+		if(i == 0) {
+			return "사용 가능한 email입니다.";
+		}else {
+			return "사용 중인 email입니다.";
+		}
+	}
+	
 	@RequestMapping(value="/mem/memIdCheck", method=RequestMethod.POST)
 	public String memIdCheck(@RequestParam(value="memberId") String memberId) {
 		Integer i = memberIdCheckService.execute(memberId);
@@ -83,6 +93,16 @@ public class CheckController {
 	
 	@RequestMapping(value="/mem/memEmailCheck", method=RequestMethod.POST)
 	public String memEmailCheck(@RequestParam(value="memberEmail") String memberEmail) {
+		Integer i = memberEmailCheckService.execute(memberEmail);
+		if(i == 0) {
+			return "사용 가능한 email입니다.";
+		}else {
+			return "사용 중인 email입니다.";
+		}
+	}
+	
+	@RequestMapping(value="/mypage/memEmailCheck", method=RequestMethod.POST)
+	public String memEmailCheck2(@RequestParam(value="memberEmail") String memberEmail) {
 		Integer i = memberEmailCheckService.execute(memberEmail);
 		if(i == 0) {
 			return "사용 가능한 email입니다.";

@@ -120,6 +120,13 @@ public class EmployeeController {
 	public String empUpdate(EmployeeCommand employeeCommand, BindingResult result) {
 		String path = employeeUpdateService.execute(employeeCommand, result);
 		System.out.println(path);
+		
+		Integer i = empEmailCheckService.execute(employeeCommand.getEmpEmail());
+		if(i == 1) {
+			result.rejectValue("empEmail", "employeeCommand.empEmail", "중복 이메일입니다.");
+			return "thymeleaf/employee/empModify";
+		}
+		
 		return path;
 	}
 	

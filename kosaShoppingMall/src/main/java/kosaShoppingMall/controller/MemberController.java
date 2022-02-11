@@ -103,19 +103,26 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="memModify", method=RequestMethod.GET)
-	public String memModify(@RequestParam(value="num") String memberNum, Model model) {
+	public String memModify(@RequestParam(value="num") String memberNum, Model model, MemberCommand memberCommand) {
 		memberInfoService.execute(memberNum, model);
-		//return "thymeleaf/member/memberUpdate";
-		return "member/memberUpdate";
+		return "thymeleaf/member/memberUpdate";
+		//return "member/memberUpdate";
 	}
 	
 	@RequestMapping(value="memModify", method=RequestMethod.POST)
 	public String memModify(@Validated MemberCommand memberCommand, BindingResult result) {
 		// Validated 검사시 result.hasErrors 사용해서 error 확인하기!
 		if(result.hasErrors()) {
-			//return "thymeleaf/member/memberForm";
-			return "member/memberForm";
+			return "thymeleaf/member/memberForm";
+			//return "member/memberForm";
 		}
+		
+		Integer i = memberEmailCheckService.execute(memberCommand.getMemberEmail());
+		if(i == 1) {
+			result.rejectValue("memberEmail", "memberCommand.memberEmail", "중복 이메일입니다.");
+			return "thymeleaf/member/memberUpdate";
+		}
+		
 		memberUpdateService.execute(memberCommand);
 		return "redirect:memberInfo/"+memberCommand.getMemberNum();
 //		return "redirect:memberInfo?num="+memberCommand.getMemberNum();

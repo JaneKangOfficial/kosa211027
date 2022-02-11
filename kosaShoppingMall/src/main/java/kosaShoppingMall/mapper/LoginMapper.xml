@@ -4,6 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kosaShoppingMall.mapper.LoginMapper">
+<!-- 아이디 찾기 -->
 <select id="findId" parameterType="String" resultType="authInfo">
 	select member_phone phone, member_id userId
 	from member
@@ -12,6 +13,17 @@
 	select emp_phone, emp_id 
 	from employees
 	where lower(emp_email) = lower(#{email})
+</select>
+
+<!-- 이메일로 아이디 찾기 -->
+<select id="findIdByEmail" parameterType="kosaShoppingMall.command.FindIdCommand" resultType="string">
+	select member_id
+	from member
+	where lower(member_email) = lower(#{memberEmail}) and member_phone = #{memberPhone}
+	union
+	select emp_id
+	from employees
+	where lower(emp_email) = lower(#{memberEmail}) and emp_phone = #{memberPhone}
 </select>
 
 <!-- id 중복 체크 -->
@@ -34,6 +46,17 @@
 	select emp_name, emp_id
 	from employees
 	where emp_email = #{email}
+</select>
+
+<!-- email로 비밀번호 찾기 -->
+<select id="findPw" parameterType="kosaShoppingMall.command.FindPasswordCommand" resultType="string">
+	select 'mem'
+	from member
+	where member_id = #{userId} and member_phone = #{userPhone} and member_email = #{userEmail}
+	union
+	select 'emp'
+	from employees
+	where emp_id = #{userId} and emp_phone = #{userPhone} and emp_email = #{userEmail}
 </select>
 
 </mapper>

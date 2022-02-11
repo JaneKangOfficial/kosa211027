@@ -1,7 +1,6 @@
 package kosaShoppingMall.controller;
 
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import kosaShoppingMall.command.MemberCommand;
-import kosaShoppingMall.domain.AuthInfo;
 import kosaShoppingMall.service.member.MemberDeleteService;
+import kosaShoppingMall.service.member.MemberEmailCheckService;
 import kosaShoppingMall.service.member.MemberNumService;
 import kosaShoppingMall.service.mypage.DelService;
 import kosaShoppingMall.service.mypage.DetailService;
@@ -36,6 +35,8 @@ public class MemberMypageController {
 	MemberDeleteService memberDeleteService;
 	@Autowired
 	DelService delService;
+	@Autowired
+	MemberEmailCheckService memberEmailCheckService;
  
 	@ModelAttribute
 	public MemberCommand setMemberCommand() {
@@ -48,7 +49,7 @@ public class MemberMypageController {
 		return "thymeleaf/membership/memberDetail";
 	}
 	
-	@RequestMapping(value="memberPw", method = RequestMethod.GET)
+	@RequestMapping(value="memberModify", method = RequestMethod.GET)
 	public String memberPw(HttpSession session, Model model) {
 		detailService.execute(session, model);
 		return "thymeleaf/membership/memberModify";
@@ -57,6 +58,12 @@ public class MemberMypageController {
 	@RequestMapping(value="memberModify", method = RequestMethod.POST)
 	public String memberModify(@Validated MemberCommand memberCommand, BindingResult result) {
 		if(result.hasErrors()) {
+			return "thymeleaf/membership/memberModify";
+		}
+		
+		Integer i = memberEmailCheckService.execute(memberCommand.getMemberEmail());
+		if(i == 1) {
+			result.rejectValue("memberEmail", "memberCommand.memberEmail", "중복 이메일입니다.");
 			return "thymeleaf/membership/memberModify";
 		}
 		

@@ -16,6 +16,7 @@ import kosaShoppingMall.command.EmployeeCommand;
 import kosaShoppingMall.service.empMypage.EmpDetailService;
 import kosaShoppingMall.service.empMypage.EmpPwUpdateService;
 import kosaShoppingMall.service.empMypage.EmpUpdateService;
+import kosaShoppingMall.service.employees.EmpEmailCheckService;
 
 @Controller
 @RequestMapping("empMypage")
@@ -26,6 +27,9 @@ public class EmpMypageController {
 	EmpUpdateService empUpdateService;
 	@Autowired
 	EmpPwUpdateService empPwUpdateService;
+	@Autowired
+	EmpEmailCheckService empEmailCheckService;
+	
 	@ModelAttribute
 	EmpPwUpdateCommand setEmpPwUpdateCommand() {
 		 return new EmpPwUpdateCommand();
@@ -46,9 +50,13 @@ public class EmpMypageController {
 	
 	@RequestMapping(value="empUpdate", method = RequestMethod.POST )
 	public String empUpdateOk(@Validated EmployeeCommand employeeCommand, BindingResult result) {
-		System.out.println("111");
 		if(result.hasErrors()) {
-			System.out.println("222");
+			return "thymeleaf/employeesShip/empUpdate";
+		}
+		
+		Integer i = empEmailCheckService.execute(employeeCommand.getEmpEmail());
+		if(i == 1) {
+			result.rejectValue("empEmail", "employeeCommand.empEmail", "중복 이메일입니다.");
 			return "thymeleaf/employeesShip/empUpdate";
 		}
 		

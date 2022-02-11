@@ -33,5 +33,11 @@ public interface MemberMapper {
 	public Integer memDels3(Map<String, Object> condition);
 	
 	public int memberCount();
+	
+	// 메일로 비밀번호 변경
+	public Integer changPw(AuthInfo authInfo);
+	
+	// 이메일로 가입 인증
+	public Integer joinOkUpdate(MemberDTO dto);
 
 }

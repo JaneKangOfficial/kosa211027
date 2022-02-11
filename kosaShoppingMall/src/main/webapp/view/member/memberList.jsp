@@ -11,9 +11,9 @@
 </head>
 <body>
 
-<table border=1 width="70%">
+<table border=1 width="90%">
 	<tr valign="middle">
-		<td colspan="3">회원리스트</td>
+		<td colspan="3" align="center">회원 리스트</td>
 		<td align="center">총 회원수 : ${count}</td>
 		<td align="center">현재 페이지 회원수 : ${list.size()}</td>
 	</tr>

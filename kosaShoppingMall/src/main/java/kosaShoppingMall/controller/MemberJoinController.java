@@ -15,6 +15,7 @@ import kosaShoppingMall.service.EmailCheckService;
 import kosaShoppingMall.service.IdCheckService;
 import kosaShoppingMall.service.member.MemberNumService;
 import kosaShoppingMall.service.memberJoin.MemberJoinService;
+import kosaShoppingMall.service.memberJoin.MemberMailService;
 
 @Controller
 @RequestMapping("register")
@@ -28,6 +29,8 @@ public class MemberJoinController {
 	IdCheckService idCheckService;
 	@Autowired
 	EmailCheckService emailCheckService;
+	@Autowired
+	MemberMailService memberMailService;
 	
 	@ModelAttribute
 	public MemberCommand setMemberCommand() {
@@ -57,7 +60,7 @@ public class MemberJoinController {
 	}
 	
 	@RequestMapping("memberJoinAction")
-	public String joinAction(@Validated MemberCommand memberCommand, BindingResult result) {
+	public String joinAction(@Validated MemberCommand memberCommand, BindingResult result, Model model) {
 
 		if(result.hasErrors()) {
 			return "thymeleaf/membership/memberJoinForm";
@@ -79,9 +82,21 @@ public class MemberJoinController {
 			result.rejectValue("memberEmail", "memberCommand.memberEmail", "중복 이메일입니다.");
 			return "thymeleaf/membership/memberJoinForm";
 		}
-		
-		memberJoinService.execute(memberCommand);
-		return "redirect:/";
+		memberJoinService.execute(memberCommand, model);
+		return "thymeleaf/membership/welcome";
+	}
+	
+	@RequestMapping("memberMail")
+	public String memberMail(@RequestParam(value="num") String num, 
+						@RequestParam(value="reciver") String reciver,
+						@RequestParam(value="userId") String userId) {
+	
+		Integer i = memberMailService.execute(num, reciver, userId);
+		if(i > 0) {
+			return "thymeleaf/membership/success";
+		}else {
+			return "thymeleaf/membership/fail";
+		}
 	}
 	
 }

@@ -29,4 +29,7 @@ public interface EmployeeMapper {
 	
 	// 전체 count
 	public int empCount();
+	
+	// 메일로 비밀번호 찾기
+	public Integer changPw(AuthInfo authInfo);
 }
