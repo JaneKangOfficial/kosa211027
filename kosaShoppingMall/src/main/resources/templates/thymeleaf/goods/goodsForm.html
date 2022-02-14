@@ -29,7 +29,7 @@
    </div>
 
 	<div id="memberInfo">
-	<form action="goodsRegist" method="post" name="frm" id="frm" th:object="${goodsCommand}">
+	<form action="goodsRegist" method="post" name="frm" id="frm" th:object="${goodsCommand}" enctype="multipart/form-data">
 	<input type="hidden" name="visitCount" value="0" />
 	<table border="1">
 		<caption><strong>상품 등록</strong></caption>
@@ -43,29 +43,42 @@
 		<tr>
 			<th>상품명</th>
 			<td>
-				<input type="text" name="goodsName" />
+				<input type="text" name="goodsName" th:value="${goodsCommand.goodsName}"/>
 				<span th:if="${#fields.hasErrors('goodsName')}" th:errors="*{goodsName}"></span>
 			</td>
 		</tr>
 		<tr>
 			<th>상품 가격</th>
 			<td>
-				<input type="number" name="goodsPrice" min="1000" step="1000" value="1000"/>
+				<input type="number" name="goodsPrice" min="1000" step="1000" value="1000" />
 				<span th:if="${#fields.hasErrors('goodsPrice')}" th:errors="*{goodsPrice}"></span>
 			</td>
 		</tr>
 		<tr>
 			<th>상품 내용</th>
 			<td>
-				<textarea rows="6" cols="30" name="goodsContent"></textarea>
+				<textarea rows="6" cols="30" name="goodsContent" >[[${goodsCommand.goodsContent}]]</textarea>
 				<span th:if="${#fields.hasErrors('goodsContent')}" th:errors="*{goodsContent}"></span>
 			</td>
 		</tr>
 		<tr>
 			<th>배송비</th>
 			<td>
-				<input type="number" name="deliveryCost" min="2000" step="500" value="2000"/>
+				<input type="number" name="deliveryCost" min="2000" step="500" value="2000" />
 				<span th:if="${#fields.hasErrors('deliveryCost')}" th:errors="*{deliveryCost}"></span>
+			</td>
+		</tr>
+		<tr>
+			<th>메인 이미지</th>
+			<td>
+				<input type="file" name="goodsMain" /><br />
+				<span th:if="${#fields.hasErrors('goodsMain')}" th:errors="*{goodsMain}"></span>
+			</td>
+		</tr>
+		<tr>
+			<th>이미지</th>
+			<td>
+				<input type="file" name="goodsImages" multiple="multiple" />
 			</td>
 		</tr>
 		<tr>

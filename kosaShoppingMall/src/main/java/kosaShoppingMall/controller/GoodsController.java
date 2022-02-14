@@ -3,16 +3,21 @@ package kosaShoppingMall.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kosaShoppingMall.command.FileInfo;
 import kosaShoppingMall.command.GoodsCommand;
 import kosaShoppingMall.command.GoodsIpgoCommand;
 import kosaShoppingMall.service.goods.GoodsDelService;
@@ -67,6 +72,13 @@ public class GoodsController {
 	GoodsDelsService goodsDelsService;
 	@Autowired
 	GoodsIpgoDelsService goodsIpgoDelscService;
+	@Autowired
+	FileDelService fileDelService;
+	
+	@ModelAttribute
+	GoodsCommand getGoodsCommand() {
+		return new GoodsCommand();
+	}
 	
 	@RequestMapping("goodsSearch")
 	public String goodsSearch(@RequestParam(value="goodsWord") String goodsWord, Model model) {
@@ -86,19 +98,31 @@ public class GoodsController {
 		return "thymeleaf/goods/goodsForm";
 	}
 	
+	/*
+	 * 회사에서는 MultipartFile 사용하지 않음(용량이 작고 느림)
+	 * command가 아닌 파일만 받을 경우
+	 * @RequestParam(value="goodsMain") MultipartFile goodsMain,
+				@RequestParam(value="goodsImages") MultipartFile[] goodsImages,
+	 */
 	@RequestMapping(value="goodsRegist", method = RequestMethod.POST)
-	public String goodsRegist(@Validated GoodsCommand goodsCommand, BindingResult result) {
+	public String goodsRegist(@Validated GoodsCommand goodsCommand, BindingResult result, HttpServletRequest request) {
 		if(result.hasErrors()) {
 			return "thymeleaf/goods/goodsForm";
 		}
 		
-		goodsInsertService.execute(goodsCommand);
+		if(goodsCommand.getGoodsMain().getOriginalFilename().isEmpty()) {
+			result.rejectValue("goodsMain", "goodsCommand.goodsMain", "대문 이미지를 선택해주세요.");
+			return "thymeleaf/goods/goodsForm";
+		}
+		
+		goodsInsertService.execute(goodsCommand, request);
 		return "redirect:goodsList";
 	}
 	
 	@RequestMapping("goodsDetail/{id}")
 	public String goodsDetail(@PathVariable(value="id") String goodsNum, Model model) {
 		goodsDetailService.execute(goodsNum, model);
+		model.addAttribute("newLineChar", '\n');
 		return "thymeleaf/goods/goodsDetail";
 	}
 	
@@ -109,11 +133,11 @@ public class GoodsController {
 	}
 	
 	@RequestMapping(value="goodsModify", method=RequestMethod.POST)
-	public String goodsModifyOk(@Validated GoodsCommand goodsCommand, BindingResult result) {
+	public String goodsModifyOk(@Validated GoodsCommand goodsCommand, BindingResult result, HttpSession session) {
 		if(result.hasErrors()) {
 			return "thymeleaf/goods/goodsModify";
 		}
-		goodsModifyService.execute(goodsCommand);
+		goodsModifyService.execute(goodsCommand, session);
 		return "redirect:goodsDetail/"+goodsCommand.getGoodsNum();
 	}
 	
@@ -130,6 +154,11 @@ public class GoodsController {
 		return "redirect:goodsList";
 	}
 	
+	@RequestMapping("fileDel")
+	public String fileDel(FileInfo fileInfo, HttpSession session, Model model) {
+		fileDelService.fileAdd(fileInfo, session, model);
+		return "thymeleaf/goods/delPage";
+	}
 	
 	//============== goodsIpgo
 	

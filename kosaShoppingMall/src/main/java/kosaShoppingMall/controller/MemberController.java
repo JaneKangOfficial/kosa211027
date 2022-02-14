@@ -53,8 +53,8 @@ public class MemberController {
 	@RequestMapping("memList")
 	public String memList(@RequestParam(value="page", defaultValue = "1", required = false)Integer page, Model model) {
 		memberListService.execute(model, page);
-		// return "thymeleaf/member/memberList"; // html 사용
-		return "member/memberList"; // jsp 사용
+		 return "thymeleaf/member/memberList"; // html 사용
+		// return "member/memberList"; // jsp 사용
 	}
 	
 	@RequestMapping(value="memberRegist", method=RequestMethod.GET)

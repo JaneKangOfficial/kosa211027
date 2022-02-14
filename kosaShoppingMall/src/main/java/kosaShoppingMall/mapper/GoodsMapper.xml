@@ -5,7 +5,7 @@
 
 <mapper namespace="kosaShoppingMall.mapper.GoodsMapper">
 <sql id="base">
-	goods_num goodsNum, goods_name goodsName, goods_price goodsPrice, goods_content goodsContent, delivery_cost deliveryCost, goods_images goodsImages, goods_main goodsMain, visit_count visitCount
+	goods_num goodsNum, goods_name goodsName, goods_price goodsPrice, goods_content goodsContent, delivery_cost deliveryCost, goods_images goodsImages, goods_main goodsMain, goods_original goodsOriginal, goods_main_org goodsMainOrg, visit_count visitCount
 </sql>
 
 <select id="autoNum" resultType="String">
@@ -14,8 +14,34 @@
 </select>
 
 <insert id="goodsInsert" parameterType="goodsDTO">
-	insert into goods(goods_num, goods_name, goods_price, goods_content, delivery_cost)
-	values(#{goodsNum},#{goodsName},#{goodsPrice},#{goodsContent},#{deliveryCost})
+	insert into goods(goods_num, goods_name, goods_price, goods_content, delivery_cost, visit_count,
+						<if test = "goodsMain != null">
+							goods_main,
+						</if>
+						<if test = "goodsImages != null">
+							goods_images,
+						</if>
+						<if test = "goodsOriginal != null">
+							goods_original,
+						</if>
+						<if test = "goodsMainOrg != null">
+							goods_main_org
+						</if>
+					)
+	values(#{goodsNum},#{goodsName},#{goodsPrice},#{goodsContent},#{deliveryCost}, 0,
+						<if test = "goodsMain != null">
+							#{goodsMain},
+						</if>
+						<if test = "goodsImages != null">
+							#{goodsImages},
+						</if>
+						<if test = "goodsOriginal != null">
+							#{goodsOriginal},
+						</if>
+						<if test = "goodsMainOrg != null">
+							#{goodsMainOrg}
+						</if>
+			)
 </insert>
 
 <select id="selectAll" resultType="goodsDTO" parameterType="startEndPageDTO">
@@ -34,7 +60,17 @@
 
 <update id="goodsUpdate" parameterType="goodsDTO">
  	update goods
- 	set goods_name=#{goodsName}, goods_price=#{goodsPrice}, delivery_cost=#{deliveryCost}
+ 	<trim prefix="set" suffixOverrides=",">
+ 	goods_name=#{goodsName}, goods_price=#{goodsPrice}, delivery_cost=#{deliveryCost}, goods_content=#{goodsContent},
+	 	<if test = "goodsImages != null">
+	 		goods_images = #{goodsImages},
+	 		goods_original = #{goodsOriginal},
+	 	</if>
+	 	<if test = "goodsMain != null">
+	 		goods_main = #{goodsMain},
+	 		goods_main_org = #{goodsMainOrg}
+	 	</if>
+ 	</trim>
  	where goods_num = #{goodsNum}
 </update>
 

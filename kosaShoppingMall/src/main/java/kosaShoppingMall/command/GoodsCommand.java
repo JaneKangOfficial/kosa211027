@@ -4,6 +4,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -19,4 +21,10 @@ public class GoodsCommand {
 	@NotNull(message="배송비를 입력하세요")
 	Integer deliveryCost;
 	Integer visitCount;
+	
+	MultipartFile goodsMain;
+	MultipartFile[] goodsImages;
+	
+	String goodsMainOrg;
+	String goodsOriginal;
 }

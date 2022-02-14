@@ -39,13 +39,14 @@
 	<table border="1" width="800">
 		<caption><strong>상품 관리</strong></caption>
 		<tr>
-			<th colspan="4">상품 리스트</th>
+			<th colspan="5">상품 리스트</th>
 			<th width="150">총 상품 개수 : [[${count}]] </th>
 			<th width="150">현재 페이지 상품 개수 : [[${list.size()}]] </th>
 		</tr>
 		<tr>
 			<th>번호</th>
 			<th>상품 번호</th>
+			<th>이미지</th>
 			<th>상품명</th>
 			<th>가격</th>
 			<th>조회수</th>
@@ -55,6 +56,11 @@
 		<tr>
 			<th>[[${idx.count}]]</th>
 			<th><a th:href="|goodsDetail/${goodsCommand.goodsNum}|">[[${goodsCommand.goodsNum}]]</a></th>
+			<th>
+				<th:block th:if = "${goodsCommand.goodsMain != null}" >
+					<img th:src="|/goods/upload/${goodsCommand.goodsMain}|" width="30px"/>
+				</th:block>
+			</th>
 			<th>[[${goodsCommand.goodsName}]]</th>
 			<th>[[${goodsCommand.goodsPrice}]]</th>
 			<th>[[${goodsCommand.visitCount}]]</th>
@@ -63,7 +69,7 @@
 		</th:block>
 		
 		<tr>
-			<th colspan="6">
+			<th colspan="7">
 				<th:block th:if="${page <= 1}">
 					[이전]
 				</th:block>

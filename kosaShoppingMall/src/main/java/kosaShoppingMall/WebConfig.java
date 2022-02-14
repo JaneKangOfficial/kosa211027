@@ -8,7 +8,7 @@ import kosaShoppingMall.interceptor.CertificationInterceptor;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer{
-	/* html이나 jsp문서에서 view밑에 있는 파일을 불러올 때 404 오류가 나는 것을 방지
+	/* html이나 jsp문서 그리고 이미지파일인 경우 view밑에 있는 파일을 불러올 때 404 오류가 나는 것을 방지
 	 * Spring Boot의 기본 설정이 resources/static이기 때문에 이런 설정이 없으면 static에서 찾기 때문에 404 발생
 	 * webapp/view 를 사용하기 위해서 설정이 필요
 	 */

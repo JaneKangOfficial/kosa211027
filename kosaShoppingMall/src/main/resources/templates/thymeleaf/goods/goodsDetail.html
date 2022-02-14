@@ -21,10 +21,10 @@
 <div id="wrapper">
    <div id="leftMenu">
       <ul>
-         <li><a href="goodsList">상품리스트</a></li>
-         <li><a href="goodsRegist">상품등록</a></li>
-         <li><a href="goodsIpgoList">상품입고현황</a></li>
-         <li><a href="goodsIpgo">상품입고</a></li>
+         <li><a href="../goodsList">상품리스트</a></li>
+         <li><a href="../goodsRegist">상품등록</a></li>
+         <li><a href="../goodsIpgoList">상품입고현황</a></li>
+         <li><a href="../goodsIpgo">상품입고</a></li>
       </ul>   
    </div>
 
@@ -33,8 +33,25 @@
 		상품 번호 : [[${goodsCommand.goodsNum}]] <br />
 		상품명 : [[${goodsCommand.goodsName}]] <br />
 		상품 가격 : [[${goodsCommand.goodsPrice}]] <br />
-		상품 설명 : [[${goodsCommand.goodsContent}]] <br />
 		배송비 : [[${goodsCommand.deliveryCost}]] <br />
+		상품 설명 : <span th:utext = "${#strings.replace(goodsCommand.goodsContent, newLineChar, '&lt;br /&gt;')}" ></span>
+		<br />
+		
+		<th:block th:if="${goodsCommand.goodsMain != null}">
+			대문 이미지<br />
+			<img th:src="|/goods/upload/${goodsCommand.goodsMain}|" width="500px"/>
+		</th:block>
+		<br />
+		
+		<!-- split을 하면 결과값은 배열로 바뀐다. -->
+		<th:block th:if="${goodsCommand.goodsImages != null}">
+			이미지<br />
+			<th:block th:each="goodsImage : ${#strings.arraySplit(goodsCommand.goodsImages,'`')}" >
+				<img th:src="|/goods/upload/${goodsImage}|" width="300px" /><br />
+			</th:block>
+		</th:block>
+		<br />
+		
 		<a href="../goodsList">목록</a> |
 		<a th:href="@{../goodsModify(num=${goodsCommand.goodsNum})}">수정</a> |
 		<a th:href="@{../goodsDel(num=${goodsCommand.goodsNum})}">삭제</a>

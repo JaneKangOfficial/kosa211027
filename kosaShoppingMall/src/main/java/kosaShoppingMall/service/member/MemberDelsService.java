@@ -40,7 +40,7 @@ public class MemberDelsService {
 			cs.add(num);
 		}
 		HashMap<String, Object> condition = new HashMap<String, Object>();
-		condition.put("memberNums", deletes);
+		condition.put("memberNums", cs);
 		memberMapper.memDels3(condition);
 		
 	}

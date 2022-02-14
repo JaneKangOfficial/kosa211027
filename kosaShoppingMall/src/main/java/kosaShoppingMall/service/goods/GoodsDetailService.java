@@ -17,7 +17,6 @@ public class GoodsDetailService {
 	public void execute(String goodsNum, Model model) {
 		goodsMapper.visitCount(goodsNum);
 		GoodsDTO dto = goodsMapper.selectOne(goodsNum);
-		System.out.println("dtoooooooo " + dto);
 		model.addAttribute("goodsCommand", dto);
 	}
 }
