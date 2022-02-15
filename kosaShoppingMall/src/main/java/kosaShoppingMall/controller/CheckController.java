@@ -1,15 +1,20 @@
 package kosaShoppingMall.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import kosaShoppingMall.domain.AuthInfo;
 import kosaShoppingMall.service.EmailCheckService;
 import kosaShoppingMall.service.IdCheckService;
 import kosaShoppingMall.service.employees.EmpEmailCheckService;
 import kosaShoppingMall.service.employees.EmpIdCheckService;
+import kosaShoppingMall.service.goods.GoodsCartAddService;
+import kosaShoppingMall.service.goods.GoodsWishService;
 import kosaShoppingMall.service.member.MemberEmailCheckService;
 import kosaShoppingMall.service.member.MemberIdCheckService;
 
@@ -27,6 +32,10 @@ public class CheckController {
 	MemberIdCheckService memberIdCheckService;
 	@Autowired
 	MemberEmailCheckService memberEmailCheckService;
+	@Autowired
+	GoodsWishService goodsWishService;
+	@Autowired
+	GoodsCartAddService goodsCartAddService;
 	
 	@RequestMapping(value="/register/idCheck", method=RequestMethod.POST)
 	public String idCheck(@RequestParam(value="memberId") String memberId) {
@@ -92,8 +101,9 @@ public class CheckController {
 	}
 	
 	@RequestMapping(value="/mem/memEmailCheck", method=RequestMethod.POST)
-	public String memEmailCheck(@RequestParam(value="memberEmail") String memberEmail) {
-		Integer i = memberEmailCheckService.execute(memberEmail);
+	public String memEmailCheck(@RequestParam(value="memberEmail") String memberEmail, 
+							@RequestParam(value="memberId") String memberId) {
+		Integer i = memberEmailCheckService.execute(memberEmail, memberId);
 		if(i == 0) {
 			return "사용 가능한 email입니다.";
 		}else {
@@ -102,8 +112,9 @@ public class CheckController {
 	}
 	
 	@RequestMapping(value="/mypage/memEmailCheck", method=RequestMethod.POST)
-	public String memEmailCheck2(@RequestParam(value="memberEmail") String memberEmail) {
-		Integer i = memberEmailCheckService.execute(memberEmail);
+	public String memEmailCheck2(@RequestParam(value="memberEmail") String memberEmail ,
+				@RequestParam(value = "memberId")String memberId) {
+		Integer i = memberEmailCheckService.execute(memberEmail ,memberId);
 		if(i == 0) {
 			return "사용 가능한 email입니다.";
 		}else {
@@ -111,4 +122,14 @@ public class CheckController {
 		}
 	}
 	
+	@RequestMapping(value="/cart/goodsWishAdd")
+	public String goodsWishAdd(@RequestParam(value="goodsNum") String goodsNum, HttpSession session) {
+		return goodsWishService.execute(goodsNum, session);
+	}
+	
+	@RequestMapping(value="/cart/goodsCartAdd")
+	public String goodsCartAdd(@RequestParam(value="goodsNum") String goodsNum,
+							@RequestParam(value="goodsQty") Integer goodsQty, HttpSession session) {
+		return goodsCartAddService.execute(goodsNum, goodsQty, session);
+	}
 }

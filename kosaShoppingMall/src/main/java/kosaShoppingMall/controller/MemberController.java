@@ -83,7 +83,8 @@ public class MemberController {
 			return "thymeleaf/member/memberForm";
 		}
 		
-		i = memberEmailCheckService.execute(memberCommand.getMemberEmail());
+//		i = memberEmailCheckService.execute(memberCommand.getMemberEmail());
+		i = memberEmailCheckService.execute(memberCommand.getMemberEmail(), memberCommand.getMemberId());
 		if(i == 1) {
 			result.rejectValue("memberEmail", "memberCommand.memberEmail", "중복 이메일입니다.");
 			return "thymeleaf/member/memberForm";
@@ -117,7 +118,8 @@ public class MemberController {
 			//return "member/memberForm";
 		}
 		
-		Integer i = memberEmailCheckService.execute(memberCommand.getMemberEmail());
+//		Integer i = memberEmailCheckService.execute(memberCommand.getMemberEmail());
+		Integer i = memberEmailCheckService.execute(memberCommand.getMemberEmail(), memberCommand.getMemberId());
 		if(i == 1) {
 			result.rejectValue("memberEmail", "memberCommand.memberEmail", "중복 이메일입니다.");
 			return "thymeleaf/member/memberUpdate";

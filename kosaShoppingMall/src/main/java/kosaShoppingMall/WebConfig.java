@@ -42,6 +42,7 @@ public class WebConfig implements WebMvcConfigurer{
 //				.excludePathPatterns("/register/**/*")
 //				.excludePathPatterns("/help/**/*")
 //				.excludePathPatterns("/login/**/*");
+//				.excludePathPatterns("/corner/**/*");
 //		// 로그인 세션이 없어도 되는 주소들을 적는다.
 //	}
 

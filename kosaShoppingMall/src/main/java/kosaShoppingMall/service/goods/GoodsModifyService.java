@@ -36,6 +36,12 @@ public class GoodsModifyService {
 		// 이미지 정보를 가져오기 위해서
 		GoodsDTO lib = goodsMapper.selectOne(goodsCommand.getGoodsNum());
 		
+		// 데이터베이스에 있는 파일정보를 dto에 저장
+		//dto.setGoodsImages(lib.getGoodsOriginal());
+		//dto.setGoodsOriginal(lib.getGoodsOriginal());
+		
+		// dto에 저장된 
+		
 		// file 삭제 session이 있다면 데이터베이스에서 dto 삭제 === 회사에서 많이 사용하는 코드 ===
 		if(list != null) {
 			for(FileInfo fi : list) {

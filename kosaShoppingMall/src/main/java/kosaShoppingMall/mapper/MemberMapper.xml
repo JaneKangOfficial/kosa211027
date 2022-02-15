@@ -4,6 +4,11 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kosaShoppingMall.mapper.MemberMapper">
+<sql id="base">
+	select member_num memberNum, member_id memberId, member_pw memberPw, member_name memberName, member_addr memberAddr, member_birth memberBirth, member_phone memberPhone, member_regist memberRegist, gender, member_email memberEmail
+	from member
+</sql>
+
 <select id="memberAutoNum" resultType="String">
 	select concat('kosa',nvl(max(substr(member_num,5)), 100000) + 1)
 	from member
@@ -125,4 +130,10 @@ where rn between #{startRow} and #{endRow}
  	where member_id = #{memberId} and member_email = #{memberEmail} and member_ok is null
 </update>
 
+<!-- 장바구니 목록 -->
+<select id="cartList" parameterType="String" resultType="cartDTO">
+	select member_num memberNum, goods_num goodsNum, cart_qty cartQty
+	from cart
+	where member_num = #{memberNum}
+</select>
 </mapper>

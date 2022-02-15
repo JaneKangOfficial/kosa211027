@@ -142,15 +142,15 @@ public class GoodsController {
 	}
 	
 	@RequestMapping("goodsDel")
-	public String goodsDel(@RequestParam(value="num") String goodsNum) {
-		goodsDelService.execute(goodsNum);
+	public String goodsDel(@RequestParam(value="num") String goodsNum, HttpServletRequest request) {
+		goodsDelService.execute(goodsNum, request);
 		return "redirect:goodsList";
 	}
 	
 	// 한번에 여러개 삭제
 	@RequestMapping(value="goodsDels", method=RequestMethod.POST)
-	public String goodsDels(@RequestParam(value="delete") String [] deletes) {
-		goodsDelsService.execute(deletes);
+	public String goodsDels(@RequestParam(value="delete") String [] deletes, HttpServletRequest request) {
+		goodsDelsService.execute(deletes, request);
 		return "redirect:goodsList";
 	}
 	

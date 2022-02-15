@@ -27,7 +27,7 @@ $(function(){
 			type: "post",
 			url : "memEmailCheck",
 			dataType : "text",
-			data : {"memberEmail" : $("#memberEmail").val()},
+			data : {"memberEmail" : $("#memberEmail").val(), "memberId" : $("#memberId").val()},
 			success : function(result){
 				$("#emailCheck").html(result);
 				if(result == "사용 가능한 email입니다.") {

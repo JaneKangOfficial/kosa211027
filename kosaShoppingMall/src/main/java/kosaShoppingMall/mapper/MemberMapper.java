@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import kosaShoppingMall.domain.AuthInfo;
+import kosaShoppingMall.domain.CartDTO;
 import kosaShoppingMall.domain.MemberDTO;
 import kosaShoppingMall.domain.StartEndPageDTO;
 
@@ -39,5 +40,8 @@ public interface MemberMapper {
 	
 	// 이메일로 가입 인증
 	public Integer joinOkUpdate(MemberDTO dto);
+	
+	// 장바구니 목록
+	public List<CartDTO> cartList(String memberNum);
 
 }

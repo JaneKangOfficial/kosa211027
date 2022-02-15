@@ -1,5 +1,6 @@
 package kosaShoppingMall.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,10 +8,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import kosaShoppingMall.command.GoodsIpgoCommand;
+import kosaShoppingMall.domain.CartDTO;
 import kosaShoppingMall.domain.GoodsDTO;
 import kosaShoppingMall.domain.GoodsIpgoDTO;
 import kosaShoppingMall.domain.GoodsIpgoGoodsDTO;
 import kosaShoppingMall.domain.StartEndPageDTO;
+import kosaShoppingMall.domain.WishDTO;
 
 @Component
 @Repository("kosaShoppingMall.mapper.GoodsMapper")
@@ -34,6 +37,10 @@ public interface GoodsMapper {
 	
 	public int goodsCount();
 	
+	// 파일 여러개 삭제
+	public List<GoodsDTO> goodsSelect(HashMap<String, Object> condition);
+	
+	
 	// goodsIpgo
 	public List<GoodsDTO> goodsItems(String goodsName);
 	public Integer ipgoInsert(GoodsIpgoDTO dto);
@@ -49,4 +56,9 @@ public interface GoodsMapper {
 	public Integer goodsIpgoDels(List<String[]> condition);
 
 	public int goodsIpgoCount();
+	// 관심상품
+	public Integer wishAdd(WishDTO dto);
+	public String wishCount(WishDTO dto);
+	// 장바구니
+	public Integer cartAdd(CartDTO cart);
 }

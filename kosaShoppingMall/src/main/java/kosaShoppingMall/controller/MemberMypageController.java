@@ -61,7 +61,7 @@ public class MemberMypageController {
 			return "thymeleaf/membership/memberModify";
 		}
 		
-		Integer i = memberEmailCheckService.execute(memberCommand.getMemberEmail());
+		Integer i = memberEmailCheckService.execute(memberCommand.getMemberEmail(), memberCommand.getMemberId());
 		if(i == 1) {
 			result.rejectValue("memberEmail", "memberCommand.memberEmail", "중복 이메일입니다.");
 			return "thymeleaf/membership/memberModify";
