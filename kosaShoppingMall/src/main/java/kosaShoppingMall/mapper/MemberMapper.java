@@ -1,5 +1,6 @@
 package kosaShoppingMall.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import kosaShoppingMall.domain.AuthInfo;
 import kosaShoppingMall.domain.CartDTO;
+import kosaShoppingMall.domain.GoodsBuy;
+import kosaShoppingMall.domain.GoodsCartDTO;
 import kosaShoppingMall.domain.MemberDTO;
 import kosaShoppingMall.domain.StartEndPageDTO;
 
@@ -42,6 +45,15 @@ public interface MemberMapper {
 	public Integer joinOkUpdate(MemberDTO dto);
 	
 	// 장바구니 목록
-	public List<CartDTO> cartList(String memberNum);
+	public List<GoodsCartDTO> cartList(String memberNum);
+	// 장바구니 수량
+	public Integer goodsCartQtyDown(CartDTO dto);
+	// 장바구니 주문
+	public List<GoodsCartDTO> goodsOrder(GoodsBuy goodsBuy);
+	// 장바구니 삭제
+	public Integer cartDel(CartDTO dto);
+	// 장바구니 선택 삭제
+	public Integer cartDels(String[] goodsNum);
+	
 
 }

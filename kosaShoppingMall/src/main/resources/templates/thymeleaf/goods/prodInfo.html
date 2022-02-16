@@ -109,7 +109,7 @@ $(function(){
 				<span th:utext="${#strings.replace(goodsCommand.goodsContent, newLineChar, '&lt;br /&gt;')}"></span>
 			<p>
 			<th:block th:each="goodsImage : ${#strings.arraySplit(goodsCommand.goodsImages,'`')}">
-				<img th:src="|/goods/upload/${goodsImage}|"/>
+				<img height="500" th:src="|/goods/upload/${goodsImage}|"/><br />
 			</th:block>
 		</td>
 	</tr>

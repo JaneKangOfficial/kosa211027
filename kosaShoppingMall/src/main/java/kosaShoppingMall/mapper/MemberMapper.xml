@@ -27,11 +27,52 @@ from (select rownum rn, member_num memberNum, member_id memberId, member_pw memb
 where rn between #{startRow} and #{endRow}
 </select>
 
+<!-- 
 <select id="selectOne" resultType="memDTO" parameterType="String">
 	select member_num memberNum, member_id memberId, member_pw memberPw, member_name memberName, member_addr memberAddr, member_birth memberBirth, member_phone memberPhone, member_regist memberRegist, gender, member_email memberEmail
 	from member
 	where member_num = #{memberNum}
 </select>
+ -->
+
+<!-- ================================================================== -->
+<!-- 아래 setter와 생성자 둘중 하나의 id를 resultMap에 적어서 사용 : resultMap을 사용할 경우 rename(dto 사용시)은 하지 않는다. -->
+<select id="selectOne" parameterType="String" resultMap="memberResultMap">
+	select member_num , member_id , member_pw , member_name , member_addr , member_birth , member_phone , member_regist , gender, member_email , member_ok 
+	from member
+	where member_num = #{memberNum}
+</select>
+<!-- setter : 순서상관없음 -->
+<resultMap type="memDTO" id="memberResultMap">
+	<id column="member_num" jdbcType="VARCHAR" property="memberNum"/>
+	<result column="member_id" jdbcType="VARCHAR" property="memberId"/>
+	<result column="member_pw" jdbcType="VARCHAR" property="memberPw"/>
+	<result column="member_name" jdbcType="VARCHAR" property="memberName"/>
+	<result column="member_addr" jdbcType="VARCHAR" property="memberAddr"/>
+	<result column="member_birth" jdbcType="DATE" property="memberBirth"/>
+	<result column="member_phone" jdbcType="VARCHAR" property="memberPhone"/>
+	<result column="member_regist" jdbcType="DATE" property="memberRegist"/>
+	<result column="gender" jdbcType="VARCHAR" property="gender"/>
+	<result column="member_email" jdbcType="VARCHAR" property="memberEmail"/>
+	<result column="member_ok" jdbcType="VARCHAR" property="memberOk"/>
+</resultMap>
+<!-- 생성자 : dto 순서대로 -->
+<resultMap type="memDTO" id="memberConstructorResultMap">
+	<constructor>
+		<idArg column="member_num" javaType="string" />
+		<arg column="member_id" javaType="string" />
+		<arg column="member_pw" javaType="string" />
+		<arg column="member_name" javaType="string" />
+		<arg column="member_addr" javaType="string" />
+		<arg column="member_regist" javaType="java.util.Date" />
+		<arg column="gender" javaType="string" />
+		<arg column="member_phone" javaType="string" />
+		<arg column="member_birth" javaType="java.util.Date" />
+		<arg column="member_email" javaType="string" />
+		<arg column="member_ok" javaType="string" />
+	</constructor>
+</resultMap>
+<!-- ================================================================== -->
 
 <update id="memberUpdate" parameterType="memDTO">
 	update member
@@ -100,7 +141,7 @@ where rn between #{startRow} and #{endRow}
  	</where>
 </delete>
 
-<!-- 2. map 이용 -->
+<!-- 3. map 이용 -->
 <delete id="memDels3" parameterType="hashMap">
  	delete from member
  	<where>
@@ -130,10 +171,63 @@ where rn between #{startRow} and #{endRow}
  	where member_id = #{memberId} and member_email = #{memberEmail} and member_ok is null
 </update>
 
+<!-- ================================================================== -->
 <!-- 장바구니 목록 -->
-<select id="cartList" parameterType="String" resultType="cartDTO">
-	select member_num memberNum, goods_num goodsNum, cart_qty cartQty
-	from cart
-	where member_num = #{memberNum}
+<select id="cartList" parameterType="String" resultMap="goodsCartResultMap">
+	select goods_main, g.goods_num, goods_name, delivery_cost, cart_qty, cart_qty * goods_price total_price
+	from goods g, cart c
+	where g.goods_num = c.goods_num and member_num = #{memberNum}
 </select>
+<resultMap type="goodsCartDTO" id="goodsCartResultMap">
+	<association property="goodsDTO" javaType="kosaShoppingMall.domain.GoodsDTO" resultMap="goodsResultMap" />
+	<association property="cartDTO" javaType="kosaShoppingMall.domain.CartDTO" resultMap="cartResultMap" />
+</resultMap>
+<resultMap type="kosaShoppingMall.domain.GoodsDTO" id="goodsResultMap">
+	<id column="goods_num" jdbcType="VARCHAR" property="goodsNum" />
+	<result column="goods_main" jdbcType="VARCHAR" property="goodsMain" />
+	<result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+	<result column="delivery_cost" jdbcType="VARCHAR" property="deliveryCost" />
+</resultMap>
+<resultMap type="kosaShoppingMall.domain.CartDTO" id="cartResultMap">
+	<id column="goods_num" jdbcType="VARCHAR" property="goodsNum" />
+	<result column="cart_qty" jdbcType="BIGINT" property="cartQty" />
+	<result column="total_price" jdbcType="BIGINT" property="totalPrice" />
+</resultMap>
+<!-- ================================================================== -->
+
+<!-- 장바구니 수량 -1 -->
+<update id="goodsCartQtyDown" parameterType="cartDTO">
+ 	update cart
+ 	set cart_qty = cart_qty - 1
+ 	where member_num = #{memberNum} and goods_num = #{goodsNum}
+</update>
+
+<!-- 장바구니 주문 -->
+<select id="goodsOrder" parameterType="goodsBuy" resultMap="goodsCartResultMap">
+	select goods_main, g.goods_num, goods_name, delivery_cost, cart_qty, cart_qty * goods_price total_price
+	from goods g, cart c
+	where g.goods_num = c.goods_num and member_num = #{memberNum}
+	and g.goods_num in
+	<foreach collection="goodsNums" item="goodsNum" index="index" open="(" close=")" separator=",">
+	#{goodsNum}
+	</foreach>
+</select>
+
+<!-- 장바구니 삭제 -->
+<delete id="cartDel" parameterType="cartDTO">
+ 	delete from cart
+	where member_num = #{memberNum} and goods_num = #{goodsNum}
+</delete>
+
+<!-- 장바구니 선택 삭제 -->
+<delete id="cartDels" parameterType="hashMap">
+ 	delete from cart 
+ 	<where>
+ 	goods_num in
+ 	<foreach collection="goodsNum" item="goodsNum" index="index" open="(" close=")" separator=",">
+ 		#{goodsNum}
+ 	</foreach>
+ 	</where>
+</delete>
+
 </mapper>

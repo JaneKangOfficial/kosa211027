@@ -5,11 +5,9 @@ import org.apache.ibatis.type.Alias;
 import lombok.Data;
 
 @Data
-@Alias("cartDTO")
-public class CartDTO {
+@Alias("goodsBuy")
+public class GoodsBuy {
 
-	String goodsNum;
+	String[] goodsNums;
 	String memberNum;
-	Long cartQty;
-	Long totalPrice;
 }
