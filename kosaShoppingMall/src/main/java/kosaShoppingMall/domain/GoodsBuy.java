@@ -10,4 +10,5 @@ public class GoodsBuy {
 
 	String[] goodsNums;
 	String memberNum;
+	
 }

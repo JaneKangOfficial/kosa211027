@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	if($('input[name=prodCk]').length == ($('input[name=prodCk]').prop('checked',true)).length) {
+	       $('#prodCkAll').prop('checked',true);
+	}
+	
+	$("#prodCkAll").click(function(){
+		if($('#prodCkAll').prop('checked')){
+	       $('input[name=prodCk]').prop('checked',true);
+	    }else{
+	       $('input[name=prodCk]').prop('checked',false);
+	    }
+	});
+	
+	$("input[name=prodCk]").click(function() {
+		var total = $("input[name=prodCk]").length;
+		var checked = $("input[name=prodCk]:checked").length;
+
+		if(total != checked) $("#prodCkAll").prop("checked", false);
+		else $("#prodCkAll").prop("checked", true); 
+	});
+});
+
+function dels() {
+	var chk_arr = [];
+	var chk_arr2 = [];
+	$("input:checkbox[name=prodCk]:checked").each(function(){
+		var checkVal = $(this).val();
+		chk_arr.push(checkVal);
+		
+		/* chk_arr2.push = $("#goodsName").val(); */
+	});
+	
+	/* var purchase = {"goodsName" : chk_arr2, "purchaseNum" : chk_arr}; */
+		
+	if($("input:checkbox[name=prodCk]:checked").length < 1) {
+		alert("하나 이상 선택하셔야 합니다.");
+	}else {
+		$.ajax({
+			type : "post",
+			url : "/cart/delPurchase",
+			dataType : "text",
+			data : {"purchaseNum" : chk_arr},
+			success : function(result){
+				if(result.trim() > "0") {
+					alert("삭제되었습니다.");
+					location.href="/cart/orderList";
+				}else {
+					alert("삭제되지 않았습니다.");
+				}
+			},
+			error : function(){
+				console.log(goodsNum);
+				alert("error!!!");
+				return false;
+			}
+		});
+	}
+}
+</script>
+</head>
+<body>
+<table width="800" align="center" border="1">
+	<tr>
+		<td><input type="checkbox" id="prodCkAll"  /></td>
+		<td>주문일(결제번호)</td>
+		<td>상품명/주문번호</td>
+		<td>주문상태</td>
+		<td><input type="button" value="선택삭제" onclick="javascript:dels()"  /></td>
+	</tr>
+	<tr th:each="dto : ${list}">
+		<td><th:block th:if="${dto.confirmNumber == null}">
+				<input type="checkbox" name="prodCk" th:value="${dto.purchaseNum}" >	
+			</th:block>
+			<th:block th:if="${dto.confirmNumber != null}">
+				<input type="checkbox" name="prodCk" disabled="disabled" >	
+			</th:block>
+		</td>
+		<td> 
+			<input type="hidden" id="goodsName" th:value="${dto.goodsName}" />
+			[[${#dates.format(dto.purchaseDate,'yyyy-MM-dd')}]]
+			(<span th:if="${dto.confirmNumber != null}" th:text="${dto.confirmNumber}"></span>
+			<span th:if="${dto.confirmNumber == null}" th:text="입금대기중"></span>)
+		</td>
+		<td><img th:src="|/goods/upload/${dto.goodsMain}|" width="50"/>[[${dto.goodsName}]] / [[${dto.purchaseNum}]]</td>
+		<td>
+			<a th:href="@{purchaseDetail(purchaseNum=${dto.purchaseNum})}">주문 상세 보기</a><br />
+			결제 금액 : [[${dto.totalPrice}]]<br />[[${dto.purchaseStatus}]] |
+			<a th:if="${dto.purchaseStatus == '결제대기중'}" th:href="@{paymentOk(purchaseNum=${dto.purchaseNum},totalPrice=${dto.totalPrice})}">결제하기</a> 
+			<a th:if="${dto.purchaseStatus == '결제완료'}" th:href="@{paymentCancel(purchaseNum=${dto.purchaseNum})}">결제취소</a>
+		</td>
+		<td>
+			<a th:if="${dto.purchaseStatus == '결제대기중'}" th:href="@{paymentDel(purchaseNum=${dto.purchaseNum})}">삭제하기</a> 
+		</td>
+	</tr>
+</table>
+</body>
+</html>

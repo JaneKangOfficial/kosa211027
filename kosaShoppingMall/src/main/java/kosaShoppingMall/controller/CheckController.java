@@ -17,6 +17,7 @@ import kosaShoppingMall.service.goods.GoodsCartAddService;
 import kosaShoppingMall.service.goods.GoodsWishService;
 import kosaShoppingMall.service.member.MemberEmailCheckService;
 import kosaShoppingMall.service.member.MemberIdCheckService;
+import kosaShoppingMall.service.memberJoin.DelpurchaseService;
 
 @RestController
 public class CheckController {
@@ -36,6 +37,8 @@ public class CheckController {
 	GoodsWishService goodsWishService;
 	@Autowired
 	GoodsCartAddService goodsCartAddService;
+	@Autowired
+	DelpurchaseService delpurchaseService;
 	
 	@RequestMapping(value="/register/idCheck", method=RequestMethod.POST)
 	public String idCheck(@RequestParam(value="memberId") String memberId) {
@@ -131,5 +134,12 @@ public class CheckController {
 	public String goodsCartAdd(@RequestParam(value="goodsNum") String goodsNum,
 							@RequestParam(value="goodsQty") Integer goodsQty, HttpSession session) {
 		return goodsCartAddService.execute(goodsNum, goodsQty, session);
+	}
+	
+	@RequestMapping(value="/cart/delPurchase")
+	public Integer delPurchase(@RequestParam(value="purchaseNum[]") String[] purchaseNum) {
+		Integer i = delpurchaseService.execute(purchaseNum);
+		System.out.println("=========" + i);
+		return i;
 	}
 }

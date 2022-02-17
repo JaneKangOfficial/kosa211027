@@ -220,6 +220,7 @@ where rn between #{startRow} and #{endRow}
 </delete>
 
 <!-- 장바구니 선택 삭제 -->
+<!-- 
 <delete id="cartDels" parameterType="hashMap">
  	delete from cart 
  	<where>
@@ -228,6 +229,93 @@ where rn between #{startRow} and #{endRow}
  		#{goodsNum}
  	</foreach>
  	</where>
+</delete> 
+-->
+<delete id="cartDels" parameterType="goodsBuy">
+	delete from cart
+	where goods_num in
+	<foreach collection="goodsNums" item="goodsNum" index="index" open="(" close=")" separator=",">
+ 		#{goodsNum}
+ 	</foreach>
+ 	and member_num = #{memberNum}
 </delete>
 
+<!-- 구매 -->
+<insert id="purchase" parameterType="purchaseDTO">
+ 	insert into purchase(Purchase_num, purchase_date, total_price, purchase_addr, purchase_phone, message, purchase_status, member_num, recieve_name) 
+	values(#{purchaseNum}, sysdate, #{totalPrice}, #{purchaseAddr}, #{purchasePhone}, #{message}, #{purchaseStatus}, #{memberNum}, #{recieveName})
+</insert>
+
+<!-- 구매 리스트 저장 -->
+<insert id="purchaseList" parameterType="purchaseListDTO">
+	insert into purchase_list (purchase_num, goods_num, purchase_qty, purchase_price)
+						select #{purchaseNum}, c.goods_num, cart_qty, cart_qty * goods_price
+						from cart c, goods g
+						where c.goods_num = g.goods_num and c.goods_num = #{goodsNum} and c.member_num = #{memberNum}
+</insert>
+
+<!-- 장바구니에서 구매한 상품 삭제 -->
+<delete id="cartGoodsDel" parameterType="goodsBuy">
+ 	delete from cart
+ 	<trim prefix="where" suffixOverrides="and|or">
+ 	member_num = #{memberNum} and 
+	 	<if test="goodsNums != null">
+		 	goods_num in
+			 	<foreach collection="goodsNums" item="goodsNum" index="index" open="(" close=")" separator=",">
+			 	#{goodsNum}
+			 	</foreach>
+	 	</if>
+ 	</trim>
+</delete>
+
+<select id="orderList" parameterType="string" resultType="orderListDTO">
+	select pa.confirm_number confirmNumber, pu.purchase_date purchaseDate, g.goods_name goodsName, pu.purchase_num purchaseNum, pu.purchase_status purchaseStatus, g.goods_main goodsMain, pu.total_price totalPrice
+	from payment pa right outer join purchase pu
+	     on pa.purchase_num = pu.purchase_num join purchase_list pl
+	     on pu.purchase_num = pl.purchase_num join goods g
+	     on pl.goods_num = g.goods_num
+	where pu.member_num = #{memberNum}     
+</select>
+
+<!-- 결제 -->
+<insert id="payment" parameterType="paymentDTO">
+ 	insert into payment (purchase_num, payment_kind, payment_price, payment_date, confirm_number, card_number)
+ 	values (#{purchaseNum},#{paymentKind},#{paymentPrice},sysdate,#{confirmNumber},#{cardNumber})
+</insert>
+<update id="purchaseStatus" parameterType="string">
+	update purchase
+	set purchase_status = '결제완료'
+	where purchase_num = #{purchaseNum}
+</update>
+
+<!-- 결제 취소 -->
+<delete id="paymentCancel" parameterType="string">
+	delete from payment
+	where purchase_num = #{purchaseNum}
+</delete>
+<update id="purchaseCancelStatus" parameterType="string">
+	update purchase
+	set purchase_status = '결제대기중'
+	where purchase_num = #{purchaseNum}
+</update>
+
+<!-- 결제 삭제 -->
+<delete id="paymentDel" parameterType="string">
+	delete from purchase
+	where purchase_num = #{purchaseNum}
+</delete>
+
+<delete id="delPurchase" parameterType="string">
+ 	delete from purchase
+ 	<where>
+ 	purchase_num in
+ 	<foreach collection="purchaseNum" item="purchaseNum" index="index" open="(" close=")" separator="," >
+ 		#{purchaseNum}
+ 	</foreach>
+ 	<!-- and goods_name in
+ 	<foreach collection="goodsName" item="goodsName" index="index" open="(" close=")" separator="," >
+ 		#{goodsName}
+ 	</foreach> -->
+ 	</where>
+</delete>
 </mapper>

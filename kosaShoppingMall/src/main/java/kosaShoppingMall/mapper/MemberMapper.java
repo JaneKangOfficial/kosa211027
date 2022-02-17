@@ -1,6 +1,5 @@
 package kosaShoppingMall.mapper;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,9 +8,14 @@ import org.springframework.stereotype.Repository;
 
 import kosaShoppingMall.domain.AuthInfo;
 import kosaShoppingMall.domain.CartDTO;
+import kosaShoppingMall.domain.DelGoodsPurchaseDTO;
 import kosaShoppingMall.domain.GoodsBuy;
 import kosaShoppingMall.domain.GoodsCartDTO;
 import kosaShoppingMall.domain.MemberDTO;
+import kosaShoppingMall.domain.OrderListDTO;
+import kosaShoppingMall.domain.PaymentDTO;
+import kosaShoppingMall.domain.PurchaseDTO;
+import kosaShoppingMall.domain.PurchaseListDTO;
 import kosaShoppingMall.domain.StartEndPageDTO;
 
 @Component
@@ -53,7 +57,28 @@ public interface MemberMapper {
 	// 장바구니 삭제
 	public Integer cartDel(CartDTO dto);
 	// 장바구니 선택 삭제
-	public Integer cartDels(String[] goodsNum);
+//	public Integer cartDels(String[] goodsNum);
+	public Integer cartDels(GoodsBuy goodsBuy);
 	
-
+	// 구매
+	public Integer purchase(PurchaseDTO dto);
+	// 구매 리스트 저장
+	public Integer purchaseList(PurchaseListDTO purchaseListDTO);
+	// 장바구니에서 구매한 물품 삭제
+	public Integer cartGoodsDel(GoodsBuy goodsBuy);
+	
+	public List<OrderListDTO> orderList(String memberNum);
+	// 결제
+	public Integer payment(PaymentDTO paymentDTO);
+	public Integer purchaseStatus(String purchaseNum);
+	
+	// 결제 취소
+	public Integer paymentCancel(String purchaseNum);
+	public Integer purchaseCancelStatus(String purchaseNum);
+	
+	// 결제 삭제
+	public Integer paymentDel(String purchaseNum);
+	// 결제 checkbox 선택 삭제
+	public Integer delPurchase(String[] purchaseNum);
+	
 }

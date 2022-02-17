@@ -39,8 +39,14 @@ public class GoodsBuyService {
 			goodsTotalPrice += dto.getGoodsDTO().getDeliveryCost();
 		}
 		
+		String goodsNum = "";
+		for(GoodsCartDTO dto : list) {
+			goodsNum += dto.getCartDTO().getGoodsNum() + "/";
+		}
+		
 		model.addAttribute("goodsTotalDelivery", goodsTotalDelivery);
 		model.addAttribute("goodsTotalPrice", goodsTotalPrice);
+		model.addAttribute("goodsNums", goodsNum);
 		model.addAttribute("list",list);
 		
 	}
