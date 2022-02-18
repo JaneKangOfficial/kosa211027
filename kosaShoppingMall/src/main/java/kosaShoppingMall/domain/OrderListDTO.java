@@ -31,5 +31,10 @@ public class OrderListDTO {
 	String paymentPrice;
 	Date paymentDate;
 	String cardNumber;
+	String deliveryNumber;
+	String deliveryCompany;
+	
+	
+	
 	
 }

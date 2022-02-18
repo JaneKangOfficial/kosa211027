@@ -12,10 +12,17 @@ public class DelpurchaseService {
 	MemberMapper memberMapper;
 	
 	public Integer execute(String[] purchaseNum) {
+//		for(String i : purchaseNum) {
+//			System.out.println("iiiii " +i);
+//		}
+//		for(String j : goodsName) {
+//			System.out.println("jjjjj " +j);
+//		}
 		
 //		DelGoodsPurchaseDTO dto = new DelGoodsPurchaseDTO();
 //		dto.setPurchaseNum(purchaseNum);
-//		dto.setGoodsName(goodsName);
+//	
+//		System.out.println("dtoooooo "+dto);
 //		return memberMapper.delPurchase(dto);
 		return memberMapper.delPurchase(purchaseNum);
 	}

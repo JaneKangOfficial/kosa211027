@@ -8,6 +8,6 @@ import lombok.Data;
 @Alias("delGoodsPurchaseDTO")
 public class DelGoodsPurchaseDTO {
 
-	String[] purchaseNum;
+	String[][] purchaseNum;
 	String[] goodsName;
 }

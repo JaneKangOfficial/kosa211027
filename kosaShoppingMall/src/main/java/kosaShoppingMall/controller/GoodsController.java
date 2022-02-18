@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kosaShoppingMall.command.DeliveryCommand;
 import kosaShoppingMall.command.FileInfo;
 import kosaShoppingMall.command.GoodsCommand;
 import kosaShoppingMall.command.GoodsIpgoCommand;
+import kosaShoppingMall.service.goods.DeliveryActionService;
+import kosaShoppingMall.service.goods.DeliveryUpdateProService;
 import kosaShoppingMall.service.goods.GoodsDelService;
 import kosaShoppingMall.service.goods.GoodsDelsService;
 import kosaShoppingMall.service.goods.GoodsDetailService;
@@ -35,6 +38,9 @@ import kosaShoppingMall.service.goods.GoodsItemService;
 import kosaShoppingMall.service.goods.GoodsListService;
 import kosaShoppingMall.service.goods.GoodsModifyService;
 import kosaShoppingMall.service.goods.GoodsNumService;
+import kosaShoppingMall.service.goods.PurchaseCancelService;
+import kosaShoppingMall.service.goods.PurchaseDetailEmpService;
+import kosaShoppingMall.service.goods.PurchaseListService;
 import kosaShoppingMall.service.goods.SearchGoodsService;
 
 @Controller
@@ -74,6 +80,16 @@ public class GoodsController {
 	GoodsIpgoDelsService goodsIpgoDelscService;
 	@Autowired
 	FileDelService fileDelService;
+	@Autowired
+	PurchaseListService purchaseListService;
+	@Autowired
+	PurchaseDetailEmpService purchaseDetailEmpService;
+	@Autowired
+	PurchaseCancelService purchaseCancelService;
+	@Autowired
+	DeliveryActionService deliveryActionService;
+	@Autowired
+	DeliveryUpdateProService deliveryUpdateProService;
 	
 	@ModelAttribute
 	GoodsCommand getGoodsCommand() {
@@ -160,7 +176,41 @@ public class GoodsController {
 		return "thymeleaf/goods/delPage";
 	}
 	
-	//============== goodsIpgo
+	// 주문 내역
+	@RequestMapping("purchaseList")
+	public String purchaseList(Model model) {
+		purchaseListService.execute(model);
+		return "thymeleaf/goods/purchaseList";
+	}
+	// 주문 상세내역
+	@RequestMapping("purchaseDetail")
+	public String purchaseDetail(@RequestParam(value="purchaseNum") String purchaseNum, Model model) {
+		purchaseDetailEmpService.execute(purchaseNum, model);
+		model.addAttribute("newLineChar","\n");
+		return "thymeleaf/goods/purchaseDetail";
+	}
+	
+	@RequestMapping("purchaseCancel")
+	public String purchaseCancel(@RequestParam(value="purchaseNum") String purchaseNum) {
+		purchaseCancelService.execute(purchaseNum);
+		return "redirect:purchaseList";
+	}
+	
+	@RequestMapping(value="deliveryAction", method=RequestMethod.POST)
+	public String deliveryAction(DeliveryCommand deliveryCommand) {
+		deliveryActionService.execute(deliveryCommand);
+		return "redirect:purchaseList";
+	}
+	
+	@RequestMapping("deliveryUpdate")
+	public String deliveryUpdate() {
+		return "thymeleaf/goods/deliveryUpdate";
+	}
+	
+
+	
+	
+	// ========================= goodsIpgo
 	
 	@RequestMapping("goodsIpgo")
 	public String goodsIpgo(GoodsIpgoCommand goodsIpgoCommand) {

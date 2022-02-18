@@ -8,11 +8,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import kosaShoppingMall.command.DeliveryCommand;
 import kosaShoppingMall.domain.AuthInfo;
 import kosaShoppingMall.service.EmailCheckService;
 import kosaShoppingMall.service.IdCheckService;
 import kosaShoppingMall.service.employees.EmpEmailCheckService;
 import kosaShoppingMall.service.employees.EmpIdCheckService;
+import kosaShoppingMall.service.goods.DeliveryDelService;
+import kosaShoppingMall.service.goods.DeliveryUpdateProService;
 import kosaShoppingMall.service.goods.GoodsCartAddService;
 import kosaShoppingMall.service.goods.GoodsWishService;
 import kosaShoppingMall.service.member.MemberEmailCheckService;
@@ -39,6 +42,11 @@ public class CheckController {
 	GoodsCartAddService goodsCartAddService;
 	@Autowired
 	DelpurchaseService delpurchaseService;
+	@Autowired
+	DeliveryUpdateProService deliveryUpdateProService;
+	@Autowired
+	DeliveryDelService deliveryDelService;
+	
 	
 	@RequestMapping(value="/register/idCheck", method=RequestMethod.POST)
 	public String idCheck(@RequestParam(value="memberId") String memberId) {
@@ -139,7 +147,16 @@ public class CheckController {
 	@RequestMapping(value="/cart/delPurchase")
 	public Integer delPurchase(@RequestParam(value="purchaseNum[]") String[] purchaseNum) {
 		Integer i = delpurchaseService.execute(purchaseNum);
-		System.out.println("=========" + i);
 		return i;
+	}
+	
+	@RequestMapping(value="/goods/deliveryUpdatePro")
+	public Integer deliveryUpdatePro(DeliveryCommand deliveryCommand) {
+		return deliveryUpdateProService.execute(deliveryCommand);
+	}
+	
+	@RequestMapping(value="/goods/deliveryDel")
+	public Integer deliveryDel(@RequestParam(value="purchaseNum") String purchaseNum) {
+		return deliveryDelService.execute(purchaseNum);
 	}
 }

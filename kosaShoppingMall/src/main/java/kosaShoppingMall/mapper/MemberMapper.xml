@@ -275,6 +275,7 @@ where rn between #{startRow} and #{endRow}
 	     on pu.purchase_num = pl.purchase_num join goods g
 	     on pl.goods_num = g.goods_num
 	where pu.member_num = #{memberNum}     
+	order by purchaseNum desc
 </select>
 
 <!-- 결제 -->
@@ -306,16 +307,42 @@ where rn between #{startRow} and #{endRow}
 </delete>
 
 <delete id="delPurchase" parameterType="string">
- 	delete from purchase
+ 	delete from purchase 
  	<where>
  	purchase_num in
  	<foreach collection="purchaseNum" item="purchaseNum" index="index" open="(" close=")" separator="," >
  		#{purchaseNum}
  	</foreach>
- 	<!-- and goods_name in
- 	<foreach collection="goodsName" item="goodsName" index="index" open="(" close=")" separator="," >
- 		#{goodsName}
+<!--  	<foreach collection="delGoodsPurchaseDTO" item="item" index="index" open="(" close=")" separator="," >
+ 		purchase_num = #{item.purchaseNum} and goods_name = #{item.goodsName}
  	</foreach> -->
  	</where>
 </delete>
+
+<!-- 주문 상세보기 -->
+<select id="purchaseDetail" parameterType="string" resultType="orderListDTO">
+	select g.goods_name goodsName, g.goods_main goodsMain, g.goods_content goodsContent, g.goods_price goodsPrice, g.delivery_cost deliveryCost, 
+	        pu.purchase_num purchaseNum, pu.purchase_date purchaseDate, pu.total_price totalPrice, pu.purchase_addr purchaseAddr, pu.purchase_phone purchasePhone, 
+	        pu.message, pu.recieve_name recieveName, 
+	        pl.purchase_qty purchaseQty, pl.purchase_price purchasePrice, 
+	        pa.payment_kind paymentKind, pa.payment_price paymentPrice, pa.payment_date paymentDate, pa.card_number cardNumber
+	from payment pa right outer join purchase pu
+	     on pa.purchase_num = pu.purchase_num join purchase_list pl
+	     on pu.purchase_num = pl.purchase_num join goods g
+	     on pl.goods_num = g.goods_num
+	where pu.purchase_num = #{purchaseNum} 
+</select>
+
+<!-- 상품준비중으로 변경 -->
+<update id="purchaseStatusReady" parameterType="orderListDTO">
+	update purchase
+	set purchase_status = '상품준비중'
+	where purchase_num = #{purchaseNum} and PURCHASE_STATUS = '결제완료' 
+</update>
+
+<select id="purchaseStatusSelect" parameterType="string" resultType="string">
+ 	select purchase_status
+ 	from purchase
+ 	where purchase_num = #{purchaseNum}
+</select>
 </mapper>

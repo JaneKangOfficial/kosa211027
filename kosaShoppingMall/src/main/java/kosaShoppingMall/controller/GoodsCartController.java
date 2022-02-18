@@ -21,6 +21,7 @@ import kosaShoppingMall.service.memberJoin.GoodsOrderService;
 import kosaShoppingMall.service.memberJoin.OrderProcessListService;
 import kosaShoppingMall.service.memberJoin.PaymentCancelService;
 import kosaShoppingMall.service.memberJoin.PaymentDelService;
+import kosaShoppingMall.service.memberJoin.PurchaseDetailService;
 
 @Controller
 public class GoodsCartController {
@@ -44,6 +45,8 @@ public class GoodsCartController {
 	PaymentCancelService paymentCancelService;
 	@Autowired
 	PaymentDelService paymentDelService;
+	@Autowired
+	PurchaseDetailService purchaseDetailService;
 	
 
 	@RequestMapping("/cart/goodsCartList")
@@ -104,12 +107,6 @@ public class GoodsCartController {
 		return "thymeleaf/purchase/buyFinished";
 	}
 	
-	@RequestMapping("/cart/purchaseDetail")
-	public String purchaseDetail(@RequestParam(value="purchaseNum") String purchaseNum) {
-		
-		return "thymeleaf/purchase/purchaseDetail";
-	}
-	
 	@RequestMapping("/cart/paymentCancel")
 	public String paymentCancel(@RequestParam(value="purchaseNum") String purchaseNum) {
 		paymentCancelService.execute(purchaseNum);
@@ -119,6 +116,13 @@ public class GoodsCartController {
 	public String paymentDel(@RequestParam(value="purchaseNum") String purchaseNum) {
 		paymentDelService.execute(purchaseNum);
 		return "redirect:orderList";
+	}
+	
+	@RequestMapping("/cart/purchaseDetail")
+	public String purchaseDetail(@RequestParam(value="purchaseNum") String purchaseNum, Model model) {
+		purchaseDetailService.execute(purchaseNum, model);
+		model.addAttribute("newLineChar", "\n");
+		return "thymeleaf/purchase/purchaseDetail";
 	}
 	
 }

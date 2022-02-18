@@ -7,18 +7,20 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import kosaShoppingMall.command.DeliveryCommand;
 import kosaShoppingMall.command.GoodsIpgoCommand;
 import kosaShoppingMall.domain.CartDTO;
 import kosaShoppingMall.domain.GoodsDTO;
 import kosaShoppingMall.domain.GoodsIpgoDTO;
 import kosaShoppingMall.domain.GoodsIpgoGoodsDTO;
+import kosaShoppingMall.domain.OrderListDTO;
 import kosaShoppingMall.domain.StartEndPageDTO;
 import kosaShoppingMall.domain.WishDTO;
 
 @Component
 @Repository("kosaShoppingMall.mapper.GoodsMapper")
 public interface GoodsMapper {
-	// goods
+	// =============== goods
 	public String autoNum();
 	public Integer goodsInsert(GoodsDTO dto);
 	public List<GoodsDTO> selectAll(StartEndPageDTO dto);
@@ -40,8 +42,11 @@ public interface GoodsMapper {
 	// 파일 여러개 삭제
 	public List<GoodsDTO> goodsSelect(HashMap<String, Object> condition);
 	
+	// 주문 목록
+	public List<OrderListDTO> purchaseList();
 	
-	// goodsIpgo
+	
+	// =============== goodsIpgo
 	public List<GoodsDTO> goodsItems(String goodsName);
 	public Integer ipgoInsert(GoodsIpgoDTO dto);
 	public List<GoodsIpgoDTO> ipgoSelect(StartEndPageDTO dto);
@@ -61,4 +66,16 @@ public interface GoodsMapper {
 	public String wishCount(WishDTO dto);
 	// 장바구니
 	public Integer cartAdd(CartDTO cart);
+	// 주문 상세보기
+	public List<OrderListDTO> purchaseDetail(String purchaseNum);
+	// 결제 취소
+	public Integer purchaseCancel(String purchaseNum);
+	
+	//
+	public Integer deliveryInsert(DeliveryCommand deliveryCommand);
+	public Integer deliveryStatus(String purchaseNum );
+	public Integer deliveryUpdate(OrderListDTO orderListDTO);
+	public Integer deliveryDel(String purchaseNum);
+	public Integer purchaseStatusDel(String purchaseNum);
+	
 }

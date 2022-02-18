@@ -173,6 +173,64 @@
 		values(#{memberNum}, #{goodsNum}, #{cartQty})
 </insert>
 
+<!-- 주문 내역 -->
+<select id="purchaseList" resultType="orderListDTO">
+	select pa.confirm_number confirmNumber, pu.purchase_date purchaseDate, g.goods_name goodsName, pu.purchase_num purchaseNum, pu.purchase_status purchaseStatus, g.goods_main goodsMain, pu.total_price totalPrice
+	from payment pa right outer join purchase pu
+	     on pa.purchase_num = pu.purchase_num join purchase_list pl
+	     on pu.purchase_num = pl.purchase_num join goods g
+	     on pl.goods_num = g.goods_num
+	order by purchaseNum desc
+</select>
+
+<!-- 결제 취소 -->
+<delete id="purchaseCancel" parameterType="string">
+ 	delete from payment
+ 	where purchase_num = #{purchaseNum}
+</delete>
+
+<select id="purchaseDetail" parameterType="string" resultType="orderListDTO">
+	select g.goods_name goodsName, g.goods_main goodsMain, g.goods_content goodsContent, g.goods_price goodsPrice, g.delivery_cost deliveryCost, 
+	        pu.purchase_num purchaseNum, pu.purchase_date purchaseDate, pu.total_price totalPrice, pu.purchase_addr purchaseAddr, pu.purchase_phone purchasePhone, 
+	        pu.message, pu.recieve_name recieveName, 
+	        pl.purchase_qty purchaseQty, pl.purchase_price purchasePrice, 
+	        pa.payment_kind paymentKind, pa.payment_price paymentPrice, pa.payment_date paymentDate, pa.card_number cardNumber,
+			d.delivery_number deliveryNumber, d.delivery_company deliveryCompany
+	from payment pa right outer join purchase pu
+	     on pa.purchase_num = pu.purchase_num left outer join delivery d
+	     on pu.purchase_num = d.purchase_num join purchase_list pl
+	     on pu.purchase_num = pl.purchase_num join goods g
+	     on pl.goods_num = g.goods_num 
+	where pu.purchase_num = #{purchaseNum} 
+</select>
+
+<!-- 배송 -->
+<insert id="deliveryInsert" parameterType="kosaShoppingMall.command.DeliveryCommand">
+ 	insert into delivery(purchase_num, delivery_number, delivery_company)
+ 	values(#{purchaseNum}, #{deliveryNumber}, #{deliveryCompany})
+</insert>
+<update id="deliveryStatus" parameterType="string">
+ 	update purchase
+ 	set purchase_status = '배송완료'
+ 	where purchase_num = #{purchaseNum}
+</update>
+
+<update id="deliveryUpdate" parameterType="orderListDTO">
+	update delivery
+	set delivery_company = #{deliveryCompany}, delivery_number = #{deliveryNumber}
+	where purchase_num = #{purchaseNum}
+</update>
+
+<delete id="deliveryDel" parameterType="string">
+ 	delete from delivery
+ 	where purchase_num = #{purchaseNum}
+</delete>
+<update id="purchaseStatusDel" parameterType="string">
+	update purchase
+	set purchase_status = '상품준비중'
+	where purchase_num = #{purchaseNum}
+</update>
+
 <!-- ================================= goodsIpgo ======================================-->
 <select id="goodsItems" parameterType="String" resultType="goodsDTO">
 	select <include refid="base"/>

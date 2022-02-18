@@ -25,6 +25,7 @@ public class DataBaseInfo {
 		// ** 표시 : mappers/**/ : mappers 밑에 폴더가 있을 수도 있다는 표시
 		sessionFactory.setMapperLocations(applicationContext.getResources("classpath:mappers/**/*Mapper.xml"));
 		
+		// 여기에서만 별칭을 사용할 수 있다.
 		sessionFactory.setTypeAliasesPackage("kosaShoppingMall.domain");
 		return sessionFactory.getObject();
 	}

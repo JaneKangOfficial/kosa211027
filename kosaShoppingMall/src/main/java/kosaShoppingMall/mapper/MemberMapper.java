@@ -80,5 +80,12 @@ public interface MemberMapper {
 	public Integer paymentDel(String purchaseNum);
 	// 결제 checkbox 선택 삭제
 	public Integer delPurchase(String[] purchaseNum);
+//	public Integer delPurchase(DelGoodsPurchaseDTO delGoodsPurchaseDTO);
+	
+	// 주문 상세보기
+	public List<OrderListDTO> purchaseDetail(String purchaseNum);
+	//
+	public Integer purchaseStatusReady(OrderListDTO orderListDTO);
+	public String purchaseStatusSelect(String purchaseNum);
 	
 }
