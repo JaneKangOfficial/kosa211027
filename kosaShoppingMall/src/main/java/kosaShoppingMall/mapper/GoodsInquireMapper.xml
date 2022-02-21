@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kosaShoppingMall.mapper.GoodsInquireMapper">
+<sql id="maxNum">
+	select nvl(max(inquire_num),0) + 1 from goods_inquire
+</sql>
+
+<select id="selectAll" resultType="goodsInquireDTO" parameterType="String">
+	select inquire_num inquireNum, goods_num goodsNum, member_num memberNum, 
+			inquire_subject inquireSubject, inquire_content inquireContent, inquire_kind inquireKind, 
+			inquire_answer inquireAnswer, inquire_date inquireDate, 
+			answer_date answerDate, answer_email answerEmail
+	from goods_inquire
+	where goods_num = #{goodsNum}
+	order by inquireNum desc
+</select>
+
+<insert id="inquireInsert" parameterType="goodsInquireDTO">
+ 	insert into goods_inquire (INQUIRE_NUM, inquire_kind, inquire_subject, inquire_content, member_num, inquire_date, goods_num)
+ 	values ((<include refid="maxNum"/>), #{inquireKind}, #{inquireSubject}, #{inquireContent}, #{memberNum}, sysdate, #{goodsNum})
+</insert>
+</mapper>

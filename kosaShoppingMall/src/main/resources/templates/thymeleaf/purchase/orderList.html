@@ -50,7 +50,7 @@ function dels() {
 	console.log(chk_arr);
 	console.log(chk_arr1);
 	*/
-	
+
 	/*
 	var chk_arr = [];
 	$("input:checkbox[name=prodCk]:checked").each(function(){
@@ -59,17 +59,20 @@ function dels() {
 		chk_arr2 = checkVal.split("`");
 		chk_arr.push(chk_arr2);
 	}); 
-	console.log(chk_arr);
-	*/
-		
+	
+	var jsonData = JSON.stringify(chk_arr);
+	console.log(jsonData);
+	 jQuery.ajaxSettings.traditional = true;
+	*/	
 	if($("input:checkbox[name=prodCk]:checked").length < 1) {
 		alert("하나 이상 선택하셔야 합니다.");
 	}else {
 		$.ajax({
 			type : "post",
 			url : "/cart/delPurchase",
-			dataType : "text",
-			data : {"purchaseNum" : chk_arr},
+			dataType : "josn",
+			
+			data : {"purchaseNum" : jsonData},
 			success : function(result){
 				if(result.trim() > "0") {
 					alert("삭제되었습니다.");
@@ -89,7 +92,7 @@ function dels() {
 </script>
 </head>
 <body>
-<table width="800" align="center" border="1">
+<table width="850" align="center" border="1">
 	<tr>
 		<td><input type="checkbox" id="prodCkAll"  /></td>
 		<td>주문일(결제번호)</td>
@@ -99,25 +102,33 @@ function dels() {
 	</tr>
 	<tr th:each="dto : ${list}">
 		<td><th:block th:if="${dto.confirmNumber == null}">
-				<input type="checkbox" name="prodCk" th:value="${dto.purchaseNum}" >	
-<!-- 				<input type="checkbox" name="prodCk" th:value="${dto.purchaseNum+'`'+dto.recieveName}" >	 -->
+				 <!-- <input type="checkbox" name="prodCk" th:value="${dto.purchaseNum}" > -->
+			 	<input type="checkbox" name="prodCk" th:value="${dto.purchaseNum+'`'+dto.recieveName}" >
 			</th:block>
 			<th:block th:if="${dto.confirmNumber != null}">
-				<input type="checkbox" name="prodCk" disabled="disabled" >	
+		<input type="checkbox"  disabled="disabled" >	 
 			</th:block>
 		</td>
 		<td> 
 			<input type="hidden" id="goodsName" th:value="${dto.goodsName}" />
-			[[${#dates.format(dto.purchaseDate,'yyyy-MM-dd')}]]
+			[[${#dates.format(dto.purchaseDate,'yyyy-MM-dd')}]] ||[[${dto.recieveName}]]
 			(<span th:if="${dto.confirmNumber != null}" th:text="${dto.confirmNumber}"></span>
 			<span th:if="${dto.confirmNumber == null}" th:text="입금대기중"></span>)
 		</td>
-		<td><img th:src="|/goods/upload/${dto.goodsMain}|" width="50"/>[[${dto.goodsName}]] / [[${dto.purchaseNum}]]</td>
+		<td>
+			<img th:src="|/goods/upload/${dto.goodsMain}|" width="50"/>[[${dto.goodsName}]] / [[${dto.purchaseNum}]] / 
+		</td>
 		<td>
 			<a th:href="@{purchaseDetail(purchaseNum=${dto.purchaseNum})}">주문 상세 보기</a><br />
 			결제 금액 : [[${dto.totalPrice}]]<br />[[${dto.purchaseStatus}]] |
 			<a th:if="${dto.purchaseStatus == '결제대기중'}" th:href="@{paymentOk(purchaseNum=${dto.purchaseNum},totalPrice=${dto.totalPrice})}">결제하기</a> 
-			<a th:if="${dto.purchaseStatus == '결제완료'}" th:href="@{paymentCancel(purchaseNum=${dto.purchaseNum})}">결제취소</a>
+			<a th:if="${dto.purchaseStatus != '결제완료' and dto.purchaseStatus != '배송완료' and dto.purchaseStatus != '결제대기중'}" th:href="@{paymentCancel(purchaseNum=${dto.purchaseNum})}">결제취소</a>
+			<th:block th:if="${dto.reviewContent == null}">
+				<a th:if="${dto.purchaseStatus == '배송완료'}" th:href="@{goodsReview(goodsNum=${dto.goodsNum},purchaseNum=${dto.purchaseNum})}">리뷰등록</a> 
+			</th:block>
+			<th:block th:if="${dto.reviewContent != null}">
+				<a th:href="@{goodsReviewUpdate(goodsNum=${dto.goodsNum},purchaseNum=${dto.purchaseNum})}" >리뷰수정</a>
+			</th:block>
 		</td>
 		<td>
 			<a th:if="${dto.purchaseStatus == '결제대기중'}" th:href="@{paymentDel(purchaseNum=${dto.purchaseNum})}">삭제하기</a> 

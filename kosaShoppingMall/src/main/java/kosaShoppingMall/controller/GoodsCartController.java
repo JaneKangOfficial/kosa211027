@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kosaShoppingMall.command.PurchaseCommand;
+import kosaShoppingMall.service.goods.GoodsReviewUpdateService;
+import kosaShoppingMall.service.goods.ReviewWriteService;
 import kosaShoppingMall.service.member.GoodsBuyService;
 import kosaShoppingMall.service.member.GoodsCartDelService;
 import kosaShoppingMall.service.member.GoodsCartDelsService;
@@ -47,6 +49,10 @@ public class GoodsCartController {
 	PaymentDelService paymentDelService;
 	@Autowired
 	PurchaseDetailService purchaseDetailService;
+	@Autowired
+	ReviewWriteService reviewWriteService;
+	@Autowired
+	GoodsReviewUpdateService goodsReviewUpdateService;
 	
 
 	@RequestMapping("/cart/goodsCartList")
@@ -123,6 +129,37 @@ public class GoodsCartController {
 		purchaseDetailService.execute(purchaseNum, model);
 		model.addAttribute("newLineChar", "\n");
 		return "thymeleaf/purchase/purchaseDetail";
+	}
+	
+	@RequestMapping("/cart/goodsReview")
+	public String goodsReview(@ModelAttribute(value="goodsNum") String goodsNum,
+						@ModelAttribute(value="purchaseNum") String purchaseNum) {
+		return "thymeleaf/purchase/goodsReview";
+	}
+	
+	@RequestMapping(value="/cart/reviewWrite", method=RequestMethod.POST)
+	public String reviewWrite(@RequestParam(value="goodsNum") String goodsNum,
+					@RequestParam(value="reviewContent") String reviewContent,
+					@RequestParam(value="purchaseNum") String purchaseNum) {
+		reviewWriteService.execute(goodsNum, reviewContent, purchaseNum);
+		return "redirect:orderList";
+	}
+	
+	@RequestMapping(value="/cart/goodsReviewUpdate", method = RequestMethod.GET)
+	public String goodsReviewUpdate(@RequestParam(value="purchaseNum") String purchaseNum,
+								@RequestParam(value="goodsNum") String goodsNum, 
+								HttpSession session, Model model) {
+		goodsReviewUpdateService.execute(purchaseNum, goodsNum, session, model);
+		return "thymeleaf/purchase/goodsReviewUpdate";
+	}
+	
+	@RequestMapping(value="/cart/goodsReviewUpdate", method = RequestMethod.POST)
+	public String goodsReviewUpdate(@RequestParam(value="purchaseNum") String purchaseNum,
+			@RequestParam(value="goodsNum") String goodsNum,
+			@RequestParam(value="reviewContent") String reviewContent) {
+		goodsReviewUpdateService.execute(purchaseNum, goodsNum, reviewContent);
+		
+		return "redirect:orderList";
 	}
 	
 }

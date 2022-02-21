@@ -60,7 +60,57 @@ $(function(){
 			}
 		});
 	});
+	
+	$("#review").click(function(){
+		$.ajax({
+			type : "post",
+			url : "/corner/reviewList",
+			dataType : "html",
+			data : {"goodsNum" : "[[${goodsCommand.goodsNum}]]"},
+			success : function(result){
+				$("#notice").html(result);
+			},
+			error : function(){
+				alert("error!!!");
+				return;
+			}
+		});
+	});
+
+/*
+	$("#inquire").click(function(){
+		$.ajax({
+			type : "post",
+			url : "/corner/inquireList",
+			dataType : "html",
+			data : {"goodsNum" : "[[${goodsCommand.goodsNum}]]"},
+			success : function(result){
+				$("#notice").html(result);
+			},
+			error : function(){
+				alert("error!!!");
+				return;
+			}
+		});
+	});
+*/
 });
+
+function inquire() {
+	$.ajax({
+		type : "post",
+		url : "/corner/inquireList",
+		dataType : "html",
+		data : {"goodsNum" : "[[${goodsCommand.goodsNum}]]"},
+		success : function(result){
+			$("#notice").html(result);
+		},
+		error : function(){
+			alert("error!!!");
+			return;
+		}
+	});
+}
 </script>
 </head>
 <body>
@@ -115,5 +165,18 @@ $(function(){
 	</tr>
 </table>
 </form>
+<table width="850" align="left">
+<tr>
+	<td>
+	<ul>
+		<li><span id="review">리뷰</span></li>
+		<li><span id="inquire" onclick="inquire();">상품문의</span></li>
+	</ul>
+	<span id="notice">
+	</span>
+	</td>
+</tr>
+</table>
+
 </body>
 </html>

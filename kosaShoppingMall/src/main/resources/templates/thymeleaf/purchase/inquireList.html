@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script >
+
+$(function(){
+	$("#inquire1").click(function(){
+		window.open("inquireWrite?goodsNum=[[${goodsNum}]]","문의하기","width=700, height=650, top=100, left=100");
+	});
+});
+</script>
+</head>
+<body>
+<table border="1">
+	<tr><td colspan="5" align="right"><button type="button" id="inquire1" >문의 하기</button></td></tr>
+	<tr><td>번호</td><td>답변 상태</td><td>문의유형</td><td>문의제목</td><td>작성자</td><td>작성일자</td></tr>
+	<tr th:each="dto : ${list}">
+		<td>[[${dto.inquireNum}]]</td>
+		<td>[[${dto.inquireAnswer}]]</td>
+		<td>[[${dto.inquireKind}]]</td>
+		<td>[[${dto.inquireSubject}]]</td>
+		<td>[[${dto.memberNum}]]</td>
+		<td>[[${#dates.format(dto.inquireDate,'yyyy-MM-dd')}]]</td>
+	</tr> 
+</table>
+</body>
+</html>

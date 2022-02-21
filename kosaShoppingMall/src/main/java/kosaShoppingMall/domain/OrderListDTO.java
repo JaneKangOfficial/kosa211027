@@ -33,6 +33,8 @@ public class OrderListDTO {
 	String cardNumber;
 	String deliveryNumber;
 	String deliveryCompany;
+	String goodsNum;
+	String reviewContent;
 	
 	
 	

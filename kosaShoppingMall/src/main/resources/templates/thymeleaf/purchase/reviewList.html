@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<table border="1">
+		<tr>
+			<td>아이디</td>
+			<td>작성날짜</td>
+			<td>별점</td>
+			<td>리뷰내용</td>
+		</tr>
+		<tr th:each="dto : ${list}">
+			<td>[[${dto.memberId}]]</td>
+			<td>[[${#dates.format(dto.reviewDate, 'yyyy-MM-dd')}]]</td>
+			<td>[[${dto.score}]]</td>
+			<td>[[${dto.reviewContent}]]</td>
+		</tr>
+	</table>
+</body>
+</html>

@@ -1,5 +1,7 @@
 package kosaShoppingMall.service.memberJoin;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +13,7 @@ public class DelpurchaseService {
 	@Autowired
 	MemberMapper memberMapper;
 	
-	public Integer execute(String[] purchaseNum) {
+	public Integer execute(String [] purchaseNum) {
 //		for(String i : purchaseNum) {
 //			System.out.println("iiiii " +i);
 //		}
@@ -25,5 +27,6 @@ public class DelpurchaseService {
 //		System.out.println("dtoooooo "+dto);
 //		return memberMapper.delPurchase(dto);
 		return memberMapper.delPurchase(purchaseNum);
+		
 	}
 }

@@ -269,10 +269,14 @@ where rn between #{startRow} and #{endRow}
 </delete>
 
 <select id="orderList" parameterType="string" resultType="orderListDTO">
-	select pa.confirm_number confirmNumber, pu.purchase_date purchaseDate, g.goods_name goodsName, pu.purchase_num purchaseNum, pu.purchase_status purchaseStatus, g.goods_main goodsMain, pu.total_price totalPrice
+	select pa.confirm_number confirmNumber, pu.purchase_date purchaseDate, g.goods_num goodsNum, 
+			g.goods_name goodsName, pu.purchase_num purchaseNum, pu.purchase_status purchaseStatus, 
+			g.goods_main goodsMain, pu.total_price totalPrice , pu.recieve_name recieveName,
+			r.review_content reviewContent
 	from payment pa right outer join purchase pu
 	     on pa.purchase_num = pu.purchase_num join purchase_list pl
-	     on pu.purchase_num = pl.purchase_num join goods g
+	     on pu.purchase_num = pl.purchase_num left outer join review r
+	     on pl.purchase_num = r.purchase_num and pl.goods_num = r.goods_num join goods g
 	     on pl.goods_num = g.goods_num
 	where pu.member_num = #{memberNum}     
 	order by purchaseNum desc
@@ -309,15 +313,15 @@ where rn between #{startRow} and #{endRow}
 <delete id="delPurchase" parameterType="string">
  	delete from purchase 
  	<where>
- 	purchase_num in
+ 	(purchase_num , recieveName) in
  	<foreach collection="purchaseNum" item="purchaseNum" index="index" open="(" close=")" separator="," >
- 		#{purchaseNum}
+ 		((#{purchaseNum} , (#{recieveName})) 
  	</foreach>
 <!--  	<foreach collection="delGoodsPurchaseDTO" item="item" index="index" open="(" close=")" separator="," >
  		purchase_num = #{item.purchaseNum} and goods_name = #{item.goodsName}
  	</foreach> -->
  	</where>
-</delete>
+ 	</delete>
 
 <!-- 주문 상세보기 -->
 <select id="purchaseDetail" parameterType="string" resultType="orderListDTO">
@@ -333,10 +337,10 @@ where rn between #{startRow} and #{endRow}
 	where pu.purchase_num = #{purchaseNum} 
 </select>
 
-<!-- 상품준비중으로 변경 -->
+<!-- 배송완료로 변경 -->
 <update id="purchaseStatusReady" parameterType="orderListDTO">
 	update purchase
-	set purchase_status = '상품준비중'
+	set purchase_status = '배송완료'
 	where purchase_num = #{purchaseNum} and PURCHASE_STATUS = '결제완료' 
 </update>
 

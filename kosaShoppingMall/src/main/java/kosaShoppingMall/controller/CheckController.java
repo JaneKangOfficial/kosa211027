@@ -1,5 +1,7 @@
 package kosaShoppingMall.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kosaShoppingMall.command.DeliveryCommand;
-import kosaShoppingMall.domain.AuthInfo;
 import kosaShoppingMall.service.EmailCheckService;
 import kosaShoppingMall.service.IdCheckService;
 import kosaShoppingMall.service.employees.EmpEmailCheckService;
@@ -21,6 +22,7 @@ import kosaShoppingMall.service.goods.GoodsWishService;
 import kosaShoppingMall.service.member.MemberEmailCheckService;
 import kosaShoppingMall.service.member.MemberIdCheckService;
 import kosaShoppingMall.service.memberJoin.DelpurchaseService;
+import net.sf.json.JSONObject;
 
 @RestController
 public class CheckController {
@@ -138,16 +140,21 @@ public class CheckController {
 		return goodsWishService.execute(goodsNum, session);
 	}
 	
-	@RequestMapping(value="/cart/goodsCartAdd")
+	@RequestMapping(value="/cart/goodsCartAdd" )
 	public String goodsCartAdd(@RequestParam(value="goodsNum") String goodsNum,
 							@RequestParam(value="goodsQty") Integer goodsQty, HttpSession session) {
 		return goodsCartAddService.execute(goodsNum, goodsQty, session);
 	}
 	
 	@RequestMapping(value="/cart/delPurchase")
-	public Integer delPurchase(@RequestParam(value="purchaseNum[]") String[] purchaseNum) {
+	public Integer delPurchase(@RequestParam(value="purchaseNum") String[] purchaseNum) {
+	///	JSONObject jsonObject = JSONObject.fromObject(purchaseNum);
+	 //   Map<String, Object> result = 
+	//			(Map<String, Object>)JSONObject.toBean(jsonObject, java.util.HashMap.class);
+	  //  System.out.println(result.size());
 		Integer i = delpurchaseService.execute(purchaseNum);
-		return i;
+		
+		return null;
 	}
 	
 	@RequestMapping(value="/goods/deliveryUpdatePro")

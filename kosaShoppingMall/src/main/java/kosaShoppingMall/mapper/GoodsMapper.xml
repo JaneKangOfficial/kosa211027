@@ -231,6 +231,52 @@
 	where purchase_num = #{purchaseNum}
 </update>
 
+<!-- 리뷰 -->
+<insert id="reviewWrite" parameterType="reviewDTO">
+	insert into review(review_num, goods_num, REVIEW_DATE, score, review_content, purchase_num)
+	values(seq_num_review.nextval, #{goodsNum}, sysdate, 5, #{reviewContent}, #{purchaseNum})
+</insert>
+
+<resultMap type="goodsReviewDTO" id="goodsReviewResultMap">
+	<association property="goodsDTO" javaType="goodsDTO" resultMap="goodsResultMap"/>
+	<association property="reviewDTO" javaType="reviewDTO" resultMap="reviewResultMap"/>
+</resultMap>
+<resultMap type="reviewDTO" id="reviewResultMap">
+	<id column="review_num" jdbcType="BIGINT" property="reviewNum" />
+	<id column="goods_num" jdbcType="VARCHAR" property="goodsNum" />
+	<id column="purchase_num" jdbcType="VARCHAR" property="purchaseNum" />
+	<result column="review_content" jdbcType="VARCHAR" property="reviewContent" />
+	<result column="review_date" jdbcType="DATE" property="reviewDate" />
+</resultMap>
+<resultMap type="goodsDTO" id="goodsResultMap">
+	<id column="goods_num" jdbcType="VARCHAR" property="goodsNum"/>
+	<result column="goods_main" jdbcType="VARCHAR" property="goodsMain"/>
+	<result column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
+	<result column="delivery_cost" jdbcType="VARCHAR" property="deliveryCost"/>
+</resultMap>
+<select id="reviewSelect" parameterType="reviewDTO" resultMap="goodsReviewResultMap">
+	select g.goods_num, g.goods_name, g.goods_main, 
+			r.review_num, r.review_date, r.review_content, r.purchase_num
+	from goods g, review r, purchase p
+	where g.goods_num =  r.goods_num
+		and p.purchase_num = r.purchase_num
+		and p.member_num = #{memberNum} and r.goods_num = #{goodsNum} and r.purchase_num = #{purchaseNum}
+</select>
+
+<update id="reviewUpdate" parameterType="reviewDTO">
+ 	update review
+ 	set review_content = #{reviewContent}
+ 	where goods_num = #{goodsNum} and purchase_num = #{purchaseNum}
+</update>
+
+<select id="reviewList" parameterType="string" resultType="reviewDTO">
+ 	select r.score score, review_date reviewDate, r.review_content reviewContent, m.member_id memberId
+	from review r, member m, purchase p
+	where r.purchase_num = p.purchase_num and p.member_num = m.member_num
+			and r.goods_num = #{goodsNum}
+</select>
+
+
 <!-- ================================= goodsIpgo ======================================-->
 <select id="goodsItems" parameterType="String" resultType="goodsDTO">
 	select <include refid="base"/>
@@ -250,6 +296,8 @@
 				order by goods_num desc, ipgo_date desc)
 	where rn between #{startRow} and #{endRow}	
 </select>
+
+
 
 <!-- ============= resultMap 시작 =============
 	<association> 대 <association> == 1 대 1
@@ -322,7 +370,7 @@
 <!--  =========== 여러개 삭제 goods_ipgo  =========== -->
 <delete id="goodsIpgoDels" parameterType="hashMap">
  delete from goods_ipgo
- where (goods_num, ipgo_date) in
+ where (goods_num, ipgo_date)
  <foreach collection="condition" item="nums" index="index" open="(" close=")" separator=",">
  	<foreach collection="nums" item="num" index="index" open="(" close=")" separator=",">
  		${num}

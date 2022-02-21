@@ -13,7 +13,9 @@ import kosaShoppingMall.domain.CartDTO;
 import kosaShoppingMall.domain.GoodsDTO;
 import kosaShoppingMall.domain.GoodsIpgoDTO;
 import kosaShoppingMall.domain.GoodsIpgoGoodsDTO;
+import kosaShoppingMall.domain.GoodsReviewDTO;
 import kosaShoppingMall.domain.OrderListDTO;
+import kosaShoppingMall.domain.ReviewDTO;
 import kosaShoppingMall.domain.StartEndPageDTO;
 import kosaShoppingMall.domain.WishDTO;
 
@@ -77,5 +79,11 @@ public interface GoodsMapper {
 	public Integer deliveryUpdate(OrderListDTO orderListDTO);
 	public Integer deliveryDel(String purchaseNum);
 	public Integer purchaseStatusDel(String purchaseNum);
+	
+	// 리뷰
+	public Integer reviewWrite(ReviewDTO dto);
+	public GoodsReviewDTO reviewSelect(ReviewDTO reviewDTO);
+	public Integer reviewUpdate(ReviewDTO reviewDTO);
+	public List<ReviewDTO> reviewList(String goodsNum);
 	
 }
