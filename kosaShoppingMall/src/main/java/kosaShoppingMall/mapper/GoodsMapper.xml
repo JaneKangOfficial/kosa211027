@@ -269,13 +269,34 @@
  	where goods_num = #{goodsNum} and purchase_num = #{purchaseNum}
 </update>
 
+<!-- 
 <select id="reviewList" parameterType="string" resultType="reviewDTO">
  	select r.score score, review_date reviewDate, r.review_content reviewContent, m.member_id memberId
 	from review r, member m, purchase p
 	where r.purchase_num = p.purchase_num and p.member_num = m.member_num
 			and r.goods_num = #{goodsNum}
 </select>
-
+ -->
+ <resultMap type="reviewDTO" id="reviewResultMap2">
+ 	<id column="reviewNum" jdbcType="BIGINT" property="reviewNum"/>
+ 	<id column="goodsNum" jdbcType="VARCHAR" property="goodsNum"/>
+ 	<id column="reviewDate" jdbcType="DATE" property="reviewDate"/>
+ 	<result column="score" jdbcType="BIGINT" property="score"/>
+ 	<result column="reviewContent" jdbcType="VARCHAR" property="reviewContent"/>
+ 	<result column="purchaseNum" jdbcType="BIGINT" property="purchaseNum"/>
+ 	<result column="memberNum" jdbcType="VARCHAR" property="memberNum"/>
+ 	<association property="memberDTO" javaType="memDTO">
+ 		<result column="memberId" jdbcType="VARCHAR" property="memberId"/>
+ 	</association>
+ </resultMap>
+<select id="reviewList" parameterType="string" resultMap="reviewResultMap2">
+ 	select r.score score, review_date reviewDate, r.review_content reviewContent, m.member_id memberId
+	from review r, member m, purchase p
+	where r.purchase_num = p.purchase_num and p.member_num = m.member_num
+			and r.goods_num = #{goodsNum}
+</select>
+ 
+ 
 
 <!-- ================================= goodsIpgo ======================================-->
 <select id="goodsItems" parameterType="String" resultType="goodsDTO">

@@ -20,4 +20,6 @@ public class GoodsInquireDTO {
 	Date answerDate;
 	String answerEmail;
 	
+	GoodsDTO goodsDTO;
+	MemberDTO memberDTO;
 }

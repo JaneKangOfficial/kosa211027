@@ -1,5 +1,8 @@
 package kosaShoppingMall;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -19,18 +22,16 @@ import kosaShoppingMall.service.goods.GoodsListPageService;
 //@RestController // test 하기 위해서
 @Controller
 public class KosaShoppingMallApplication {
-	
 	@Autowired
 	GoodsListPageService goodsListPageService;
-	
 	@ModelAttribute
 	public LoginCommand getLoginCommand() {
 		return new LoginCommand();
 	}
 	
 	@RequestMapping("/")
-	public String test(Model model) {
-		goodsListPageService.execute(model);
+	public String test(HttpServletRequest request) {
+		goodsListPageService.execute(request);
 		return "thymeleaf/index";
 	}
 	public static void main(String[] args) {

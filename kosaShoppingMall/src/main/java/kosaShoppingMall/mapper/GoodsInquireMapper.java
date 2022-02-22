@@ -13,5 +13,11 @@ public interface GoodsInquireMapper {
 
 	public List<GoodsInquireDTO> selectAll(String goodsNum);
 	public Integer inquireInsert(GoodsInquireDTO dto);
+	// 관리자 상품문의
+	public List<GoodsInquireDTO> goodsInquire();
+	// 관리자 상품문의 상세보기
+	public GoodsInquireDTO goodsInquire(String inquireNum);
+	// 관리자 상품문의 답변
+	public Integer setInquireAnswer(GoodsInquireDTO goodsInquireDTO);
 
 }

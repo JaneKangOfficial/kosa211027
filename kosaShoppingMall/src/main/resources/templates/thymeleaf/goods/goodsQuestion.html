@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	#leftMenu {
+		width: 25%;
+		float: left;
+		border-right: 1px solid gray;
+		height:500px;
+	}
+	#memberInfo {
+		width: 70%;
+		float: right;
+		padding-left: 30px;
+	}
+</style>
+</head>
+<body>
+<div id="wrapper">
+   <div id="leftMenu">
+      <ul>
+         <li><a href="goodsList">상품리스트</a></li>
+         <li><a href="goodsRegist">상품등록</a></li>
+         <li><a href="goodsIpgoList">상품입고현황</a></li>
+         <li><a href="goodsIpgo">상품입고</a></li>
+         <li><a href="purchaseList">주문내역</a></li>
+         <li><a href="goodsQuestion">상품문의</a></li>
+         
+      </ul>   
+   </div>
+
+	<div id="memberInfo">
+	<table width="600" border="1">
+		<tr>
+			<td>상품명</td>
+			<td>종류</td>
+			<td>제목</td>
+			<td>작성자</td>
+			<td>답변상태</td>
+		</tr>
+		<th:block th:each="goodsInquireDTO : ${list}" >
+		<tr>
+			<td>[[${goodsInquireDTO.goodsDTO.goodsName}]]</td>
+			<td>[[${goodsInquireDTO.inquireKind}]]</td>
+			<td><a th:href="|goodsInquireDetail/${goodsInquireDTO.inquireNum}|">[[${goodsInquireDTO.inquireSubject}]]</a></td>
+			<td>[[${goodsInquireDTO.memberNum}]]</td>
+			<td th:if="${goodsInquireDTO.inquireAnswer == null}">답변 준비중</td>
+			<td th:if="${goodsInquireDTO.inquireAnswer != null}">답변완료</td>
+		</tr>
+		</th:block>
+	</table>
+	
+	</div>
+</div>
+</body>
+</html>

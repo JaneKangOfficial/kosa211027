@@ -5,9 +5,10 @@
 
 <mapper namespace="kosaShoppingMall.mapper.GoodsInquireMapper">
 <sql id="maxNum">
-	select nvl(max(inquire_num),0) + 1 from goods_inquire
+	select max(nvl(inquire_num,0)) + 1 from goods_inquire
 </sql>
 
+<!-- 
 <select id="selectAll" resultType="goodsInquireDTO" parameterType="String">
 	select inquire_num inquireNum, goods_num goodsNum, member_num memberNum, 
 			inquire_subject inquireSubject, inquire_content inquireContent, inquire_kind inquireKind, 
@@ -17,9 +18,70 @@
 	where goods_num = #{goodsNum}
 	order by inquireNum desc
 </select>
-
+ -->
+<resultMap type="goodsInquireDTO" id="goodsInquireResultMap">
+ 	<id column="goodsNum" jdbcType="VARCHAR" property="goodsNum"/>
+ 	<id column="inquireNum" jdbcType="BIGINT" property="inquireNum"/>
+ 	<id column="memberNum" jdbcType="VARCHAR" property="memberNum"/>
+ 	<result column="inquireSubject" jdbcType="VARCHAR" property="inquireSubject"/>
+ 	<result column="inquireContent" jdbcType="VARCHAR" property="inquireContent"/>
+ 	<result column="inquireKind" jdbcType="VARCHAR" property="inquireKind"/>
+ 	<result column="inquireAnswer" jdbcType="VARCHAR" property="inquireAnswer"/>
+ 	<result column="inquireDate" jdbcType="DATE" property="inquireDate"/>
+ 	<result column="answerDate" jdbcType="DATE" property="answerDate"/>
+ 	<result column="answerEmail" jdbcType="VARCHAR" property="answerEmail"/>
+ 	<association property="memberDTO" javaType="memDTO">
+ 		<result column="memberId" jdbcType="VARCHAR" property="memberId"/>
+ 	</association>
+</resultMap>
+<select id="selectAll" resultMap="goodsInquireResultMap" parameterType="String">
+	select inquire_num inquireNum, goods_num goodsNum, gi.member_num memberNum, 
+			inquire_subject inquireSubject, inquire_content inquireContent, inquire_kind inquireKind, 
+			inquire_answer inquireAnswer, inquire_date inquireDate, 
+			answer_date answerDate, answer_email answerEmail, m.member_id memberId
+	from goods_inquire gi, member m
+	where gi.member_num = m.member_num and gi.goods_num = #{goodsNum}
+	order by inquireNum desc
+</select>
+ 
 <insert id="inquireInsert" parameterType="goodsInquireDTO">
- 	insert into goods_inquire (INQUIRE_NUM, inquire_kind, inquire_subject, inquire_content, member_num, inquire_date, goods_num)
- 	values ((<include refid="maxNum"/>), #{inquireKind}, #{inquireSubject}, #{inquireContent}, #{memberNum}, sysdate, #{goodsNum})
+ 	insert into goods_inquire (INQUIRE_NUM, inquire_kind, inquire_subject, inquire_content, member_num, inquire_date, goods_num, answer_email)
+ 	values (seq_num.nextval, #{inquireKind}, #{inquireSubject}, #{inquireContent}, #{memberNum}, sysdate, #{goodsNum}, #{answerEmail})
 </insert>
+
+<!-- 관리자 상품문의 -->
+<resultMap type="goodsInquireDTO" id="goodsInquireAnswerResultMap">
+ 	<id column="goods_num" jdbcType="VARCHAR" property="goodsNum"/>
+ 	<id column="inquire_num" jdbcType="BIGINT" property="inquireNum"/>
+ 	<id column="member_num" jdbcType="VARCHAR" property="memberNum"/>
+ 	<result column="inquire_subject" jdbcType="VARCHAR" property="inquireSubject"/>
+ 	<result column="inquire_content" jdbcType="VARCHAR" property="inquireContent"/>
+ 	<result column="inquire_kind" jdbcType="VARCHAR" property="inquireKind"/>
+ 	<result column="inquire_answer" jdbcType="VARCHAR" property="inquireAnswer"/>
+ 	<result column="inquire_date" jdbcType="DATE" property="inquireDate"/>
+ 	<result column="answer_date" jdbcType="DATE" property="answerDate"/>
+ 	<result column="answer_email" jdbcType="VARCHAR" property="answerEmail"/>
+ 	<association property="goodsDTO" javaType="goodsDTO">
+ 		<result column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
+ 	</association>
+</resultMap>
+<select id="goodsInquire" parameterType="string" resultMap="goodsInquireAnswerResultMap">
+	select goods_name, inquire_num, gi.goods_num, member_num, inquire_subject, inquire_content, 
+			inquire_kind, inquire_date, answer_date, answer_email, inquire_answer
+	from goods g, goods_inquire gi
+	where g.goods_num = gi.goods_num
+	<!-- 관리자 상품문의 상세보기 -->
+	<if test="inquireNum != null">
+		and inquire_num = #{inquireNum}
+	</if>
+</select>
+
+<!-- 관리자 상품문의 답변 -->
+<update id="setInquireAnswer" parameterType="goodsInquireDTO">
+ 	update goods_inquire
+ 	set inquire_answer = #{inquireAnswer}, answer_date = sysdate
+ 	where inquire_num = #{inquireNum}
+</update>
+
+
 </mapper>

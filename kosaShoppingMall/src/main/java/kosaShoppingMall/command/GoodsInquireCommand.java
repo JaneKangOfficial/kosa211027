@@ -15,4 +15,6 @@ public class GoodsInquireCommand {
 	Date inquireDate;
 	String memberNum;
 	String goodsNum;
+	String email1;
+	String email2;
 }

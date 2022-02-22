@@ -3,6 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script>
+$(function(){
+	$("#frmMain").submit(function(){
+		if([[${session.authInfo == null}]]) {
+			alert("로그인을 하셔야 합니다.");
+			opener.location.href="/";
+			window.self.close();
+			return false;
+		}
+	});
+});
+</script>
 </head>
 <body>
 	<form method="post" action="inquireWrite" id="frmMain">
@@ -50,7 +63,6 @@
 												value="nate.com" />
 									</td>
 								</tr>
-
 							</tbody>
 						</table>
 						<div id="bottombutton" class="bottom-button layerpopup">

@@ -48,6 +48,7 @@ public class CornerController {
 	@RequestMapping("/corner/reviewList")
 	public String reviewList(@RequestParam(value="goodsNum") String goodsNum, Model model) {
 		reviewListService.execute(goodsNum, model);
+		model.addAttribute("newLineChar", "\n");
 		return "thymeleaf/purchase/reviewList";
 	}
 	
@@ -69,16 +70,15 @@ public class CornerController {
 		try {
 			response.setContentType("text/html; charset=utf-8"); 
 			PrintWriter out = response.getWriter();
-			String str=  "<script language='javascript'>" 
-			          +  "opener.location.reload();"
-			          + "				window.self.close();"
-			          + "</script>";
+			String str = "<script language='javascript'>" 
+			           + " opener.parent.inquire();"
+			           + " window.self.close();"
+			           + "</script>";
 			 out.print(str);
 			 out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//return "thymeleaf/purchase/inquireWrite";
 		return null;
 	}
 	

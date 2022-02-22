@@ -26,6 +26,8 @@ import kosaShoppingMall.service.goods.DeliveryUpdateProService;
 import kosaShoppingMall.service.goods.GoodsDelService;
 import kosaShoppingMall.service.goods.GoodsDelsService;
 import kosaShoppingMall.service.goods.GoodsDetailService;
+import kosaShoppingMall.service.goods.GoodsInquireAnswerWriteService;
+import kosaShoppingMall.service.goods.GoodsInquireDetailService;
 import kosaShoppingMall.service.goods.GoodsInsertService;
 import kosaShoppingMall.service.goods.GoodsIpgoDelService;
 import kosaShoppingMall.service.goods.GoodsIpgoDelsService;
@@ -38,6 +40,7 @@ import kosaShoppingMall.service.goods.GoodsItemService;
 import kosaShoppingMall.service.goods.GoodsListService;
 import kosaShoppingMall.service.goods.GoodsModifyService;
 import kosaShoppingMall.service.goods.GoodsNumService;
+import kosaShoppingMall.service.goods.GoodsQuestionService;
 import kosaShoppingMall.service.goods.PurchaseCancelService;
 import kosaShoppingMall.service.goods.PurchaseDetailEmpService;
 import kosaShoppingMall.service.goods.PurchaseListService;
@@ -90,6 +93,12 @@ public class GoodsController {
 	DeliveryActionService deliveryActionService;
 	@Autowired
 	DeliveryUpdateProService deliveryUpdateProService;
+	@Autowired
+	GoodsQuestionService goodsQuestionService;
+	@Autowired
+	GoodsInquireDetailService goodsInquireDetailService;
+	@Autowired
+	GoodsInquireAnswerWriteService goodsInquireAnswerWriteService;
 	
 	@ModelAttribute
 	GoodsCommand getGoodsCommand() {
@@ -207,7 +216,32 @@ public class GoodsController {
 		return "thymeleaf/goods/deliveryUpdate";
 	}
 	
-
+	// 관리자 상품문의
+	@RequestMapping("goodsQuestion")
+	public String goodsQuestion(Model model) {
+		goodsQuestionService.execute(model);
+		return "thymeleaf/goods/goodsQuestion";
+	}
+	
+	// 관리자 상품문의 상세페이지
+	@RequestMapping("goodsInquireDetail/{id}")
+	public String goodsInquireDetail(@PathVariable(value="id") String inquireNum, Model model) {
+		goodsInquireDetailService.execute(inquireNum, model);
+		return "thymeleaf/goods/goodsInquireDetail";
+	}
+	
+	@RequestMapping("answerWrite")
+	public String answerWrite(@RequestParam(value="memberNum") String memberNum,
+						@RequestParam(value="inquireNum") Integer inquireNum,
+						@RequestParam(value="answerEmail") String answerEmail,
+						@RequestParam(value="inquireSubject") String inquireSubject,
+						@RequestParam(value="inquireAnswer") String inquireAnswer) {
+		goodsInquireAnswerWriteService.execute(memberNum, inquireNum, inquireAnswer, answerEmail, inquireSubject);
+		return "redirect:goodsQuestion";
+	}
+	
+	
+	
 	
 	
 	// ========================= goodsIpgo

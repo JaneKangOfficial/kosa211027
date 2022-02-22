@@ -12,7 +12,7 @@ import org.springframework.core.io.ClassPathResource;
 
 @Configuration
 public class DataBaseInfo {
-	// interface, class 사용시 필요
+	// mapper : interface, class 사용시 필요
 	@Bean
 	public SqlSessionFactory sqlSessionFactory(DataSource dataSource, 
 			ApplicationContext applicationContext)
@@ -30,7 +30,7 @@ public class DataBaseInfo {
 		return sessionFactory.getObject();
 	}
 
-	// class 사용시 꼭 필요
+	// mapper : class 사용시 꼭 필요
 	@Bean
 	public SqlSessionTemplate sqlSession(SqlSessionFactory sqlSessionFactory) throws Exception {
 		return new SqlSessionTemplate(sqlSessionFactory);

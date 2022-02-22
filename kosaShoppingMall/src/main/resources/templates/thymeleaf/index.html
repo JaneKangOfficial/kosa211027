@@ -12,13 +12,14 @@
 		<tr>
 			<td colspan=3>
 				<input type="checkbox" name="autoLogin">자동 로그인 &nbsp;
-				<input type="checkbox" name="idStore">아이디 저장
+				<input type="checkbox" name="idStore" th:checked="${isId}">아이디 저장
 			</td>
 		</tr>
 		<tr>
 			<td>아이디</td>
 			<td>
-				<input type="text" name="userId" id="userId"/>
+				<input type="text" name="userId" id="userId" th:if="${isId != null}" th:value="${isId}"/>
+				<input type="text" name="userId" id="userId" th:if="${isId == null}" th:value="${loginCommand.userId}"/>
 				<span th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}"></span><br />
 			</td>
 			<td rowspan=2>

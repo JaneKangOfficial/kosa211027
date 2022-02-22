@@ -12,11 +12,13 @@
 			<td>별점</td>
 			<td>리뷰내용</td>
 		</tr>
-		<tr th:each="dto : ${list}">
-			<td>[[${dto.memberId}]]</td>
-			<td>[[${#dates.format(dto.reviewDate, 'yyyy-MM-dd')}]]</td>
-			<td>[[${dto.score}]]</td>
-			<td>[[${dto.reviewContent}]]</td>
+		<tr th:each="reviewDTO : ${list}">
+			<td>[[${reviewDTO.memberDTO.memberId}]]</td>
+			<td>[[${#dates.format(reviewDTO.reviewDate, 'yyyy-MM-dd')}]]</td>
+			<td>[[${reviewDTO.score}]]</td>
+			<td>
+				<span th:utext="${#strings.replace(reviewDTO.reviewContent, newLineChar, '&lt;br /&gt;')}"></span>
+			</td>
 		</tr>
 	</table>
 </body>

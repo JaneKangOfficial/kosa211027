@@ -10,14 +10,12 @@ import kosaShoppingMall.domain.GoodsInquireDTO;
 import kosaShoppingMall.mapper.GoodsInquireMapper;
 
 @Service
-public class InquireListService {
+public class GoodsQuestionService {
 	@Autowired
 	GoodsInquireMapper goodsInquireMapper;
 	
-	public void execute(String goodsNum, Model model) {
-		List<GoodsInquireDTO> list = goodsInquireMapper.selectAll(goodsNum);
+	public void execute(Model model) {
+		List<GoodsInquireDTO> list = goodsInquireMapper.goodsInquire();
 		model.addAttribute("list", list);
-		
 	}
-	
 }

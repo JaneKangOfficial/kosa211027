@@ -11,4 +11,7 @@ public class LoginCommand {
 	String userId;
 	@NotBlank(message = "비밀번호 입력!!!")
 	String userPw;
+	
+	Boolean idStore;
+	Boolean autoLogin;
 }

@@ -28,8 +28,8 @@ public class InquireWriteService {
 		dto.setInquireContent(goodsInquireCommand.getInquireContent());
 		dto.setGoodsNum(goodsInquireCommand.getGoodsNum());
 		dto.setMemberNum(memberNum);
+		dto.setAnswerEmail(goodsInquireCommand.getEmail1() + "@" + goodsInquireCommand.getEmail2());
 		
-		System.out.println("dto!!!!!!!! " + dto);
 		goodsInquireMapper.inquireInsert(dto);
 	}
 	

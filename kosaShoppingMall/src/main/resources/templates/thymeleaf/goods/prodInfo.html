@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
+<style>
+	ul > li {
+		list-style-type: none;
+		display : inline;
+	}
+</style>
 <script>
 $(function(){
 	$("#qty").change(function(){
@@ -96,6 +102,10 @@ $(function(){
 */
 });
 
+/* 
+ 버튼이 아닌 이유 : 작성 완료 후 페이지 닫힘과 동시에 다시 불러와서 리로드되어야 하기 때문에 
+ 서블릿에서 함수를 불러서 사용하기 위해 함수로 작성
+*/
 function inquire() {
 	$.ajax({
 		type : "post",
@@ -169,7 +179,7 @@ function inquire() {
 <tr>
 	<td>
 	<ul>
-		<li><span id="review">리뷰</span></li>
+		<li><span id="review">리뷰</span></li> | 
 		<li><span id="inquire" onclick="inquire();">상품문의</span></li>
 	</ul>
 	<span id="notice">
