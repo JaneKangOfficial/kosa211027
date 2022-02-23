@@ -32,7 +32,8 @@
 
 	<div id="memberInfo">
 	<p>상품 조회
-	<form action="goodsSearch" method="get">
+	<!-- <form action="goodsSearch" method="get">  -->
+	<form action="goodsList" method="get"> 
 		<input type="search" name="goodsWord" size="50" />
 		<input type="submit" value="검색" />
 	</form>
@@ -76,15 +77,15 @@
 					[이전]
 				</th:block>
 				<th:block th:if="${page > 1}">
-					<a th:href="@{goodsList(page=${page-1})}">[이전]</a>
+					<a th:href="@{goodsList(page=${page-1},goodsWord=${goodsWord})}">[이전]</a>
 				</th:block>
 				
 				<th:block th:each="i : ${#numbers.sequence(startPage, endPage)}" >
-					[<a th:href="@{goodsList(page=${i})}" ><th:block th:text="${i}" ></th:block></a>]
+					[<a th:href="@{goodsList(page=${i},goodsWord=${goodsWord})}" ><th:block th:text="${i}" ></th:block></a>]
 				</th:block>
 					
 				<th:block th:if="${page < maxPage}">	
-					<a th:href="@{goodsList(page=${page+1})}">[이후]</a>
+					<a th:href="@{goodsList(page=${page+1},goodsWord=${goodsWord})}">[이후]</a>
 				</th:block>
 				<th:block th:if="${page >= maxPage}">	
 					[이후]

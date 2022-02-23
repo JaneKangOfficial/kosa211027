@@ -8,28 +8,64 @@ $(function(){
 	$("#inquire1").click(function(){
 		window.open("inquireWrite?goodsNum=[[${goodsNum}]]","문의하기","width=700, height=650, top=100, left=100");
 	});
+	
+	$("#update1").click(function(){
+		window.open("inquireUpdate?inquireNum="+$('#inquireNum').val(),"수정","width=500, height=450, top=100, left=900");
+	});
 });
+
+function answer(id, id1){
+	status = $(id).css("display");
+	if (status == "none") { 
+		$(id).css("display", ""); 
+		$(id1).text("답변  닫기");
+	} else { 
+		$(id).css("display", "none"); 
+		$(id1).text("답변  열기");
+	}
+}
 </script>
 </head>
 <body>
 <table border="1" width="600" align="center">
-	<tr><td colspan="6" align="right"><button type="button" id="inquire1" >문의 하기</button></td></tr>
-	<tr><td>번호</td><td>답변 상태</td><td>문의유형</td><td>문의제목</td><td>작성자</td><td>작성일자</td></tr>
+	<tr><td colspan="7" align="right"><button type="button" id="inquire1" >문의 하기</button></td></tr>
+	<tr><td>번호</td><td>답변 상태</td><td>문의유형</td><td>작성자</td><td>작성일자</td></tr>
 	<th:block  th:each="goodsInquireDTO, idx : ${list}" >
+	<input type="hidden" name="inquireNum" id="inquireNum" th:value="${goodsInquireDTO.inquireNum}" />
 	<tr>
 		<td>[[${idx.count}]]</td>
-		<td>[[${goodsInquireDTO.inquireAnswer}]]</td>
+		<td>검토중</td>
 		<td>[[${goodsInquireDTO.inquireKind}]]</td>
-		<td>[[${goodsInquireDTO.inquireSubject}]]</td>
 		<td>[[${goodsInquireDTO.memberDTO.memberId}]]</td>
 		<td>[[${#dates.format(goodsInquireDTO.inquireDate,'yyyy-MM-dd')}]]</td>
 	</tr> 
-	<tr th:if="dto.inquireAnswer != null" th:id="ing+${idx.count}" style="display:none">
+	<tr><td></td>
+		<td colspan="5">
+			[[${goodsInquireDTO.inquireSubject}]]
+			 <a th:href="|javascript:answer('#inq${idx.count}', ingu${idx.count})|">
+			 	<span th:id = "ingu + ${idx.count}">답변 열기</span></a>
+		</td>
+	</tr>
+	<tr><td></td>
+		<td colspan="5">
+			<th:block th:if="${session.memberId} == ${goodsInquireDTO.memberDTO.memberId}">		
+				<!-- <a th:href="@{inquireUpdate(inquireNum=${goodsInquireDTO.inquireNum})}" id="update">
+						[[${goodsInquireDTO.inquireContent}]]</a>
+				 -->
+				[[${goodsInquireDTO.inquireContent}]]
+			<button type="button" id="update1" >수정</button>
+			</th:block>
+			<th:block th:if="${session.memberId} != ${goodsInquireDTO.memberDTO.memberId}">		
+				[[${goodsInquireDTO.inquireContent}]]
+			</th:block>
+		</td>
+	</tr>
+	<tr th:if="dto.inquireAnswer != null" th:id="inq+${idx.count}" style="display:none">
 		<td colspan="5">[[${#dates.format(goodsInquireDTO.inquireDate,'yyyy-MM-dd')}]]<br />
 			[[${goodsInquireDTO.inquireAnswer}]]
 		</td>
 	</tr>
-	<tr><td colspan="6">&nbsp;&nbsp;&nbsp;</td></tr>
+	<tr><td colspan="7">&nbsp;&nbsp;&nbsp;</td></tr>
 	</th:block>
 </table>
 </body>

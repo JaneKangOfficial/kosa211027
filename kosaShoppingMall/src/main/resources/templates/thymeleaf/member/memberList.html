@@ -5,7 +5,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<p>회원검색
+<form action="memList" method="get">
+	<input type="search" name="memWord" size="50" />
+	<input type="submit" value="검색" />
+</form>
+</p>
 <form action="memDels" method="post">
 <table border=1>
 	<tr>
@@ -38,15 +43,15 @@
 				[이전]
 			</th:block>
 			<th:block th:if="${page > 1}">
-				<a th:href="@{memList(page=${page-1})}">[이전]</a>
+				<a th:href="@{memList(page=${page-1}, memWord=${memWord})}">[이전]</a>
 			</th:block>
 			
 			<th:block th:each="i : ${#numbers.sequence(startPage, endPage)}" >
-				[<a th:href="@{memList(page=${i})}" ><th:block th:text="${i}" ></th:block></a>]
+				[<a th:href="@{memList(page=${i}, memWord=${memWord})}" ><th:block th:text="${i}" ></th:block></a>]
 			</th:block>
 				
 			<th:block th:if="${page < maxPage}">	
-				<a th:href="@{memList(page=${page+1})}">[이후]</a>
+				<a th:href="@{memList(page=${page+1}, memWord=${memWord})}">[이후]</a>
 			</th:block>
 			<th:block th:if="${page >= maxPage}">	
 				[이후]

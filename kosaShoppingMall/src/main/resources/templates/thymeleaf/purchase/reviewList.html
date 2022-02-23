@@ -3,23 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript"></script>
+<script>
+/* function reviewUpdate() {
+	$.ajax({
+		type : "get",
+		url : "/corner/reviewUpdate",
+		dataType : "html",
+		data : {"reviewContent" : ("#reviewContent").val(),
+				"purchaseNum" : ("#purchaseNum").val()},
+		success : function(result){
+			$("#notice").html(result);
+		},
+		error : function(){
+			alert("error!!!");
+			return;
+		}
+	});
+} */
+
+</script>
+
 </head>
 <body>
+<form action="reviewUpdate" >
 	<table border="1">
 		<tr>
 			<td>아이디</td>
 			<td>작성날짜</td>
 			<td>별점</td>
 			<td>리뷰내용</td>
+			<td></td>
 		</tr>
-		<tr th:each="reviewDTO : ${list}">
+		<tr th:each="reviewDTO : ${list}" id="notice">
 			<td>[[${reviewDTO.memberDTO.memberId}]]</td>
 			<td>[[${#dates.format(reviewDTO.reviewDate, 'yyyy-MM-dd')}]]</td>
 			<td>[[${reviewDTO.score}]]</td>
 			<td>
 				<span th:utext="${#strings.replace(reviewDTO.reviewContent, newLineChar, '&lt;br /&gt;')}"></span>
 			</td>
+			<th:block th:if="${session.memberId} == ${reviewDTO.memberDTO.memberId}" >
+			<td>
+				<input type="hidden" name="purchaseNum" id="purchaseNum" th:value="${reviewDTO.purchaseNum}" />
+				<input type="hidden" name="reviewContent" id="reviewContent" th:value="${reviewDTO.reviewContent}" />
+				<input type="submit" value="수정" />
+				<!-- <input type="button" value="수정" onclick="reviewUpdate();"/> -->
+			</td>
+			</th:block>
 		</tr>
 	</table>
+</form>
 </body>
 </html>

@@ -17,7 +17,8 @@ public class MemberListService {
 	@Autowired
 	MemberMapper memberMapper;
 	
-	public void execute(Model model, Integer page) {
+	public void execute(Model model, Integer page, String memWord) {
+		
 		int limit = 5;
 		int limitPage = 10;
 		
@@ -29,9 +30,10 @@ public class MemberListService {
 		StartEndPageDTO dto = new StartEndPageDTO();
 		dto.setStartRow(startRow);
 		dto.setEndRow(endRow);
+		dto.setMemWord(memWord); // search
 		
 		// 레코드 전체의 갯수
-		int count = memberMapper.memberCount(); 
+		int count = memberMapper.memberCount(memWord); 
 		
 		List<MemberDTO> list = memberMapper.selectAll(dto); 
 		int maxPage = (int)((double)count / limit + 0.9); // 22 / 10 = 2.2 + 0.9
@@ -53,5 +55,7 @@ public class MemberListService {
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
 		model.addAttribute("page", page);
+		model.addAttribute("memWord", memWord);
 	}
+
 }

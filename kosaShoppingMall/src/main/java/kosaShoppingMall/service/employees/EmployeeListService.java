@@ -10,12 +10,14 @@ import org.springframework.ui.Model;
 import kosaShoppingMall.domain.EmployeeDTO;
 import kosaShoppingMall.domain.StartEndPageDTO;
 import kosaShoppingMall.mapper.EmployeeMapper;
+import kosaShoppingMall.repository.EmployeeRepository;
 
 @Component
 @Service
 public class EmployeeListService {
 	@Autowired
-	EmployeeMapper employeeMapper;
+	EmployeeMapper employeeMapper; // interface 사용시
+	//EmployeeRepository employeeMapper; // class 사용시
 	
 	public void execute(Model model, Integer page) {
 		int limit = 5;

@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kosaShoppingMall.mapper.MemberMapper">
+<sql id="base">
+	select member_num memberNum, member_id memberId, member_pw memberPw, member_name memberName, member_addr memberAddr, member_birth memberBirth, member_phone memberPhone, member_regist memberRegist, gender, member_email memberEmail
+	from member
+</sql>
+
+<select id="memberAutoNum" resultType="String">
+	select concat('kosa',nvl(max(substr(member_num,5)), 100000) + 1)
+	from member
+</select>
+
+<insert id="memberInsert" parameterType="memDTO">
+	insert into member (member_num, member_id, member_name, member_pw, member_addr, member_birth, member_email, gender, member_regist, member_phone)
+	values (#{memberNum}, #{memberId}, #{memberName}, #{memberPw}, #{memberAddr}, #{memberBirth}, #{memberEmail}, #{gender}, #{memberRegist}, #{memberPhone})
+</insert>
+
+<select id="selectAll" resultType="memDTO" parameterType="startEndPageDTO">
+select *
+from (select rownum rn, member_num memberNum, member_id memberId, member_pw memberPw, member_name memberName, member_addr memberAddr, member_birth memberBirth, member_phone memberPhone, member_regist memberRegist, gender, member_email memberEmail
+	 from member
+	 <where>
+	 	<if test="memWord != null">
+	 	member_id like '%'||#{memWord}||'%' or member_name like '%'||#{memWord}||'%'
+	 	</if>
+	 </where>
+	 order by member_num desc)
+where rn between #{startRow} and #{endRow}
+</select>
+
+<!-- 
+<select id="selectOne" resultType="memDTO" parameterType="String">
+	select member_num memberNum, member_id memberId, member_pw memberPw, member_name memberName, member_addr memberAddr, member_birth memberBirth, member_phone memberPhone, member_regist memberRegist, gender, member_email memberEmail
+	from member
+	where member_num = #{memberNum}
+</select>
+ -->
+
+<!-- ================================================================== -->
+<!-- 아래 setter와 생성자 둘중 하나의 id를 resultMap에 적어서 사용 : resultMap을 사용할 경우 rename(dto 사용시)은 하지 않는다. -->
+<select id="selectOne" parameterType="String" resultMap="memberResultMap">
+	select member_num , member_id , member_pw , member_name , member_addr , member_birth , member_phone , member_regist , gender, member_email , member_ok 
+	from member
+	where member_num = #{memberNum}
+</select>
+<!-- setter : 순서상관없음 -->
+<resultMap type="memDTO" id="memberResultMap">
+	<id column="member_num" jdbcType="VARCHAR" property="memberNum"/>
+	<result column="member_id" jdbcType="VARCHAR" property="memberId"/>
+	<result column="member_pw" jdbcType="VARCHAR" property="memberPw"/>
+	<result column="member_name" jdbcType="VARCHAR" property="memberName"/>
+	<result column="member_addr" jdbcType="VARCHAR" property="memberAddr"/>
+	<result column="member_birth" jdbcType="DATE" property="memberBirth"/>
+	<result column="member_phone" jdbcType="VARCHAR" property="memberPhone"/>
+	<result column="member_regist" jdbcType="DATE" property="memberRegist"/>
+	<result column="gender" jdbcType="VARCHAR" property="gender"/>
+	<result column="member_email" jdbcType="VARCHAR" property="memberEmail"/>
+	<result column="member_ok" jdbcType="VARCHAR" property="memberOk"/>
+</resultMap>
+<!-- 생성자 : dto 순서대로 -->
+<resultMap type="memDTO" id="memberConstructorResultMap">
+	<constructor>
+		<idArg column="member_num" javaType="string" />
+		<arg column="member_id" javaType="string" />
+		<arg column="member_pw" javaType="string" />
+		<arg column="member_name" javaType="string" />
+		<arg column="member_addr" javaType="string" />
+		<arg column="member_regist" javaType="java.util.Date" />
+		<arg column="gender" javaType="string" />
+		<arg column="member_phone" javaType="string" />
+		<arg column="member_birth" javaType="java.util.Date" />
+		<arg column="member_email" javaType="string" />
+		<arg column="member_ok" javaType="string" />
+	</constructor>
+</resultMap>
+<!-- ================================================================== -->
+
+<update id="memberUpdate" parameterType="memDTO">
+	update member
+	set member_id = #{memberId}, member_pw = #{memberPw}, member_name = #{memberName}, member_addr = #{memberAddr}, gender = #{gender}, member_phone = #{memberPhone}, member_birth = #{memberBirth}, member_email = #{memberEmail}, member_regist = #{memberRegist}
+	where member_num = #{memberNum}
+</update>
+
+<delete id="memberDel" parameterType="String">
+ 	delete from member
+ 	where member_num = #{memberNum}
+</delete>
+
+<insert id="memberJoin" parameterType="memDTO">
+ 	insert into member (member_num, member_id, member_name, member_pw, member_addr, member_birth, member_email, gender, member_phone, member_regist)
+	values (#{memberNum}, #{memberId}, #{memberName}, #{memberPw}, #{memberAddr}, #{memberBirth}, #{memberEmail}, #{gender}, #{memberPhone}, sysdate)
+</insert>
+
+<select id="loginSelect" parameterType="String" resultType="authInfo">
+	select member_id userId, member_pw userPw, 'mem' grade, member_ok memberOk
+	from member
+	where member_id = #{userId}
+	union
+	select emp_id, emp_pw, 'emp', null
+	from employees
+	where emp_id = #{userId}
+</select>
+
+<select id="selectOneById" resultType="memDTO" parameterType="String">
+	select member_num memberNum, member_id memberId, member_pw memberPw, member_name memberName, member_addr memberAddr, member_birth memberBirth, member_phone memberPhone, member_regist memberRegist, gender, member_email memberEmail
+	from member
+	where member_id = #{memberId}
+</select>
+
+<update id="memberModify">
+	update member
+	set member_id = #{memberId}, member_pw = #{memberPw}, member_name = #{memberName}, member_addr = #{memberAddr}, gender = #{gender}, member_phone = #{memberPhone}, member_birth = #{memberBirth}, member_email = #{memberEmail}, member_regist = #{memberRegist}
+	where member_num = #{memberNum}
+</update>
+
+<update id="pwUpdate" parameterType="memDTO">
+ 	update member
+	set member_pw = #{memberPw}
+	where member_num = #{memberNum}
+</update>
+
+<!-- ======== 여러개 삭제 ========= -->
+<!-- 1. 배열을 이용 -->
+<delete id="memDels" parameterType="hashMap">
+ 	delete from member
+ 	<where>
+ 	member_num in
+ 	<foreach collection="deletes" item="memberNum" index="index" open="(" close=")" separator=",">
+ 		#{memberNum}
+ 	</foreach>
+ 	</where>
+</delete>
+
+<!-- 2. 리스트 이용 -->
+<delete id="memDels2" parameterType="hashMap">
+ 	delete from member
+ 	<where>
+ 	member_num in
+ 	<foreach collection="cs" item="memberNum" index="index" open="(" close=")" separator=",">
+ 		#{memberNum}
+ 	</foreach>
+ 	</where>
+</delete>
+
+<!-- 3. map 이용 -->
+<delete id="memDels3" parameterType="hashMap">
+ 	delete from member
+ 	<where>
+ 	member_num in
+ 	<foreach collection="memberNums" item="memberNum" index="index" open="(" close=")" separator=",">
+ 		#{memberNum}
+ 	</foreach>
+ 	</where>
+</delete>
+
+<!-- 페이징에 필요한 전체개수 -->
+<select id="memberCount" resultType="int">
+	select count(*) from member
+	<where>
+		<if test="memWord != null">
+			member_name like '%'||#{memWord}||'%'
+	   		or member_id like '%'||#{memWord}||'%'
+		</if>
+	</where>
+</select>
+
+<!-- 메일로 비밀번호 변경 -->
+<update id="changPw" parameterType="authInfo">
+	update member
+	set member_pw = #{userPw}
+	where member_id = #{userId}
+</update>
+
+<!-- 메일로 가입 인증 -->
+<update id="joinOkUpdate" parameterType="memDTO">
+ 	update member
+ 	set member_ok = #{memberOk}
+ 	where member_id = #{memberId} and member_email = #{memberEmail} and member_ok is null
+</update>
+
+<!-- ================================================================== -->
+<!-- 장바구니 목록 -->
+<select id="cartList" parameterType="String" resultMap="goodsCartResultMap">
+	select goods_main, g.goods_num, goods_name, delivery_cost, cart_qty, cart_qty * goods_price total_price
+	from goods g, cart c
+	where g.goods_num = c.goods_num and member_num = #{memberNum}
+</select>
+<resultMap type="goodsCartDTO" id="goodsCartResultMap">
+	<association property="goodsDTO" javaType="kosaShoppingMall.domain.GoodsDTO" resultMap="goodsResultMap" />
+	<association property="cartDTO" javaType="kosaShoppingMall.domain.CartDTO" resultMap="cartResultMap" />
+</resultMap>
+<resultMap type="kosaShoppingMall.domain.GoodsDTO" id="goodsResultMap">
+	<id column="goods_num" jdbcType="VARCHAR" property="goodsNum" />
+	<result column="goods_main" jdbcType="VARCHAR" property="goodsMain" />
+	<result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+	<result column="delivery_cost" jdbcType="VARCHAR" property="deliveryCost" />
+</resultMap>
+<resultMap type="kosaShoppingMall.domain.CartDTO" id="cartResultMap">
+	<id column="goods_num" jdbcType="VARCHAR" property="goodsNum" />
+	<result column="cart_qty" jdbcType="BIGINT" property="cartQty" />
+	<result column="total_price" jdbcType="BIGINT" property="totalPrice" />
+</resultMap>
+<!-- ================================================================== -->
+
+<!-- 장바구니 수량 -1 -->
+<update id="goodsCartQtyDown" parameterType="cartDTO">
+ 	update cart
+ 	set cart_qty = cart_qty - 1
+ 	where member_num = #{memberNum} and goods_num = #{goodsNum}
+</update>
+
+<!-- 장바구니 주문 -->
+<select id="goodsOrder" parameterType="goodsBuy" resultMap="goodsCartResultMap">
+	select goods_main, g.goods_num, goods_name, delivery_cost, cart_qty, cart_qty * goods_price total_price
+	from goods g, cart c
+	where g.goods_num = c.goods_num and member_num = #{memberNum}
+	and g.goods_num in
+	<foreach collection="goodsNums" item="goodsNum" index="index" open="(" close=")" separator=",">
+	#{goodsNum}
+	</foreach>
+</select>
+
+<!-- 장바구니 삭제 -->
+<delete id="cartDel" parameterType="cartDTO">
+ 	delete from cart
+	where member_num = #{memberNum} and goods_num = #{goodsNum}
+</delete>
+
+<!-- 장바구니 선택 삭제 -->
+<!-- 
+<delete id="cartDels" parameterType="hashMap">
+ 	delete from cart 
+ 	<where>
+ 	goods_num in
+ 	<foreach collection="goodsNum" item="goodsNum" index="index" open="(" close=")" separator=",">
+ 		#{goodsNum}
+ 	</foreach>
+ 	</where>
+</delete> 
+-->
+<delete id="cartDels" parameterType="goodsBuy">
+	delete from cart
+	where goods_num in
+	<foreach collection="goodsNums" item="goodsNum" index="index" open="(" close=")" separator=",">
+ 		#{goodsNum}
+ 	</foreach>
+ 	and member_num = #{memberNum}
+</delete>
+
+<!-- 구매 -->
+<insert id="purchase" parameterType="purchaseDTO">
+ 	insert into purchase(Purchase_num, purchase_date, total_price, purchase_addr, purchase_phone, message, purchase_status, member_num, recieve_name) 
+	values(#{purchaseNum}, sysdate, #{totalPrice}, #{purchaseAddr}, #{purchasePhone}, #{message}, #{purchaseStatus}, #{memberNum}, #{recieveName})
+</insert>
+
+<!-- 구매 리스트 저장 -->
+<insert id="purchaseList" parameterType="purchaseListDTO">
+	insert into purchase_list (purchase_num, goods_num, purchase_qty, purchase_price)
+						select #{purchaseNum}, c.goods_num, cart_qty, cart_qty * goods_price
+						from cart c, goods g
+						where c.goods_num = g.goods_num and c.goods_num = #{goodsNum} and c.member_num = #{memberNum}
+</insert>
+
+<!-- 장바구니에서 구매한 상품 삭제 -->
+<delete id="cartGoodsDel" parameterType="goodsBuy">
+ 	delete from cart
+ 	<trim prefix="where" suffixOverrides="and|or">
+ 	member_num = #{memberNum} and 
+	 	<if test="goodsNums != null">
+		 	goods_num in
+			 	<foreach collection="goodsNums" item="goodsNum" index="index" open="(" close=")" separator=",">
+			 	#{goodsNum}
+			 	</foreach>
+	 	</if>
+ 	</trim>
+</delete>
+
+<select id="orderList" parameterType="string" resultType="orderListDTO">
+	select pa.confirm_number confirmNumber, pu.purchase_date purchaseDate, g.goods_num goodsNum, 
+			g.goods_name goodsName, pu.purchase_num purchaseNum, pu.purchase_status purchaseStatus, 
+			g.goods_main goodsMain, pu.total_price totalPrice , pu.recieve_name recieveName,
+			r.review_content reviewContent
+	from payment pa right outer join purchase pu
+	     on pa.purchase_num = pu.purchase_num join purchase_list pl
+	     on pu.purchase_num = pl.purchase_num left outer join review r
+	     on pl.purchase_num = r.purchase_num and pl.goods_num = r.goods_num join goods g
+	     on pl.goods_num = g.goods_num
+	where pu.member_num = #{memberNum}     
+	order by purchaseNum desc
+</select>
+
+<!-- 결제 -->
+<insert id="payment" parameterType="paymentDTO">
+ 	insert into payment (purchase_num, payment_kind, payment_price, payment_date, confirm_number, card_number)
+ 	values (#{purchaseNum},#{paymentKind},#{paymentPrice},sysdate,#{confirmNumber},#{cardNumber})
+</insert>
+<update id="purchaseStatus" parameterType="string">
+	update purchase
+	set purchase_status = '결제완료'
+	where purchase_num = #{purchaseNum}
+</update>
+
+<!-- 결제 취소 -->
+<delete id="paymentCancel" parameterType="string">
+	delete from payment
+	where purchase_num = #{purchaseNum}
+</delete>
+<update id="purchaseCancelStatus" parameterType="string">
+	update purchase
+	set purchase_status = '결제대기중'
+	where purchase_num = #{purchaseNum}
+</update>
+
+<!-- 결제 삭제 -->
+<delete id="paymentDel" parameterType="string">
+	delete from purchase
+	where purchase_num = #{purchaseNum}
+</delete>
+
+<delete id="delPurchase" parameterType="string">
+ 	delete from purchase 
+ 	<where>
+ 	(purchase_num , recieveName) in
+ 	<foreach collection="purchaseNum" item="purchaseNum" index="index" open="(" close=")" separator="," >
+ 		((#{purchaseNum} , (#{recieveName})) 
+ 	</foreach>
+<!--  	<foreach collection="delGoodsPurchaseDTO" item="item" index="index" open="(" close=")" separator="," >
+ 		purchase_num = #{item.purchaseNum} and goods_name = #{item.goodsName}
+ 	</foreach> -->
+ 	</where>
+ 	</delete>
+
+<!-- 주문 상세보기 -->
+<select id="purchaseDetail" parameterType="string" resultType="orderListDTO">
+	select g.goods_name goodsName, g.goods_main goodsMain, g.goods_content goodsContent, g.goods_price goodsPrice, g.delivery_cost deliveryCost, 
+	        pu.purchase_num purchaseNum, pu.purchase_date purchaseDate, pu.total_price totalPrice, pu.purchase_addr purchaseAddr, pu.purchase_phone purchasePhone, 
+	        pu.message, pu.recieve_name recieveName, 
+	        pl.purchase_qty purchaseQty, pl.purchase_price purchasePrice, 
+	        pa.payment_kind paymentKind, pa.payment_price paymentPrice, pa.payment_date paymentDate, pa.card_number cardNumber
+	from payment pa right outer join purchase pu
+	     on pa.purchase_num = pu.purchase_num join purchase_list pl
+	     on pu.purchase_num = pl.purchase_num join goods g
+	     on pl.goods_num = g.goods_num
+	where pu.purchase_num = #{purchaseNum} 
+</select>
+
+<!-- 배송완료로 변경 -->
+<update id="purchaseStatusReady" parameterType="orderListDTO">
+	update purchase
+	set purchase_status = '배송완료'
+	where purchase_num = #{purchaseNum} and PURCHASE_STATUS = '결제완료' 
+</update>
+
+<select id="purchaseStatusSelect" parameterType="string" resultType="string">
+ 	select purchase_status
+ 	from purchase
+ 	where purchase_num = #{purchaseNum}
+</select>
+</mapper>

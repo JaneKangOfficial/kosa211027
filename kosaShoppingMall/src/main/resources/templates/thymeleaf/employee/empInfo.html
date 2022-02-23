@@ -13,6 +13,12 @@
 주소 : [[${employeeCommand.empAddr}]] <br />
 연락처 : [[${employeeCommand.empPhone}]] <br />
 이메일 : [[${employeeCommand.empEmail}]] <br />
+
+	<h2>학력 소개</h2>
+	<th:block th:each="educationDTO : ${employeeCommand.educations}">
+		졸업년도 : [[${#dates.format(educationDTO.schoolYear,'yyyy-MM-dd')}]] &nbsp;&nbsp;
+		학교 : [[${educationDTO.school}]]<br />
+	</th:block>
 <br />
 <a href="empList">리스트</a> | 
 <a th:href="@{empModify(num=${employeeCommand.empId})}">수정</a> | 

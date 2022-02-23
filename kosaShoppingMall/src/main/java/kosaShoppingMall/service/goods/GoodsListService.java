@@ -17,7 +17,7 @@ public class GoodsListService {
 	@Autowired
 	GoodsMapper goodsMapper;
 	
-	public void execute(Model model, Integer page) {
+	public void execute(Model model, Integer page, String goodsWord) {
 		int limit = 5;
 		int limitPage = 10;
 		
@@ -27,8 +27,9 @@ public class GoodsListService {
 		StartEndPageDTO dto = new StartEndPageDTO();
 		dto.setStartRow(startRow);
 		dto.setEndRow(endRow);
+		dto.setGoodsWord(goodsWord);
 		
-		int count = goodsMapper.goodsCount();
+		int count = goodsMapper.goodsCount(goodsWord);
 		
 		List<GoodsDTO> list = goodsMapper.selectAll(dto);
 		int maxPage = (int)((double)count / limit + 0.9);
@@ -45,5 +46,6 @@ public class GoodsListService {
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
 		model.addAttribute("page", page);
+		model.addAttribute("goodsWord", goodsWord);
 	}
 }

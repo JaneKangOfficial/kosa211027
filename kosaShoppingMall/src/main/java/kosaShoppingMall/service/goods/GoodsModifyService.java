@@ -1,6 +1,7 @@
 package kosaShoppingMall.service.goods;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,23 +38,53 @@ public class GoodsModifyService {
 		GoodsDTO lib = goodsMapper.selectOne(goodsCommand.getGoodsNum());
 		
 		// 데이터베이스에 있는 파일정보를 dto에 저장
-		//dto.setGoodsImages(lib.getGoodsOriginal());
-		//dto.setGoodsOriginal(lib.getGoodsOriginal());
+		dto.setGoodsImages(lib.getGoodsOriginal());
+		dto.setGoodsOriginal(lib.getGoodsOriginal());
 		
 		// dto에 저장된 
 		
 		// file 삭제 session이 있다면 데이터베이스에서 dto 삭제 === 회사에서 많이 사용하는 코드 ===
-		if(list != null) {
-			for(FileInfo fi : list) {
-				if(fi.getKind().equals("img")) {
-					// (zz.jpg`zzz.jpg`zzzz.jpg).replace("zz.jpg"+"`","") ===> (zzz.jpg`zzzz.jpg`)
-					// (zzz.jpg`zzzz.jpg).replace("zzz.jpg"+"`","") ===> (zzzz.jpg`)
-					lib.setGoodsOriginal(lib.getGoodsOriginal().replace(fi.getOrgFile() + "`", ""));
-					lib.setGoodsImages(lib.getGoodsImages().replace(fi.getStrFile() + "`", ""));
+		if(list != null && dto.getGoodsOriginal() != null) {
+			// dto에 저장된 파일 정보를 스플릿 후 리스트에 저장
+			List<String> orgFile = new ArrayList<String>();
+			List<String> strFile = new ArrayList<String>();
+			for(String s : dto.getGoodsOriginal().split("`")) {
+				orgFile.add(s.trim());
+			}
+			for(String s : dto.getGoodsImages().split("`")) {
+				strFile.add(s.trim());
+			}
+			
+			for(FileInfo fi : list) { // session에 있는 내용과 비교하여 리스트에 있는 파일정보 삭제
+				for(int i = 0; i < orgFile.size(); i++) {
+					if(fi.getOrgFile().equals(orgFile.get(i)) && fi.getKind().equals("img")) { // dto와 session에 같은 것이 있다면
+						// (zz.jpg`zzz.jpg`zzzz.jpg).replace("zz.jpg"+"`","") ===> (zzz.jpg`zzzz.jpg`)
+						// (zzz.jpg`zzzz.jpg).replace("zzz.jpg"+"`","") ===> (zzzz.jpg`)
+						// lib.setGoodsOriginal(lib.getGoodsOriginal().replace(fi.getOrgFile() + "`", ""));
+						// lib.setGoodsImages(lib.getGoodsImages().replace(fi.getStrFile() + "`", ""));
+						orgFile.remove(fi.getOrgFile().trim()); // dto에 있는 것 삭제
+						strFile.remove(fi.getStrFile().trim());
+					}
 				}
 			}
-			dto.setGoodsOriginal(lib.getGoodsOriginal()); // session에 있는 것은 지우고 session에 없는 것만 저장
-			dto.setGoodsImages(lib.getGoodsImages());
+			
+			String o = "";
+			String s = "";
+			
+			// 리스트에 있는 내용을 문자열로 변경
+			for(String ostr : orgFile) {
+				o += ostr + "`";
+			}
+			for(String sstr : strFile) {
+				s += sstr + "`";
+			}
+			
+			// 문자열을 dto에 저장
+			dto.setGoodsOriginal(o); // session에 있는 것은 지우고 session에 없는 것만 저장
+			dto.setGoodsImages(s);
+			
+			//dto.setGoodsOriginal(lib.getGoodsOriginal()); // session에 있는 것은 지우고 session에 없는 것만 저장
+			//dto.setGoodsImages(lib.getGoodsImages());
 		}
 
 		String fileDir = "/view/goods/upload";
@@ -79,8 +110,10 @@ public class GoodsModifyService {
 			String storeTotal = "";
 			String originalTotal = "";
 			if(lib.getGoodsImages() != null) {
-				storeTotal = lib.getGoodsImages();
-				originalTotal = lib.getGoodsOriginal();
+				//storeTotal = lib.getGoodsImages();
+				//originalTotal = lib.getGoodsOriginal();
+				storeTotal = dto.getGoodsImages();
+				originalTotal = dto.getGoodsOriginal();
 			}
 			
 			for(MultipartFile mf : goodsCommand.getGoodsImages()) {

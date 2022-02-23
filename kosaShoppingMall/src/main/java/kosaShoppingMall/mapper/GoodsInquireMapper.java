@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import kosaShoppingMall.domain.GoodsInquireDTO;
+import kosaShoppingMall.domain.ReviewDTO;
 
 @Component
 @Repository("kosaShoppingMall.mapper.GoodsInquireMapper")
@@ -19,5 +20,9 @@ public interface GoodsInquireMapper {
 	public GoodsInquireDTO goodsInquire(String inquireNum);
 	// 관리자 상품문의 답변
 	public Integer setInquireAnswer(GoodsInquireDTO goodsInquireDTO);
+	
+	public GoodsInquireDTO selectOne(Integer inquireNum);
+	public Integer inquireUpdate(GoodsInquireDTO dto);
+	public Integer inquireDel(GoodsInquireDTO dto);
 
 }

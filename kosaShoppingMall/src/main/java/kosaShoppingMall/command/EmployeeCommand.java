@@ -1,9 +1,13 @@
 package kosaShoppingMall.command;
 
+import java.util.Date;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
@@ -33,6 +37,10 @@ public class EmployeeCommand {
 	@Email(message = "이메일 형식!!!")
 	@NotBlank(message="이메일!!!")
 	String empEmail;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	Date[] schoolYear;
+	String[] school;
 	
 	public boolean isEmpPwEqualsEmpPwCon() {
 		return empPw.equals(empPwCon);

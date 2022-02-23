@@ -51,8 +51,9 @@ public class MemberController {
 	
 	// required=false 는 쿼리스트링이 없어도 된다. defaultValue로 1을 주겠다.
 	@RequestMapping("memList")
-	public String memList(@RequestParam(value="page", defaultValue = "1", required = false)Integer page, Model model) {
-		memberListService.execute(model, page);
+	public String memList(@RequestParam(value="page", defaultValue = "1", required = false)Integer page, 
+				@RequestParam(value="memWord" , required = false) String memWord, Model model) {
+		memberListService.execute(model, page, memWord);
 		 return "thymeleaf/member/memberList"; // html 사용
 		// return "member/memberList"; // jsp 사용
 	}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script>
+function del(){
+	$.ajax({
+		type : "post",
+		url : "/corner/inquireDel",
+		dataType : "text",
+		data : {"inquireNum" : "[[${dto.inquireNum}]]",
+				"goodsNum" : "[[${dto.goodsNum}]]"},
+		success : function(result) {
+			if(result.trim() > "0") {
+				alert("삭제 완료!");
+				location.href="/"
+			}else {
+				alert("삭제 실패");
+				return false;
+			}
+		},
+		error : function() {
+			alert("error!!!");
+			return false;
+		}
+	});
+}
+
+</script>
+</head>
+<body>
+<form action="inquireUpdate" method="post" id="frm">
+<input type="hidden" th:value="${dto.inquireNum}" name="inquireNum"/>
+<input type="hidden" th:value="${dto.goodsNum}" name="goodsNum"/>
+<table>
+	<tr>
+		<td>문의내용 수정</td>
+	</tr>
+	<tr>
+		<td>
+			<textarea rows="6" cols="30" name="inquireContent">[[${dto.inquireContent}]]</textarea>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<input type="submit" id="update2" value="수정완료" />
+			<input type="button" value="삭제" onclick="del()" />
+			<a href="javascript:self.close();">취소</a>
+		</td>
+	</tr>
+</table>
+</form>
+</body>
+</html>

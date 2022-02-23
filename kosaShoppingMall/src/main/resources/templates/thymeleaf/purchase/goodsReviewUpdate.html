@@ -3,6 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script>
+function del(){
+	$.ajax({
+		type : "post",
+		url : "/cart/reviewDel",
+		data : {"purchaseNum" : "[[${goodsReviewDTO.reviewDTO.purchaseNum}]]",
+				"goodsNum" : "[[${goodsReviewDTO.goodsDTO.goodsNum}]]"},
+		success : function(result) {
+			if(result.trim() > '0') {
+				alert("삭제되었습니다.");
+				location.href="/"
+			}else {
+				alert("삭제되지 않았습니다.");
+				return false;
+			}
+		},
+		error : function() {
+			alert("error!!!");
+			return false;
+		}
+	});
+}
+</script>
 </head>
 <body>
 <img th:src="|/goods/upload/${goodsReviewDTO.goodsDTO.goodsMain}|" width="100"/><br />
@@ -20,7 +44,8 @@
 	</tr>
 	<tr>
 		<td colspan="2">
-			<input type="submit" value="리뷰수정완료" /> 
+			<input type="submit" value="리뷰수정완료" />
+			<input type="button" name="delete" value="삭제" onclick="del()" />
 		</td>
 	</tr>
 </table>

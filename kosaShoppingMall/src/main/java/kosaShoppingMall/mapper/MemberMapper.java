@@ -40,7 +40,7 @@ public interface MemberMapper {
 	// 3. map 이용
 	public Integer memDels3(Map<String, Object> condition);
 	
-	public int memberCount();
+	public int memberCount(String memWord);
 	
 	// 메일로 비밀번호 변경
 	public Integer changPw(AuthInfo authInfo);

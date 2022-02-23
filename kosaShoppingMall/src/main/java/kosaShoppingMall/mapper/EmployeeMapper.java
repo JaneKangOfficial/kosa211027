@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import kosaShoppingMall.domain.AuthInfo;
+import kosaShoppingMall.domain.EducationDTO;
 import kosaShoppingMall.domain.EmployeeDTO;
 import kosaShoppingMall.domain.StartEndPageDTO;
 
@@ -32,4 +33,7 @@ public interface EmployeeMapper {
 	
 	// 메일로 비밀번호 찾기
 	public Integer changPw(AuthInfo authInfo);
+	
+	//
+	public Integer educationInsert(List<EducationDTO> lists);
 }

@@ -5,6 +5,19 @@
 <title>Insert title here</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript">
+$(function(){
+	$("#btn").click(function(){
+		$("#appd").append(
+				"<div id='appd'>졸엽년도 : <input type='date' name='choolYear' />"
+				+"학교 : <input type='text' size='15' name='school'/>"
+				+"<button id='btn' onclick='del(this)' type='button'>삭제</button></div>"
+		);
+	});
+});
+function del(eee){
+	$(eee).parent().remove();
+}
+
 /*
 	$(function(){
 		$("#frm").submit(function(){
@@ -81,6 +94,13 @@ $(function(){
 	이메일 : <input type="tel" name="empEmail" id="empEmail" th:value="${employeeCommand.empEmail}" />
 	<span id="emailCheck"></span>
 	<span th:if="${#fields.hasErrors('empEmail')}" th:errors="*{empEmail}"></span><br />
+	학력 : 
+	<div id="appd">
+		졸업년도 : <input type="date" name="schoolYear" />
+		학교 : <input type="text" name="school" size="15"/>
+		<button type="button" id="btn">추가</button>
+	</div>
+	
 	<input type="submit" value="등록" />
 </form>
 </body>

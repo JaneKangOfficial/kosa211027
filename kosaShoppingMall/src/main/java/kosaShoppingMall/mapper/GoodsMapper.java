@@ -39,7 +39,7 @@ public interface GoodsMapper {
 	// 3. Map을 이용한 방법
 	public Integer goodsRemove(Map<String, Object> condition);
 	
-	public int goodsCount();
+	public int goodsCount(String goodsWord);
 	
 	// 파일 여러개 삭제
 	public List<GoodsDTO> goodsSelect(HashMap<String, Object> condition);
@@ -85,5 +85,10 @@ public interface GoodsMapper {
 	public GoodsReviewDTO reviewSelect(ReviewDTO reviewDTO);
 	public Integer reviewUpdate(ReviewDTO reviewDTO);
 	public List<ReviewDTO> reviewList(String goodsNum);
+	public Integer reviewDel(ReviewDTO dto);
+
+	// 상품에서 보이는 리뷰 수정
+	public Integer reviewListUpdate(ReviewDTO dto);
+	
 	
 }

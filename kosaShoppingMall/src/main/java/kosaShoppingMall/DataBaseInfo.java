@@ -21,6 +21,7 @@ public class DataBaseInfo {
 		sessionFactory.setDataSource(dataSource);
 		sessionFactory.setConfigLocation(new ClassPathResource("mybatis-config.xml"));
 		
+		// class 사용시
 		// interface와 xml 파일이 같은 package에 있을 경우 설정할 필요가 없다.
 		// ** 표시 : mappers/**/ : mappers 밑에 폴더가 있을 수도 있다는 표시
 		sessionFactory.setMapperLocations(applicationContext.getResources("classpath:mappers/**/*Mapper.xml"));

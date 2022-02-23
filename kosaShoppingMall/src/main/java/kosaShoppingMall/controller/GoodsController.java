@@ -105,15 +105,19 @@ public class GoodsController {
 		return new GoodsCommand();
 	}
 	
+/* goodsList 페이지와 융합
 	@RequestMapping("goodsSearch")
-	public String goodsSearch(@RequestParam(value="goodsWord") String goodsWord, Model model) {
-		searchGoodsService.execute(goodsWord, model);
+	public String goodsSearch(@RequestParam(value="goodsWord" , required = false) String goodsWord,
+			@RequestParam(value="page", defaultValue = "1", required = false) Integer page,
+			Model model) {
+		searchGoodsService.execute(goodsWord, model, page);
 		return "thymeleaf/goods/goodsList";
 	}
-	
+*/	
 	@RequestMapping("goodsList")
-	public String goodsList(@RequestParam(value="page", defaultValue = "1", required = false) Integer page, Model model) {
-		goodsListService.execute(model,page);
+	public String goodsList(@RequestParam(value="page", defaultValue = "1", required = false) Integer page, 
+					@RequestParam(value="goodsWord", required=false)String goodsWord , Model model) {
+		goodsListService.execute(model,page,goodsWord);
 		return "thymeleaf/goods/goodsList";
 	}
 	
@@ -152,7 +156,8 @@ public class GoodsController {
 	}
 	
 	@RequestMapping(value="goodsModify", method=RequestMethod.GET)
-	public String goodsModify(@RequestParam(value="num") String goodsNum, Model model) {
+	public String goodsModify(@RequestParam(value="num") String goodsNum, Model model, HttpSession session) {
+		session.removeAttribute("fileList");
 		goodsDetailService.execute(goodsNum, model);
 		return "thymeleaf/goods/goodsModify";
 	}
