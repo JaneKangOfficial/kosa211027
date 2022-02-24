@@ -16,10 +16,10 @@ public class DeliveryActionService {
 	
 	public void execute(DeliveryCommand deliveryCommand) {
 		String status = memberMapper.purchaseStatusSelect(deliveryCommand.getPurchaseNum());
-		if(status.equals("결제완료")) {
+		if(status.equals("상품준비중")) {
 			Integer i = goodsMapper.deliveryInsert(deliveryCommand);
 			if(i >= 1) {
-				// 상품대기중 ==> 배송완료
+				// 상품준비중 ==> 배송완료
 				goodsMapper.deliveryStatus(deliveryCommand.getPurchaseNum());
 			}
 		}

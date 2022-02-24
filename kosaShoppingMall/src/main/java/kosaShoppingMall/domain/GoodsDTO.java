@@ -3,9 +3,11 @@ package kosaShoppingMall.domain;
 import org.apache.ibatis.type.Alias;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Alias("goodsDTO")
+@NoArgsConstructor
 public class GoodsDTO {
 	String goodsNum;
 	String goodsName;
@@ -21,4 +23,13 @@ public class GoodsDTO {
 	String goodsMainOrg; // 대문 이미지 originalFileName
 	
 	GoodsIpgoDTO goodsIpgoDTO;
+	
+	public  GoodsDTO(String goodsNum) {
+		this.goodsNum = goodsNum;
+		
+	}
+
+	
+	
+	
 }

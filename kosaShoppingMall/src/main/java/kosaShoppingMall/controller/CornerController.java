@@ -49,8 +49,8 @@ public class CornerController {
 	}
 	
 	@RequestMapping("/corner/prodInfo")
-	public String prodInfo(@RequestParam(value="goodsNum") String goodsNum, Model model) {
-		goodsDetailService.execute(goodsNum, model);
+	public String prodInfo(@RequestParam(value="goodsNum") String goodsNum, Model model, HttpSession session) {
+		goodsDetailService.execute(goodsNum, model, session);
 		model.addAttribute("newLineChar", "\n");
 		return "thymeleaf/goods/prodInfo";
 	}

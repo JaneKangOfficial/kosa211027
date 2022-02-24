@@ -1,7 +1,5 @@
 package kosaShoppingMall.controller;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,6 @@ import kosaShoppingMall.service.goods.GoodsWishService;
 import kosaShoppingMall.service.member.MemberEmailCheckService;
 import kosaShoppingMall.service.member.MemberIdCheckService;
 import kosaShoppingMall.service.memberJoin.DelpurchaseService;
-import net.sf.json.JSONObject;
 
 @RestController
 public class CheckController {

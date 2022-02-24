@@ -348,10 +348,10 @@ where rn between #{startRow} and #{endRow}
 	where pu.purchase_num = #{purchaseNum} 
 </select>
 
-<!-- 배송완료로 변경 -->
+<!-- 상품준비중으로 변경 -->
 <update id="purchaseStatusReady" parameterType="orderListDTO">
 	update purchase
-	set purchase_status = '배송완료'
+	set purchase_status = '상품준비중'
 	where purchase_num = #{purchaseNum} and PURCHASE_STATUS = '결제완료' 
 </update>
 

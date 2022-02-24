@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberDTO {
+	
+	
 	String memberNum;
 	String memberId;
 	String memberPw;
@@ -25,4 +27,8 @@ public class MemberDTO {
 	Date memberBirth;
 	String memberEmail;
 	String memberOk;
+	
+	GoodsDTO goodsDTO;
+
+	
 }

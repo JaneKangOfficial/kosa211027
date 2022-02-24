@@ -28,13 +28,13 @@ $(document).ready(function() {
 });
 
 function dels() {
-	var chk_arr = [];
+/*	var chk_arr = [];
 	$("input:checkbox[name=prodCk]:checked").each(function(){
 		var checkVal = $(this).val();
 		chk_arr.push(checkVal);
 	}); 
 	console.log(chk_arr);
-	
+	*/
 	/*
 	var chk_arr = [];
 	var chk_arr1 = [];
@@ -51,7 +51,7 @@ function dels() {
 	console.log(chk_arr1);
 	*/
 
-	/*
+	
 	var chk_arr = [];
 	$("input:checkbox[name=prodCk]:checked").each(function(){
 		var checkVal = $(this).val();
@@ -63,7 +63,7 @@ function dels() {
 	var jsonData = JSON.stringify(chk_arr);
 	console.log(jsonData);
 	 jQuery.ajaxSettings.traditional = true;
-	*/	
+	
 	if($("input:checkbox[name=prodCk]:checked").length < 1) {
 		alert("하나 이상 선택하셔야 합니다.");
 	}else {

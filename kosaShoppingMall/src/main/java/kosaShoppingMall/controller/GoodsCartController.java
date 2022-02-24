@@ -76,6 +76,7 @@ public class GoodsCartController {
 		return "thymeleaf/membership/goodsOrder";
 	}
 	
+	
 	@RequestMapping(value="/cart/cartDel")
 	public String cartDel(@RequestParam(value="goodsNum") String goodsNum, HttpSession session) {
 		goodsCartDelService.execute(goodsNum, session);
@@ -128,8 +129,8 @@ public class GoodsCartController {
 	}
 	
 	@RequestMapping("/cart/purchaseDetail")
-	public String purchaseDetail(@RequestParam(value="purchaseNum") String purchaseNum, Model model) {
-		purchaseDetailService.execute(purchaseNum, model);
+	public String purchaseDetail(@RequestParam(value="purchaseNum") String purchaseNum, Model model, HttpSession session) {
+		purchaseDetailService.execute(purchaseNum, model, session);
 		model.addAttribute("newLineChar", "\n");
 		return "thymeleaf/purchase/purchaseDetail";
 	}
