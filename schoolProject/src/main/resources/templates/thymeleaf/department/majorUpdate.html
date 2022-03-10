@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+
+<script type="text/javascript">
+function del(){
+	$.ajax({
+		type:"post",
+		url:"departmentDel",
+		data: {"num" : "[[${departmentCommand.departmentNum}]]"},
+		dataType:"text",
+		success : function(result){			
+			if(result.trim() == '1') {
+				alert("정상 삭제");
+				location.href="/"
+			}else {
+				alert("삭제되지 않음");
+				return false;
+			}
+		},
+		error : function() {
+			alert("error!!!");
+			return false;
+		}
+	});
+};
+
+</script>
+</head>
+<body>
+<form action="departmentUpdate" method="post">
+<table>
+	<tr>
+		<td>학과 번호</td>
+		<td><input type="text" name="departmentNum" th:value="${departmentCommand.departmentNum}" readonly="readonly"/></td>
+	</tr>
+	<tr>
+		<td>학과 이름</td>
+		<td><input type="text" name="departmentName" th:value="${departmentCommand.departmentName}"  /></td>
+	</tr>
+	<tr>
+		<td>학과 전화번호</td>
+		<td><input type="tel" name="departmentPhone" th:value="${departmentCommand.departmentPhone}" /></td>
+	</tr>
+	<tr>
+		<td>학과 주소</td>
+		<td><input type="text" name="departmentAddr" th:value="${departmentCommand.departmentAddr}" /></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="center">
+			<input type="submit" value="수정완료" />
+			<input type="button" value="삭제" onclick="del()"/> 
+		</td>
+	</tr>
+</table>
+</form>
+</body>
+</html>

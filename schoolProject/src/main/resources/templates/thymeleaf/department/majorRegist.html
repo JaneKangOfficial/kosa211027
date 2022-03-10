@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="departmentRegist" method="post">
+<table>
+	<tr>
+		<td>학과 번호</td>
+		<td><input type="text" name="departmentNum" th:value="${departmentNum}" /></td>
+	</tr>
+	<tr>
+		<td>학과 이름</td>
+		<td><input type="text" name="departmentName" /></td>
+	</tr>
+	<tr>
+		<td>학과 전화번호</td>
+		<td><input type="tel" name="departmentPhone" /></td>
+	</tr>
+	<tr>
+		<td>학과 주소</td>
+		<td><input type="text" name="departmentAddr" /></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="center">
+			<input type="submit" value="등록" />
+		</td>
+	</tr>
+</table>
+</form>
+</body>
+</html>

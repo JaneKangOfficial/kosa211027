@@ -323,16 +323,13 @@ where rn between #{startRow} and #{endRow}
 
 <delete id="delPurchase" parameterType="string">
  	delete from purchase 
- 	<where>
- 	(purchase_num , recieveName) in
- 	<foreach collection="purchaseNum" item="purchaseNum" index="index" open="(" close=")" separator="," >
- 		((#{purchaseNum} , (#{recieveName})) 
- 	</foreach>
-<!--  	<foreach collection="delGoodsPurchaseDTO" item="item" index="index" open="(" close=")" separator="," >
- 		purchase_num = #{item.purchaseNum} and goods_name = #{item.goodsName}
- 	</foreach> -->
- 	</where>
- 	</delete>
+ 	where (purchase_Num, RECIEVE_NAME) IN
+ 		<foreach collection="purchaseNums" item="purchaseNum" index="index" open="(" close=")" separator=",">
+			 	<foreach collection="purchaseNum" item="goods" index="index" open="(" close=")" separator=",">
+			 		#{goods}
+				</foreach>
+		</foreach> 	
+</delete>
 
 <!-- 주문 상세보기 -->
 <select id="purchaseDetail" parameterType="string" resultType="orderListDTO">

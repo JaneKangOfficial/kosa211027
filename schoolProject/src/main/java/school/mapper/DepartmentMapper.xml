@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="school.mapper.DepartmentMapper">
+
+<select id="autoNum" resultType="string">
+	select seq_num10.nextval from dual
+</select>
+
+<insert id="departmentInsert" parameterType="departmentDTO">
+	insert into department (department_num, department_name, department_phone, department_addr)
+	values (#{departmentNum}, #{departmentName}, #{departmentPhone}, #{departmentAddr})
+</insert>
+
+<select id="selectAll" resultType="departmentDTO">
+	select department_num departmentNum, department_name departmentName, department_phone departmentPhone, department_addr departmentAddr
+	from department
+</select>
+
+<select id="selectOne" resultType="departmentDTO" parameterType="string">
+	select department_num departmentNum, department_name departmentName, department_phone departmentPhone, department_addr departmentAddr
+	from department
+	where department_num = #{departmentNum}
+</select>
+
+<update id="departmentUpdate" parameterType="departmentDTO">
+	update department
+	set department_name = #{departmentName}, department_phone = #{departmentPhone}, department_addr = #{departmentAddr}
+	where department_num = #{departmentNum}
+</update>
+
+<delete id="departmentDel">
+	delete from department
+	where department_num = #{departmentNum}
+</delete>
+
+</mapper>

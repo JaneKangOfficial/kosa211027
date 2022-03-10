@@ -13,7 +13,7 @@
     <Loggers>
         <!-- 기본 패키지 경로 -->
         <!-- 프로젝트명만 변경하고 사용하면 된다. -->
-        <logger name="kosaShoppingMall" 		level="debug"/>
+        <logger name="schoolProject" 		level="debug"/>
 		<Logger name="jdbc.connection"      level="OFF" 	additivity="false"><AppenderRef ref="console" /></Logger>
         <Logger name="jdbc.audit"           level="WARN"	additivity="false"><AppenderRef ref="console" /></Logger>
         <Logger name="jdbc.sqlonly"         level="OFF" 	additivity="false"><AppenderRef ref="console" /></Logger>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<table border=1>
+	<tr>
+		<td>학과 번호</td>
+		<td>학과명</td>
+		<td>학과 연락처</td>
+		<td>학과 주소</td>
+	</tr>
+	<tr th:each="departmentCommand: ${list}">	
+		<td><a th:href="@{departmentUpdate(num=${departmentCommand.departmentNum})}">[[${departmentCommand.departmentNum}]]</a></td>
+		<td>[[${departmentCommand.departmentName}]]</td>
+		<td>[[${departmentCommand.departmentPhone}]]</td>
+		<td>[[${departmentCommand.departmentAddr}]]</td>
+	</tr>
+
+</table>
+
+<a href="/major/majorRegist">학과 등록</a>
+
+</body>
+</html>

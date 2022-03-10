@@ -52,15 +52,21 @@ function dels() {
 	*/
 
 	
-	var chk_arr = [];
+	var list = [];
 	$("input:checkbox[name=prodCk]:checked").each(function(){
 		var checkVal = $(this).val();
-		var chk_arr2 = [];
-		chk_arr2 = checkVal.split("`");
-		chk_arr.push(chk_arr2);
+		
+		var chk_arr2 = checkVal.split("`"); /// {"111","222","333"} | {"111`222`333"}`{"111`222`333"}
+		                                    /// var aaa = "111`222`333".split("`") // 1차원
+		                              
+		                                    // bbb= "2202252312","sdafff";
+		                                    
+		//var listdate = {"Nation" : chk_arr2[0] ,"Brand" :chk_arr2[1]};
+		//list.push(listdate);
+		list.push(chk_arr2);
 	}); 
 	
-	var jsonData = JSON.stringify(chk_arr);
+	var jsonData = JSON.stringify(list);
 	console.log(jsonData);
 	 jQuery.ajaxSettings.traditional = true;
 	
@@ -70,8 +76,7 @@ function dels() {
 		$.ajax({
 			type : "post",
 			url : "/cart/delPurchase",
-			dataType : "josn",
-			
+			dataType : "text",
 			data : {"purchaseNum" : jsonData},
 			success : function(result){
 				if(result.trim() > "0") {

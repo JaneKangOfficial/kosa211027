@@ -1,8 +1,15 @@
 package kosaShoppingMall.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +27,8 @@ import kosaShoppingMall.service.goods.GoodsWishService;
 import kosaShoppingMall.service.member.MemberEmailCheckService;
 import kosaShoppingMall.service.member.MemberIdCheckService;
 import kosaShoppingMall.service.memberJoin.DelpurchaseService;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @RestController
 public class CheckController {
@@ -144,14 +153,12 @@ public class CheckController {
 	}
 	
 	@RequestMapping(value="/cart/delPurchase")
-	public Integer delPurchase(@RequestParam(value="purchaseNum") String[] purchaseNum) {
-	///	JSONObject jsonObject = JSONObject.fromObject(purchaseNum);
-	 //   Map<String, Object> result = 
-	//			(Map<String, Object>)JSONObject.toBean(jsonObject, java.util.HashMap.class);
-	  //  System.out.println(result.size());
+	public Integer delPurchase(HttpServletRequest request ,
+				@RequestParam (value = "purchaseNum") String purchaseNum) {
+		//System.out.println(purchaseNum);
 		Integer i = delpurchaseService.execute(purchaseNum);
 		
-		return null;
+		return i;
 	}
 	
 	@RequestMapping(value="/goods/deliveryUpdatePro")

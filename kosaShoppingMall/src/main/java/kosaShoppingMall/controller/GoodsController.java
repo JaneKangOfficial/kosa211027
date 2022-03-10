@@ -149,8 +149,8 @@ public class GoodsController {
 	}
 	
 	@RequestMapping("goodsDetail/{id}")
-	public String goodsDetail(@PathVariable(value="id") String goodsNum, Model model) {
-		goodsDetailService.execute(goodsNum, model);
+	public String goodsDetail(@PathVariable(value="id") String goodsNum, Model model, HttpSession session) {
+		goodsDetailService.execute(goodsNum, model, session);
 		model.addAttribute("newLineChar", '\n');
 		return "thymeleaf/goods/goodsDetail";
 	}
@@ -158,7 +158,7 @@ public class GoodsController {
 	@RequestMapping(value="goodsModify", method=RequestMethod.GET)
 	public String goodsModify(@RequestParam(value="num") String goodsNum, Model model, HttpSession session) {
 		session.removeAttribute("fileList");
-		goodsDetailService.execute(goodsNum, model);
+		goodsDetailService.execute(goodsNum, model, session);
 		return "thymeleaf/goods/goodsModify";
 	}
 	

@@ -79,7 +79,7 @@ public interface MemberMapper {
 	// 결제 삭제
 	public Integer paymentDel(String purchaseNum);
 	// 결제 checkbox 선택 삭제
-	public Integer delPurchase(String[] purchaseNum);
+	public Integer delPurchase(List<String[]> purchaseNums);
 //	public Integer delPurchase(DelGoodsPurchaseDTO delGoodsPurchaseDTO);
 	
 	// 주문 상세보기
