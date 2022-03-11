@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<table border="1">
+<tr>
+	<td>과목 번호</td>
+	<td>과목명</td>
+	<td>과목 제목</td>
+	<td>과목 내용</td>
+</tr>
+
+<tr th:each="subjectCommand : ${list}">
+	<td><a th:href="|subInfo/${subjectCommand.subjectNum}|">[[${subjectCommand.subjectNum}]]</a></td>
+	<td>[[${subjectCommand.subjectName}]]</td>
+	<td>[[${subjectCommand.subjectTitle}]]</td>
+	<td>[[${subjectCommand.subjectContent}]]</td>
+</tr>
+
+<tr>
+	<th colspan="6">
+		<th:block th:if="${page <= 1}">
+			[이전]
+		</th:block>
+		<th:block th:if="${page > 1}">
+			<a th:href="@{subList(page=${page-1})}">[이전]</a>
+		</th:block>
+		
+		<th:block th:each="i : ${#numbers.sequence(startPage, endPage)}" >
+			[<a th:href="@{subList(page=${i})}" ><th:block th:text="${i}" ></th:block></a>]
+		</th:block>
+			
+		<th:block th:if="${page < maxPage}">	
+			<a th:href="@{subList(page=${page+1})}">[이후]</a>
+		</th:block>
+		<th:block th:if="${page >= maxPage}">	
+			[이후]
+		</th:block>
+	</th>
+</tr>
+
+</table>
+<a href="subRegist">과목 등록</a>
+</body>
+</html>

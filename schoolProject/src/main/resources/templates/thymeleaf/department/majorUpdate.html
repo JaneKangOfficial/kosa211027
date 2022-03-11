@@ -6,6 +6,9 @@
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
 
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+
 <script type="text/javascript">
 function del(){
 	$.ajax({
@@ -29,6 +32,38 @@ function del(){
 	});
 };
 
+
+function openZipSearch() {
+   new daum.Postcode(
+         {
+            oncomplete : function(data) {
+               var departmentAddr = data.address; // 최종 주소 변수
+               var extraAddr = ''; // 조합형 주소 변수
+
+               // 기본 주소가 도로명 타입일때 조합한다.
+               if (data.addressType === 'R') {
+                  //법정동명이 있을 경우 추가한다.
+                  if (data.bname !== '') {
+                     extraAddr += data.bname;
+                  }
+                  // 건물명이 있을 경우 추가한다.
+                  if (data.buildingName !== '') {
+                     extraAddr += (extraAddr !== '' ? ', '
+                           + data.buildingName : data.buildingName);
+                  }
+                  // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                  departmentAddr += (extraAddr !== '' ? ' (' + extraAddr
+                        + ')' : '');
+
+                  $('[name=departmentAddr]').val(departmentAddr);
+                  $('[name=zip]').val(data.zonecode); // 우편번호 (5자리)
+                  $('[name=addr1]').val(data.address);
+                  $('[name=addr2]').val(data.buildingName);
+               }
+            }
+         }).open();
+}
+
 </script>
 </head>
 <body>
@@ -48,7 +83,15 @@ function del(){
 	</tr>
 	<tr>
 		<td>학과 주소</td>
-		<td><input type="text" name="departmentAddr" th:value="${departmentCommand.departmentAddr}" /></td>
+		<td>
+			 우편 번호 : <input type="text" name="zip" th:value="${departmentCommand.zip}" readonly="readonly"> 
+	         <button type="button" onclick='openZipSearch();' >주소검색</button><br />
+	         전체 주소  : <input type="text" name="departmentAddr" size="50" th:value="${departmentCommand.departmentAddr}" readonly="readonly" > <br />
+	         주소 : <input type="text" name="addr1" th:value="${departmentCommand.addr1}" readonly="readonly"> 
+	         빌딩 이름  : <input type="text" name="addr2" th:value="${departmentCommand.addr2}" readonly="readonly"><br />
+	         상세 주소 :  <input type="text" name="depatymentAddr" th:value="${departmentCommand.depatymentAddr}" readonly="readonly">
+			
+		</td>
 	</tr>
 	<tr>
 		<td colspan="2" align="center">

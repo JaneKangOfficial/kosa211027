@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="school.mapper.SubjectMapper">
+
+<select id="autoNum" resultType="string">
+	select nvl(max(subject_num),0) + 1 from subject
+</select>
+
+<insert id="setSubjectInsert" parameterType="subjectDTO">
+	insert into subject(subject_num, subject_name, subject_title, subject_content)
+	values(#{subjectNum},#{subjectName},#{subjectTitle},#{subjectContent})
+</insert>
+
+<select id="selectAll" resultType="subjectDTO" parameterType="pageDTO">
+	select *
+	from	(select rownum rn, subject_num subjectNum, subject_name subjectName, subject_title subjectTitle, subject_content subjectContent
+			from subject
+			order by subject_num desc)
+	where rn between #{startRow} and #{endRow}
+</select>
+
+<select id="selectOne" resultType="subjectDTO" parameterType="string">
+	select subject_num subjectNum, subject_name subjectName, subject_title subjectTitle, subject_content subjectContent
+	from subject
+	where subject_num = #{subjectNum}
+	order by subject_num desc
+</select>
+
+<update id="subUpdate" parameterType="subjectDTO">
+	update subject
+	set subject_name = #{subjectName}, subject_title = #{subjectTitle}, subject_content = #{subjectContent}
+	where subject_num = #{subjectNum}
+</update>
+
+<delete id="subDel" parameterType="string">
+	delete from subject
+	where subject_num = #{subjectNum}
+</delete>
+
+<select id="count" resultType="Integer">
+	select count(*) from subject
+</select>
+
+
+</mapper>

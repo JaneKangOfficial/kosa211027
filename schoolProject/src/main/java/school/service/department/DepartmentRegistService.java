@@ -21,8 +21,12 @@ public class DepartmentRegistService {
 		dto.setDepartmentPhone(departmentCommand.getDepartmentPhone());
 		dto.setDepartmentAddr(departmentCommand.getDepartmentAddr());
 		
-		departmentMapper.departmentInsert(dto);
+		dto.setZip(departmentCommand.getZip());
+		dto.setAddr1(departmentCommand.getAddr1());
+		dto.setAddr2(departmentCommand.getAddr2());
+		dto.setDepatymentAddr(departmentCommand.getDepatymentAddr());
 		
+		departmentMapper.departmentInsert(dto);
 		
 	}
 

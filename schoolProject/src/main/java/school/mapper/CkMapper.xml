@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="school.mapper.CkMapper">
+
+<select id="emailCk" parameterType="string" resultType="school.domain.CheckDTO">
+	select professor_email email
+	from professor
+	where professor_email = #{email}
+	union
+	select student_email
+	from student
+	where student_email = #{email} 
+</select>
+
+<select id="idCk" parameterType="string" resultType="school.domain.CheckDTO">
+	select professor_id id
+	from professor
+	where professor_id= #{id}
+	union
+	select student_id
+	from student
+	where student_id= #{id} 
+</select>
+
+</mapper>

@@ -10,24 +10,25 @@
 </select>
 
 <insert id="departmentInsert" parameterType="departmentDTO">
-	insert into department (department_num, department_name, department_phone, department_addr)
-	values (#{departmentNum}, #{departmentName}, #{departmentPhone}, #{departmentAddr})
+	insert into department (department_num, department_name, department_phone, department_addr, zip, addr1, addr2, depatyment_addr)
+	values (#{departmentNum}, #{departmentName}, #{departmentPhone}, #{departmentAddr}, #{zip}, #{addr1}, #{addr2}, #{depatymentAddr})
 </insert>
 
 <select id="selectAll" resultType="departmentDTO">
-	select department_num departmentNum, department_name departmentName, department_phone departmentPhone, department_addr departmentAddr
+	select department_num departmentNum, department_name departmentName, department_phone departmentPhone, department_addr departmentAddr, zip, addr1, addr2, depatyment_addr depatymentAddr
 	from department
+	order by department_num desc
 </select>
 
 <select id="selectOne" resultType="departmentDTO" parameterType="string">
-	select department_num departmentNum, department_name departmentName, department_phone departmentPhone, department_addr departmentAddr
+	select department_num departmentNum, department_name departmentName, department_phone departmentPhone, department_addr departmentAddr, zip, addr1, addr2, depatyment_addr depatymentAddr
 	from department
 	where department_num = #{departmentNum}
 </select>
 
 <update id="departmentUpdate" parameterType="departmentDTO">
 	update department
-	set department_name = #{departmentName}, department_phone = #{departmentPhone}, department_addr = #{departmentAddr}
+	set department_name = #{departmentName}, department_phone = #{departmentPhone}, department_addr = #{departmentAddr}, zip = #{zip}, addr1 = #{addr1}, addr2 = #{addr2}, depatyment_addr = #{depatymentAddr}
 	where department_num = #{departmentNum}
 </update>
 
@@ -35,5 +36,7 @@
 	delete from department
 	where department_num = #{departmentNum}
 </delete>
+
+
 
 </mapper>
