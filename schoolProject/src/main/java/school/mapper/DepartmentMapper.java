@@ -15,5 +15,7 @@ public interface DepartmentMapper {
 	public DepartmentDTO selectOne(String departmentNum);
 	public Integer departmentUpdate(DepartmentDTO dto);
 	public Integer departmentDel(String departmentNum);
+	
+	public List<DepartmentDTO> selectNumAll();
 
 }

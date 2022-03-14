@@ -1,5 +1,7 @@
 package school.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import school.command.ProfessorCommand;
+import school.domain.AuthInfo;
 import school.service.check.ProfessorEmailCkService;
+import school.service.check.ProfessorEmailCkUpdateService;
 import school.service.check.ProfessorIdCkService;
+import school.service.check.ProfessorIdCkUpdateService;
 import school.service.department.DepartmentListService;
 import school.service.professor.ProfessorDelService;
 import school.service.professor.ProfessorInfoService;
@@ -43,6 +48,10 @@ public class ProfessorController {
 	ProfessorEmailCkService professorEmailCkService;
 	@Autowired
 	ProfessorIdCkService professorIdCkService;
+	@Autowired
+	ProfessorEmailCkUpdateService professorEmailCkUpdateService;
+	@Autowired
+	ProfessorIdCkUpdateService professorIdCkUpdateService;
 	
 	
 	@ModelAttribute
@@ -64,7 +73,7 @@ public class ProfessorController {
 	}
 	
 	@RequestMapping(value="professorRegist", method=RequestMethod.POST)
-	public String professorRegist(@Validated ProfessorCommand professorCommand, BindingResult result, Model model ) {
+	public String professorRegist(@Validated ProfessorCommand professorCommand, BindingResult result, Model model, HttpSession session) {
 		
 		Integer i = professorEmailCkService.execute(professorCommand.getProfessorEmail());
 		if(i == 1) {
@@ -89,27 +98,42 @@ public class ProfessorController {
 		}
 		
 		professorRegistService.execute(professorCommand);
-		return "redirect:professorList";
+		
+		AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
+		if(authInfo == null) {
+			return "redirect:/";
+		}else {
+			return "redirect:professorList";
+		}
 	}
 	
 	@RequestMapping("professorInfo/{num}")
-	public String professorInfo(@PathVariable(value="num") String professorNum, Model model) {
-		professorInfoService.execute(professorNum, model);
+	public String professorInfo(@PathVariable(value="num") String professorNum, Model model, HttpSession session) {
+		professorInfoService.execute(professorNum, model, session);
 		return "professor/proInfo";
 	}
 	
 //	@PathVariable은 get방식으로 한번만 쓸 때만 사용하기!
 	@RequestMapping("proUpdate")
-	public String profUpdate(@RequestParam(value="num") String professorNum, Model model) {
-		professorInfoService.execute(professorNum, model);
+	public String profUpdate(@RequestParam(value="num") String professorNum, Model model, HttpSession session) {
+		professorInfoService.execute(professorNum, model, session);
 		departmentListService.execute(model);
 		return "professor/proUpdate"; 
 	}
 	
 	@RequestMapping(value="proUpdate", method=RequestMethod.POST)
-	public String proUpdate(@Validated ProfessorCommand professorCommand, BindingResult result, Model model) {
+	public String proUpdate(@Validated ProfessorCommand professorCommand, BindingResult result, Model model, HttpSession session) {
 		professorNumService.execute(model);
 		departmentListService.execute(model);
+		
+		Integer i = professorEmailCkUpdateService.execute(professorCommand.getProfessorEmail(), session);
+		if(i == 1) {
+			return "professor/proUpdate";
+		}
+		Integer ii = professorIdCkUpdateService.execute(professorCommand.getProfessorId(), session);
+		if(ii == 1) {
+			return "professor/proUpdate";
+		}
 		
 		if(result.hasErrors()) {
 			return "professor/proUpdate";

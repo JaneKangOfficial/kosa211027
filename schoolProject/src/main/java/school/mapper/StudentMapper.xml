@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="school.mapper.StudentMapper">
+<select id="autoNum" resultType="string" parameterType="string">
+	select to_char(sysdate,'yy') || #{departmentNum} || nvl(max(substr(student_num, -5)),10000) + 1 
+    from student 
+    where department_num = #{departmentNum}
+</select>
+
+<insert id="studentInsert" parameterType="studentDTO">
+ 	insert into student(student_num, student_id, student_pw, student_name, student_phone, student_email, department_num)
+ 	values(#{studentNum},#{studentId},#{studentPw},#{studentName},#{studentPhone},#{studentEmail},#{departmentNum})
+</insert>
+
+<select id="selectAll" resultType="studentDTO">
+ 	select student_num studentNum, student_id studentId, student_pw studentPw, student_name studentName, student_phone studentPhone, student_email studentEmail, department_num departmentNum
+ 	from student
+ 	order by student_num desc
+</select>
+
+<select id="selectOne" resultType="studentDTO" parameterType="string">
+ 	select student_num studentNum, student_id studentId, student_pw studentPw, student_name studentName, student_phone studentPhone, student_email studentEmail, department_num departmentNum
+ 	from student
+ 	where student_num = #{studentNum}
+</select>
+
+<update id="studentUpdate" parameterType="studentDTO">
+ 	update student
+ 	set student_id = #{studentId}, student_name = #{studentName}, student_phone = #{studentPhone}, student_email = #{studentEmail}, department_num = #{departmentNum}
+ 	where student_num = #{studentNum}
+</update>
+
+<delete id="studentDel" parameterType="string">
+ 	delete from student
+ 	where student_num = #{studentNum}
+</delete>
+
+
+<select id="loginSelect" parameterType="string" resultType="authInfo">
+	select student_id userId, student_pw userPw, 'student' grade
+	from student
+	where student_id = #{userId}
+	union
+	select professor_id, professor_pw, 'professor'
+	from professor
+	where professor_id = #{userId}
+</select>
+
+<select id="selectOneById" resultType="studentDTO" parameterType="string">
+ 	select student_num studentNum, student_id studentId, student_pw studentPw, student_name studentName, student_phone studentPhone, student_email studentEmail, department_num departmentNum
+ 	from student
+ 	where student_id = #{studentId}
+</select>
+
+
+</mapper>

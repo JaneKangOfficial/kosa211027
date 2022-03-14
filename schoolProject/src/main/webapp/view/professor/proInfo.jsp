@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>            
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,9 +34,15 @@
 		<td>학과</td>
 		<td>${professorCommand.departmentNum}</td>
 	</tr>
+	<tr>
+		<td colspan="2" align="center">
+			<a href="../professorList">목록</a>
+			<c:if test="${id != null}" >
+				| <a href="../proUpdate?num=${professorCommand.professorNum}">수정</a>
+				| <a href="../proDel/${professorCommand.professorNum}">삭제</a>
+			</c:if>
+		</td>
+	</tr>
 </table>
-<a href="../proUpdate?num=${professorCommand.professorNum}">수정</a> |
-<a href="../proDel/${professorCommand.professorNum}">삭제</a>
-
 </body>
 </html>

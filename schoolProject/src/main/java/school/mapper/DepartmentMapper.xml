@@ -37,6 +37,9 @@
 	where department_num = #{departmentNum}
 </delete>
 
-
+<select id="selectNumAll" resultType="departmentDTO">
+ 	select department_num departmentNum
+ 	from department
+</select>
 
 </mapper>

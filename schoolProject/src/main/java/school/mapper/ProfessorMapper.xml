@@ -36,4 +36,10 @@
  	delete from professor
  	where professor_num = #{professorNum}
 </delete>
+
+<select id="selectOneById" resultType="professorDTO" parameterType="string">
+ 	select professor_num professorNum, professor_name professorName, professor_phone professorPhone, professor_email professorEmail, professor_id professorId, professor_pw professorPw, department_num departmentNum
+	from professor
+	where professor_id = #{professorId}
+</select>
 </mapper>

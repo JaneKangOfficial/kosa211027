@@ -8,6 +8,43 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script>
+function checkEmail() {
+	$.ajax({
+		type:"post",
+		dataType:"text",
+		data : {email : $('#professorEmail').val()},
+		url : "emailCkUpdate",
+		success : function(result) {
+			$("#email").html(result);
+			if(result == "사용 가능한 이메일입니다.") {
+				$('#email').css("color","blue");
+			}else {
+				$('#email').css("color","red");
+			}
+		}
+	});
+}
+
+function checkId(){
+	$.ajax({
+		type: "post",
+		dataType: "text",
+		data : {id : $('#professorId').val()},
+		url : "idCkUpdate",
+		success : function(result) {
+			$("#id").html(result);
+			if(result == "사용 가능한 이메일입니다.") {
+				$('#id').css("color","blue");
+			}else {
+				$('#id').css("color","red");
+			}
+		}
+	});
+}
+
+</script>
 </head>
 <body>
 <form:form action="proUpdate" method="post" modelAttribute="professorCommand">
@@ -34,16 +71,18 @@
 		</td>
 	</tr>
 	<tr>
-		<td>교수 이메일  중복체크 하기!</td>
+		<td>교수 이메일</td>
 		<td>
-			<input type="text" name="professorEmail" value="${professorCommand.professorEmail}" />
+			<input type="text" name="professorEmail" id="professorEmail" value="${professorCommand.professorEmail}" oninput="checkEmail()" />
+			<span id="email"></span>
 			<form:errors path="professorEmail"/>
 		</td>
 	</tr>
 	<tr>
-		<td>교수 아이디  중복체크 하기!</td>
+		<td>교수 아이디</td>
 		<td>
-			<input type="text" name="professorId" value="${professorCommand.professorId}"/>
+			<input type="text" name="professorId" id="professorId" value="${professorCommand.professorId}" oninput="checkId()"/>
+			<span id="id"></span>
 			<form:errors path="professorId"/>
 		</td>
 	</tr>

@@ -5,11 +5,42 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<a href="/major/majorList">학과 정보</a><br />
-	<a href="/subject/subList">과목 정보</a><br />
-	<a href="/professor/professorList">교수 정보</a><br /> <!-- tea_1000001 -->
-	<a href="/student/studentList">학생 정보</a><br /> <!-- 년도과번호10001 (과번호는 10번부터) -->
-	
+<form action="login/loginPro" method="post">
+<th:block th:if="${session.authInfo == null}">
+<table border="1">
+	<tr>
+		<td>아이디</td>
+		<td> 
+			<input type="text" name="userId" />
+		</td>
+		<td rowspan="2">
+			<input type="submit" value="로그인" />
+		</td>
+	</tr>
+	<tr>
+		<td>비밀번호</td>
+		<td>
+			<input type="password" name="userPw" />
+		</td>
+	</tr>
+</table>
+	<a href="student/studentRegist">학생 가입</a><br />
+	<a href="professor/professorRegist">교수 가입</a>
+</th:block>
+</form>
+<th:block th:if="${session.authInfo != null}">
+	<th:block th:switch="${session.authInfo.grade}">
+		<span th:case="professor">
+			<a href="/professor/professorList">교수 정보</a><br /> <!-- tea_1000001 -->
+		</span>
+		<span th:case="student">
+			<a href="/student/studentList">학생 정보</a><br /> <!-- 년도과번호10001 (과번호는 10번부터) -->
+		</span>
+	</th:block>
+		<a href="/major/majorList">학과 정보</a><br />
+		<a href="/subject/subList">과목 정보</a><br />
+	<a href="login/logout" >로그아웃</a>
+</th:block>	
 </body>
+
 </html>

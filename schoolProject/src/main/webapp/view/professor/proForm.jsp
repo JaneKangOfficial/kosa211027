@@ -3,13 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<script src="https://code.jquery.com/jquery-latest.js"></script>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
 <script>
 	function checkEmail() {
 		$.ajax({
@@ -73,7 +72,7 @@
 	<tr>
 		<td>교수 이메일</td>
 		<td>
-			<input type="text" name="professorEmail" id="professorEmail" oninput="checkEmail()"/><br/>
+			<input type="email" name="professorEmail" id="professorEmail" oninput="checkEmail()"/>
 			<span id="asd"></span>
 			<form:errors path="professorEmail"/>
 		</td>
@@ -81,7 +80,7 @@
 	<tr>
 		<td>교수 아이디</td>
 		<td>
-			<input type="text" name="professorId" id="professorId" oninput="checkId()" /><br />
+			<input type="text" name="professorId" id="professorId" oninput="checkId()" />
 			<span id="sdf"></span>
 			<form:errors path="professorId"/>
 		</td>

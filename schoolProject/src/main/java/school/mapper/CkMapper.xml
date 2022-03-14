@@ -16,13 +16,13 @@
 </select>
 
 <select id="idCk" parameterType="string" resultType="school.domain.CheckDTO">
-	select professor_id id
+	select professor_id userId
 	from professor
-	where professor_id= #{id}
+	where professor_id = #{id}
 	union
 	select student_id
 	from student
-	where student_id= #{id} 
+	where student_id = #{id}
 </select>
 
 </mapper>
