@@ -26,6 +26,8 @@ public class ProfessorCommand {
 	@NotBlank(message = "새로운 비밀번호를 입력해주세요")
 	String newPw;
 	
+	String departmentName;
+	
 	public boolean passwordCon() {
 		return professorPw.equals(professorPwCon);
 	}

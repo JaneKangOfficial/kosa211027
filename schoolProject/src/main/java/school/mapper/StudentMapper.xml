@@ -15,16 +15,25 @@
  	values(#{studentNum},#{studentId},#{studentPw},#{studentName},#{studentPhone},#{studentEmail},#{departmentNum})
 </insert>
 
-<select id="selectAll" resultType="studentDTO">
- 	select student_num studentNum, student_id studentId, student_pw studentPw, student_name studentName, student_phone studentPhone, student_email studentEmail, department_num departmentNum
- 	from student
- 	order by student_num desc
+<select id="selectAll" resultType="studentDTO" parameterType="pageDTO">
+	select *
+	from (select rownum rn, student_num studentNum, student_id studentId, student_pw studentPw, student_name studentName, student_phone studentPhone, student_email studentEmail, department_num departmentNum
+	 		from student
+	 		order by student_num desc)
+	where rn between #{startRow} and #{endRow}	 		
 </select>
 
 <select id="selectOne" resultType="studentDTO" parameterType="string">
  	select student_num studentNum, student_id studentId, student_pw studentPw, student_name studentName, student_phone studentPhone, student_email studentEmail, department_num departmentNum
  	from student
- 	where student_num = #{studentNum}
+ 	where student_num = #{studentNum} 
+</select>
+<select id="selectDepartmentNum" resultType="string" parameterType="studentDTO">
+ 	select department_name departmentName
+	from department
+	where department_num = (select department_num departmentNum
+					        from student
+					        where student_num = #{studentNum})
 </select>
 
 <update id="studentUpdate" parameterType="studentDTO">
@@ -37,7 +46,6 @@
  	delete from student
  	where student_num = #{studentNum}
 </delete>
-
 
 <select id="loginSelect" parameterType="string" resultType="authInfo">
 	select student_id userId, student_pw userPw, 'student' grade
@@ -55,5 +63,8 @@
  	where student_id = #{studentId}
 </select>
 
+<select id="count" resultType="Integer">
+	select count(*) from student
+</select>
 
 </mapper>

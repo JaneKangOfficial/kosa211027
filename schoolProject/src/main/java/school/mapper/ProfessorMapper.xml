@@ -42,4 +42,13 @@
 	from professor
 	where professor_id = #{professorId}
 </select>
+
+<select id="selectDepartmentNum" resultType="string" parameterType="string">
+	select department_name departmentName
+	from department
+	where department_num = (select department_num departmentNum
+					        from professor
+					        where professor_num = #{professorNum})
+</select>
+
 </mapper>

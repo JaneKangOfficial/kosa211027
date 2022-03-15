@@ -9,6 +9,7 @@
 </head>
 <body>
 <table border="1">
+전체 학생수 : ${count}
 	<tr>
 		<td>학생 번호</td>
 		<td>학생 아이디</td>
@@ -24,6 +25,25 @@
 		<td>${studentCommand.departmentNum}</td>
 	</tr>
 	</c:forEach>
+	<tr>
+		<th colspan="4">
+			<c:if test="${page <= 1}">
+				[이전]
+			</c:if>
+			<c:if test="${page > 1}">
+				<a href="studentList?page=${page - 1}">[이전]</a>
+			</c:if>
+			<c:forEach begin="${startPage}" end="${endPage}" var="i" step="1">
+				[<a href="studentList?page=${i}">${i}</a>]
+			</c:forEach>
+			<c:if test="${page < maxPage}">
+				<a href="studentList?page=${page + 1}">[이후]</a>
+			</c:if>
+			<c:if test="${page >= maxPage}">
+				[이후]
+			</c:if>
+		</th>
+	</tr>
 </table>
 
 <a href="studentRegist">학생 등록</a>

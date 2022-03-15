@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 
 import school.domain.AuthInfo;
 import school.domain.ProfessorDTO;
+import school.domain.StudentDTO;
 import school.mapper.ProfessorMapper;
 
 @Service
@@ -25,8 +26,13 @@ public class ProfessorInfoService {
 			model.addAttribute("id", id);
 		}
 		
-		ProfessorDTO dto = professorMapper.selectOne(professorNum);
-		model.addAttribute("professorCommand", dto);
+		String departmentName = professorMapper.selectDepartmentNum(dto1.getProfessorNum());
+		
+		ProfessorDTO dto2 = professorMapper.selectOne(dto1.getProfessorNum());
+		dto2.setDepartmentName(departmentName);
+		
+//		ProfessorDTO dto = professorMapper.selectOne(professorNum);
+		model.addAttribute("professorCommand", dto2);
 		
 	}
 }

@@ -19,19 +19,21 @@ public class LoginService {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
-	public void execute(LoginCommand loginCommand, HttpSession session, BindingResult result, Model model) {
+	public String execute(LoginCommand loginCommand, HttpSession session, BindingResult result) {
 		
 		AuthInfo authInfo = studentMapper.loginSelect(loginCommand.getUserId());
 		
+		String path = "thymeleaf/index";
 		if(authInfo != null) {
 			if(passwordEncoder.matches(loginCommand.getUserPw(), authInfo.getUserPw())) {
 				session.setAttribute("authInfo", authInfo);
+				path = "redirect:/";
 			}else {
-				result.rejectValue("userPw", "loginCommand.userPw", "비밀번호 다릅니다.");
+				result.rejectValue("userPw", "loginCommand.userPw", "비밀번호가 다릅니다.");
 			}
 		}else {
 			result.rejectValue("userId", "loginCommand.userId", "아이디가 존재하지 않습니다.");
 		}
-		model.addAttribute("authInfo", authInfo);
+		return path;
 	}
 }

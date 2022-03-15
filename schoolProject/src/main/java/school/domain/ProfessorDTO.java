@@ -14,6 +14,8 @@ public class ProfessorDTO {
 	String professorId;
 	String professorPw;
 	String departmentNum;
+
+	String departmentName;
 	
 	String newPw;
 	String professorPwCon;

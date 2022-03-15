@@ -21,6 +21,7 @@ import school.service.department.DepartmentNumSelectService;
 import school.service.student.StudentDelService;
 import school.service.student.StudentInfoService;
 import school.service.student.StudentListService;
+import school.service.student.StudentMyInfoService;
 import school.service.student.StudentRegistService;
 import school.service.student.StudentUpdateService;
 
@@ -47,10 +48,12 @@ public class StudentController {
 	StudentEmailCkUpdateService studentEmailCkUpdateService;
 	@Autowired
 	StudentIdCkUpdateService studentIdCkUpdateService;
+	@Autowired
+	StudentMyInfoService studentMyInfoService;
 
 	@RequestMapping("studentList")
-	public String studentList(Model model) {
-		studentListService.execute(model);
+	public String studentList(@RequestParam(value="page", defaultValue = "1", required = false) Integer page, Model model) {
+		studentListService.execute(page, model);
 		return "student/studentList";
 	}
 	
@@ -97,7 +100,7 @@ public class StudentController {
 		return "student/studentInfo"; 
 	}
 	
-	@RequestMapping("studentUpdate")
+	@RequestMapping(value="studentUpdate", method = RequestMethod.GET)
 	public String studentUpdate(@RequestParam(value="num") String studentNum, Model model, HttpSession session) {
 		studentInfoService.execute(studentNum, model, session);
 		departmentNumSelectService.execute(model);
@@ -133,5 +136,11 @@ public class StudentController {
 	public String studentDel(@RequestParam(value="num") String studentNum) {
 		studentDelService.execute(studentNum);
 		return "redirect:studentList";
+	}
+	
+	@RequestMapping("myInfo")
+	public String myInfo(HttpSession session, Model model) {
+		studentMyInfoService.execute(session, model);
+		return "student/myInfo";
 	}
 }

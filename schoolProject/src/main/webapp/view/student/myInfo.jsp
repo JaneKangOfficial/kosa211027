@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>          
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,10 +35,8 @@
 	<tr>
 		<td colspan="2" align="center">
 			<a href="studentList">목록</a>
-			<c:if test="${id != null}">
-				| <a href="studentUpdate?num=${studentCommand.studentNum}">수정</a>
-				| <a href="studentDel?num=${studentCommand.studentNum}">삭제</a>
-			</c:if>
+		| 	<a href="studentUpdate?num=${studentCommand.studentNum}">수정</a>
+		|   <a href="studentDel?num=${studentCommand.studentNum}">삭제</a>
 		</td>
 	</tr>
 </table>

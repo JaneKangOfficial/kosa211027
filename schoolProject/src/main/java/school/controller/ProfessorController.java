@@ -23,6 +23,7 @@ import school.service.department.DepartmentListService;
 import school.service.professor.ProfessorDelService;
 import school.service.professor.ProfessorInfoService;
 import school.service.professor.ProfessorListService;
+import school.service.professor.ProfessorMyInfoService;
 import school.service.professor.ProfessorNumService;
 import school.service.professor.ProfessorRegistService;
 import school.service.professor.ProfessorUpdateService;
@@ -52,6 +53,8 @@ public class ProfessorController {
 	ProfessorEmailCkUpdateService professorEmailCkUpdateService;
 	@Autowired
 	ProfessorIdCkUpdateService professorIdCkUpdateService;
+	@Autowired
+	ProfessorMyInfoService professorMyInfoService;
 	
 	
 	@ModelAttribute
@@ -148,5 +151,10 @@ public class ProfessorController {
 		professorDelService.execute(professorNum);
 		return "redirect:../professorList";
 	}
-	
+
+	@RequestMapping("myInfo")
+	public String myInfo(HttpSession session, Model model) {
+		professorMyInfoService.execute(session, model);
+		return "professor/myInfo";
+	}
 }

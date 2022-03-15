@@ -14,4 +14,6 @@ public class StudentDTO {
 	String studentPhone;
 	String studentEmail;
 	String departmentNum;
+	
+	String departmentName;
 }

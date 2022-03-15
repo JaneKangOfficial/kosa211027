@@ -23,9 +23,6 @@ public class SubjectListService {
 		Long startRow = ((long)page - 1) * limit + 1;
 		Long endRow = startRow + limit - 1;
 		
-		System.out.println("ROWWWWWWWWW1 " + startRow);
-		System.out.println("ROWWWWWWWWW2 " + endRow);
-		
 		StartEndPageDTO dto = new StartEndPageDTO();
 		dto.setStartRow(startRow);
 		dto.setEndRow(endRow);

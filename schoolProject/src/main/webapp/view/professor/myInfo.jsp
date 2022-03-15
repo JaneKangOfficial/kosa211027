@@ -36,11 +36,9 @@
 	</tr>
 	<tr>
 		<td colspan="2" align="center">
-			<a href="../professorList">목록</a>
-			<c:if test="${id != null}" >
-				| <a href="../proUpdate?num=${professorCommand.professorNum}">수정</a>
-				| <a href="../proDel/${professorCommand.professorNum}">삭제</a>
-			</c:if>
+			<a href="professorList">목록</a>
+		| 	<a href="proUpdate?num=${professorCommand.professorNum}">수정</a>
+		| 	<a href="proDel/${professorCommand.professorNum}">삭제</a>
 		</td>
 	</tr>
 </table>

@@ -16,5 +16,8 @@ public interface ProfessorMapper {
 	public Integer setProfessorUpdate(ProfessorDTO dto);
 	public Integer proDel(String professorNum);
 	public ProfessorDTO selectOneById(String professorId);
+
+	public String selectDepartmentNum(String professorNum);
+	
 	
 }

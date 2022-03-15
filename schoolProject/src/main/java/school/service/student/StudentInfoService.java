@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import school.command.StudentCommand;
 import school.domain.AuthInfo;
 import school.domain.StudentDTO;
 import school.mapper.StudentMapper;
@@ -25,7 +26,14 @@ public class StudentInfoService {
 			model.addAttribute("id", id);
 		}
 		
-		StudentDTO dto = studentMapper.selectOne(studentNum);
-		model.addAttribute("studentCommand", dto);
+//		StudentDTO dto  = studentMapper.selectOne(studentNum);
+//		model.addAttribute("studentCommand", dto);
+		
+		String departmentName = studentMapper.selectDepartmentNum(studentNum);
+		
+		StudentDTO dto2 = studentMapper.selectOne(studentNum);
+		dto2.setDepartmentName(departmentName);
+		
+		model.addAttribute("studentCommand", dto2);
 	}
 }

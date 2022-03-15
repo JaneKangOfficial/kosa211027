@@ -109,8 +109,8 @@ function checkEmail(){
 		<td>학과 번호</td>
 		<td>
 			<select name="departmentNum">
-				<c:forEach items="${departmentNum}" var="studentCommand"  >
-					<option value="${studentCommand.departmentNum}" >${studentCommand.departmentNum}</option>		
+				<c:forEach items="${list}" var="studentCommand"  >
+					<option value="${studentCommand.departmentNum}" >${studentCommand.departmentName}</option>		
 				</c:forEach>
 			</select>
 			<form:errors path="departmentNum"/>
