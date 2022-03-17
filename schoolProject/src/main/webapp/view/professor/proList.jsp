@@ -11,12 +11,14 @@
 <table border="1">
 	<tr>
 		<td>교수 번호</td>
+		<td>교수 아이디</td>
 		<td>교수 이름</td>
 		<td>학과명</td>
 	</tr>
 	<c:forEach items="${list}" var="professorCommand">
 	<tr>
 		<td><a href="professorInfo/${professorCommand.professorNum}">${professorCommand.professorNum}</a></td>
+		<td>${professorCommand.professorId}</td>
 		<td>${professorCommand.professorName}</td>
 		<td>${professorCommand.departmentNum}</td>
 	</tr>

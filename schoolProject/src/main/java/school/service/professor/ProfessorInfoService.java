@@ -26,9 +26,9 @@ public class ProfessorInfoService {
 			model.addAttribute("id", id);
 		}
 		
-		String departmentName = professorMapper.selectDepartmentNum(dto1.getProfessorNum());
+		String departmentName = professorMapper.selectDepartmentNum(professorNum);
 		
-		ProfessorDTO dto2 = professorMapper.selectOne(dto1.getProfessorNum());
+		ProfessorDTO dto2 = professorMapper.selectOne(professorNum);
 		dto2.setDepartmentName(departmentName);
 		
 //		ProfessorDTO dto = professorMapper.selectOne(professorNum);

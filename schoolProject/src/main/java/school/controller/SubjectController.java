@@ -35,8 +35,8 @@ public class SubjectController {
 	@RequestMapping("subList")
 	public String subList(@RequestParam(value="page", defaultValue = "1", required = false) Integer page, Model model) {
 		subjectListService.execute(model, page);
-//		return "subject/subList";
-		return "thymeleaf/subject/subList";
+		return "subject/subList";
+//		return "thymeleaf/subject/subList";
 	}
 	
 	@RequestMapping("subRegist")

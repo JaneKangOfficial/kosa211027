@@ -20,6 +20,7 @@ import school.service.check.ProfessorEmailCkUpdateService;
 import school.service.check.ProfessorIdCkService;
 import school.service.check.ProfessorIdCkUpdateService;
 import school.service.department.DepartmentListService;
+import school.service.professor.MySubListService;
 import school.service.professor.ProfessorDelService;
 import school.service.professor.ProfessorInfoService;
 import school.service.professor.ProfessorListService;
@@ -27,6 +28,14 @@ import school.service.professor.ProfessorMyInfoService;
 import school.service.professor.ProfessorNumService;
 import school.service.professor.ProfessorRegistService;
 import school.service.professor.ProfessorUpdateService;
+import school.service.professor.SubDelService;
+import school.service.professor.SubDelService2;
+import school.service.professor.SubDeletesService;
+import school.service.professor.SubInService;
+import school.service.professor.SubInfoService;
+import school.service.professor.SubInsertListService;
+import school.service.professor.SubInsertOneService;
+import school.service.professor.SubInsertService;
 
 @Controller
 @RequestMapping("professor")
@@ -55,7 +64,24 @@ public class ProfessorController {
 	ProfessorIdCkUpdateService professorIdCkUpdateService;
 	@Autowired
 	ProfessorMyInfoService professorMyInfoService;
-	
+	@Autowired
+	SubInsertService subInsertService;
+	@Autowired
+	SubInsertOneService subInsertOneService;
+	@Autowired
+	SubInsertListService subInsertListService;
+	@Autowired
+	SubDelService subDelService;
+	@Autowired
+	SubInfoService subInfoService;
+	@Autowired
+	SubDelService2 subDelService2;
+	@Autowired
+	SubDeletesService subDeletesService;
+	@Autowired
+	SubInService subInService;
+	@Autowired
+	MySubListService mySubListService;
 	
 	@ModelAttribute
 	ProfessorCommand setProfessorCommand() {
@@ -156,5 +182,66 @@ public class ProfessorController {
 	public String myInfo(HttpSession session, Model model) {
 		professorMyInfoService.execute(session, model);
 		return "professor/myInfo";
+	}
+	
+	@RequestMapping("subInsertList")
+	public String subInsertList(Model model) {
+		subInsertListService.execute(model);
+		return "professor/subInsertList";
+	}
+	
+	@RequestMapping("subInsert")
+	public String subInsert(@RequestParam(value="subjectNum[]") String[] subjectNum, HttpSession session) {
+		System.out.println("111111subjectNum " + subjectNum);
+		subInsertService.execute(subjectNum, session);
+		return "redirect:subInsertList";
+	}
+	
+	@RequestMapping("subInsertOne/{num}")
+	public String subInsertOne(@PathVariable(value="num") String subjectNum, HttpSession session) {
+		String path = subInsertOneService.execute(subjectNum, session);
+		return path;
+	}
+	
+	@RequestMapping("subIn")
+	public String subIn(@RequestParam(value="subIn") String[] subIn) {
+		subInService.execute(subIn);
+		return "redirect:subInsertList";
+	}
+	
+	@RequestMapping("subInfo")
+	public String subInfo(@RequestParam(value="num") String professorNum, @RequestParam(value="num2") String subjectNum, Model model) {
+		subInfoService.execute(professorNum, subjectNum, model);
+		return "professor/subInfo";
+	}
+	
+	@RequestMapping("subDel")
+	public String subDel(@RequestParam(value="num") String subjectNum) {
+		subDelService.execute(subjectNum);
+		return "redirect:subInsertList";
+	}
+	
+	@RequestMapping("subDel2")
+	public String subDel2(@RequestParam(value="num") String professorNum, @RequestParam(value="num2") String subjectNum) {
+		subDelService2.execute(professorNum, subjectNum);
+		return "redirect:subInsertList";
+	}
+	
+	@RequestMapping(value="subDeletes", method = RequestMethod.POST)
+	public String subDeletes(@RequestParam(value="delete") String[] deletes, HttpSession session) {
+		subDeletesService.execute(deletes, session);
+		return "redirect:subInsertList";
+	}
+	
+	@RequestMapping(value="mySubDeletes", method = RequestMethod.POST)
+	public String mySubDeletes(@RequestParam(value="delete") String[] deletes, HttpSession session) {
+		subDeletesService.execute(deletes, session);
+		return "redirect:mySubList";
+	}
+	
+	@RequestMapping("mySubList")
+	public String mySubList(HttpSession session, Model model) {
+		mySubListService.execute(session, model);
+		return "professor/mySubList";
 	}
 }

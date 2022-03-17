@@ -51,4 +51,5 @@
 					        where professor_num = #{professorNum})
 </select>
 
+
 </mapper>

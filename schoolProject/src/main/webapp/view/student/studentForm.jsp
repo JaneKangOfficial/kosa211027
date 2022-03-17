@@ -42,7 +42,6 @@ function checkEmail(){
 		}
 	});
 }
-
 function selectDepNum() {
 	$.ajax({
 		type : "post",
@@ -118,9 +117,9 @@ function selectDepNum() {
 	<tr>
 		<td>학생 이메일</td>
 		<td>
-			<input type="email" name="studentEmail" id="studentEmail" value="${studentCommand.studentEmail}" oninput="checkEmail()"/>
+			<input type="text" name="studentEmail" id="studentEmail" value="${studentCommand.studentEmail}" oninput="checkEmail()"/>
 			<span id="email"></span>
-			<form:errors path="studentEmail"/>	
+			<form:errors path="studentEmail"/>
 		</td>
 	</tr>
 	<tr>

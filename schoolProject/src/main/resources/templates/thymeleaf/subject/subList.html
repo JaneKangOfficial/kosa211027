@@ -13,7 +13,7 @@
 	<td>과목 내용</td>
 </tr>
 
-<tr th:each="subjectCommand : ${list}">
+<tr th:each="subjectCommand : ${list}" align="center">
 	<td><a th:href="|subInfo/${subjectCommand.subjectNum}|">[[${subjectCommand.subjectNum}]]</a></td>
 	<td>[[${subjectCommand.subjectName}]]</td>
 	<td>[[${subjectCommand.subjectTitle}]]</td>

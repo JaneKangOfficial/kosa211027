@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import school.domain.ProfessorDTO;
+import school.domain.ProfessorSubjectDTO;
 
 @Repository("school.mapper.ProfessorMapper")
 public interface ProfessorMapper {
@@ -18,6 +19,7 @@ public interface ProfessorMapper {
 	public ProfessorDTO selectOneById(String professorId);
 
 	public String selectDepartmentNum(String professorNum);
+	
 	
 	
 }

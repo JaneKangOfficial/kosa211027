@@ -58,21 +58,21 @@
 	<tr>
 		<td>교수 이름</td>
 		<td>
-			<input type="text" name="professorName" />
+			<input type="text" name="professorName" value="${professorCommand.professorName}"/>
 			<form:errors path="professorName"/>
 		</td>
 	</tr>
 	<tr>
 		<td>교수 연락처</td>
 		<td>
-			<input type="tel" name="professorPhone" />
+			<input type="tel" name="professorPhone" value="${professorCommand.professorPhone}" />
 			<form:errors path="professorPhone"/>
 		</td>
 	</tr>
 	<tr>
 		<td>교수 이메일</td>
 		<td>
-			<input type="email" name="professorEmail" id="professorEmail" oninput="checkEmail()"/>
+			<input type="text" name="professorEmail" id="professorEmail" value="${professorCommand.professorEmail}" oninput="checkEmail()" />
 			<span id="asd"></span>
 			<form:errors path="professorEmail"/>
 		</td>
@@ -80,7 +80,7 @@
 	<tr>
 		<td>교수 아이디</td>
 		<td>
-			<input type="text" name="professorId" id="professorId" oninput="checkId()" />
+			<input type="text" name="professorId" id="professorId" value="${professorCommand.professorId}" oninput="checkId()" />
 			<span id="sdf"></span>
 			<form:errors path="professorId"/>
 		</td>
@@ -104,7 +104,7 @@
 		<td>학과</td>
 		<td>
 		
-		<select name="departmentNum">
+		<select name="departmentNum" >
 			<c:forEach items="${list}" var="departmentCommand"  >
 				<option value="${departmentCommand.departmentNum}" >${departmentCommand.departmentName}</option>		
 			</c:forEach>

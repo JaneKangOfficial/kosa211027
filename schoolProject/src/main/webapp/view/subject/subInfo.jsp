@@ -27,6 +27,7 @@
 </table>
 <a href="../subList">리스트</a> | 
 <a href="../subUpdate/${subjectCommand.subjectNum}">수정</a> | 
-<a href="../subDel/${subjectCommand.subjectNum}">삭제</a> 
+<a href="../subDel/${subjectCommand.subjectNum}">삭제</a> |
+<a href="../../professor/subInsertOne/${subjectCommand.subjectNum}">수강신청</a>
 </body>
 </html>

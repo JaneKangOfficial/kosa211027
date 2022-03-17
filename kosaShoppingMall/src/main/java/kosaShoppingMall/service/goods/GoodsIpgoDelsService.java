@@ -24,7 +24,7 @@ public class GoodsIpgoDelsService {
 		List<String[]> condition = new ArrayList<String[]>();
 		
 		for(String num:deletes) {
-			String[] n = num.split("`");
+			String[] n = num.split(" ");
 			condition.add(n);
 		}
 		goodsMapper.goodsIpgoDels(condition);

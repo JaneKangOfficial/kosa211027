@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="school.mapper.ProfessorSubjectMapper">
+
+<!-- 
+<insert id="subInsert" parameterType="proSubDTO">
+ 	insert into professor_subject (subject_num, professor_num)
+ 	values 
+			<foreach collection="subjectNums" item="subjectNum" index="index" separator=",">
+		 	(#{subjectNum}, #{professorNum})
+			</foreach>
+</insert>
+ -->
+ 
+<insert id="subInsertOne" parameterType="proSubDTO">
+ 	insert into professor_subject (subject_num, professor_num, status)
+ 	values (#{subjectNum}, #{professorNum}, '0')
+</insert>
+
+<select id="selectAll" resultType="proSubDTO">
+ 	
+ 	select professor_num professorNum, subject_num subjectNum, status
+ 	from professor_subject
+ 	<!-- 
+ 	select ps.professor_num professorNum, ps.subject_num subject_num, subject_name subjectName, status
+	from professor_subject ps, subject s
+	where ps.subject_num = s.subject_num
+	 -->
+</select>
+
+<select id="selectOne" parameterType="proSubDTO" resultType="proSubDTO">
+	select professor_num professorNum, subject_num subjectNum, status
+ 	from professor_subject
+ 	where professor_num = #{professorNum} and subject_num = #{subjectNum}
+</select>
+
+<delete id="subDel" parameterType="string">
+ 	delete from professor_subject
+ 	where subject_num = #{subjectNum}
+</delete>
+
+<delete id="subDel2" parameterType="proSubDTO">
+ 	delete from professor_subject
+ 	where professor_num = #{professorNum} and subject_num = #{subjectNum}
+</delete>
+
+
+<delete id="subDeletes" parameterType="hashMap">
+   delete from professor_subject
+   <where>
+   (professor_num, subject_num) in
+   <foreach collection="condition" item="nums" index="index" open="(" close=")" separator=",">
+      <foreach collection="nums" item="num" index="index" open="(" close=")" separator=",">
+         #{num}
+      </foreach>
+   </foreach>
+   </where>
+</delete>
+
+<insert id="subIn" parameterType="hashMap">
+
+</insert>
+
+<select id="selectProId" parameterType="string" resultType="proSubDTO">
+ 	select professor_num professorNum, subject_num subjectNum, status
+ 	from professor_subject
+ 	where professor_num = #{professorNum}
+</select>
+</mapper>

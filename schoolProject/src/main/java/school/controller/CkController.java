@@ -17,7 +17,7 @@ import school.service.check.StudentEmailCkUpdateService;
 import school.service.check.StudentIdCkService;
 import school.service.check.StudentIdCkUpdateService;
 
-@RestController
+@RestController 
 public class CkController {
 	@Autowired
 	ProfessorEmailCkService professorEmailCkService;

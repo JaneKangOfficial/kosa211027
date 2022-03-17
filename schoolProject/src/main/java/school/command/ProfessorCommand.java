@@ -1,6 +1,7 @@
 package school.command;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 import lombok.Data;
 
@@ -12,7 +13,8 @@ public class ProfessorCommand {
 	String professorName;
 	@NotBlank(message = "연락처를 입력해주세요")
 	String professorPhone;
-	@NotBlank(message = "이메일을 입력해주세요")
+	@Pattern(regexp="[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$", 
+			message = "이메일 형식에 맞지 않습니다.")
 	String professorEmail;
 	@NotBlank(message = "아이디를 입력해주세요")
 	String professorId;
