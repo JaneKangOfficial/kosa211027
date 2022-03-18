@@ -39,7 +39,7 @@ function subInsert() {
 </script>
 </head>
 <body>
-<form action="">
+<form action="../professor/subIn" method="post">
 <table border="1">
 총 과목 수 : ${count} <br />
 현재 페이지 과목 수 : ${list.size()}

@@ -67,4 +67,9 @@
 	select count(*) from student
 </select>
 
+<insert id="coursesInsert" parameterType="coursesSubjectDTO">
+ 	insert into courses_subject (professor_num, student_num, subject_num)
+ 	values (#{professorNum}, #{studentNum}, #{subjectNum})
+</insert>
+
 </mapper>

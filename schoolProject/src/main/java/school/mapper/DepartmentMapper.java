@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import school.domain.DepartmentDTO;
+import school.domain.ProfessorDTO;
+import school.domain.SubjectDTO;
 
 @Repository("school.mapper.DepartmentMapper")
 public interface DepartmentMapper {
@@ -17,5 +19,7 @@ public interface DepartmentMapper {
 	public Integer departmentDel(String departmentNum);
 	
 	public List<DepartmentDTO> selectNumAll();
+	public List<SubjectDTO> selectSubject(String departmentNum);
+	public List<ProfessorDTO> selectProfessor(String subjectNum);
 
 }

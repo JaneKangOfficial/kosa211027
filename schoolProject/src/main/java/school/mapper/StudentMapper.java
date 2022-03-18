@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import school.domain.AuthInfo;
+import school.domain.CoursesSubjectDTO;
 import school.domain.StartEndPageDTO;
 import school.domain.StudentDTO;
 
@@ -21,4 +22,6 @@ public interface StudentMapper {
 	public String selectDepartmentNum(String studentNum);
 	public AuthInfo loginSelect(String userId);
 	public Integer count();
+	
+	public Integer coursesInsert(CoursesSubjectDTO dto);
 }

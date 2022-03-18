@@ -28,6 +28,8 @@ import school.service.professor.ProfessorMyInfoService;
 import school.service.professor.ProfessorNumService;
 import school.service.professor.ProfessorRegistService;
 import school.service.professor.ProfessorUpdateService;
+import school.service.professor.SubCancelService;
+import school.service.professor.SubCloseService;
 import school.service.professor.SubDelService;
 import school.service.professor.SubDelService2;
 import school.service.professor.SubDeletesService;
@@ -82,6 +84,10 @@ public class ProfessorController {
 	SubInService subInService;
 	@Autowired
 	MySubListService mySubListService;
+	@Autowired
+	SubCancelService subCancelService;
+	@Autowired
+	SubCloseService subCloseService;
 	
 	@ModelAttribute
 	ProfessorCommand setProfessorCommand() {
@@ -204,14 +210,14 @@ public class ProfessorController {
 	}
 	
 	@RequestMapping("subIn")
-	public String subIn(@RequestParam(value="subIn") String[] subIn) {
-		subInService.execute(subIn);
+	public String subIn(@RequestParam(value="subIn") String[] subIn, HttpSession session) {
+		subInService.execute(subIn, session);
 		return "redirect:subInsertList";
 	}
 	
 	@RequestMapping("subInfo")
-	public String subInfo(@RequestParam(value="num") String professorNum, @RequestParam(value="num2") String subjectNum, Model model) {
-		subInfoService.execute(professorNum, subjectNum, model);
+	public String subInfo(@RequestParam(value="num") String professorNum, @RequestParam(value="num2") String subjectNum, Model model, HttpSession session) {
+		subInfoService.execute(professorNum, subjectNum, model, session);
 		return "professor/subInfo";
 	}
 	
@@ -222,8 +228,8 @@ public class ProfessorController {
 	}
 	
 	@RequestMapping("subDel2")
-	public String subDel2(@RequestParam(value="num") String professorNum, @RequestParam(value="num2") String subjectNum) {
-		subDelService2.execute(professorNum, subjectNum);
+	public String subDel2(@RequestParam(value="num") String professorNum, @RequestParam(value="num2") String subjectNum, HttpSession session) {
+		subDelService2.execute(professorNum, subjectNum, session);
 		return "redirect:subInsertList";
 	}
 	
@@ -243,5 +249,17 @@ public class ProfessorController {
 	public String mySubList(HttpSession session, Model model) {
 		mySubListService.execute(session, model);
 		return "professor/mySubList";
+	}
+	
+	@RequestMapping("subClose") 
+	public String subClose(@RequestParam(value="num") String professorNum, @RequestParam(value="num2") String subjectNum, HttpSession session) {
+		subCloseService.execute(professorNum, subjectNum, session);
+		return "redirect:subInfo?num="+professorNum+"&num2="+subjectNum;
+	}
+	
+	@RequestMapping("subCancel") 
+	public String subCancel(@RequestParam(value="num") String professorNum, @RequestParam(value="num2") String subjectNum, HttpSession session) {
+		subCancelService.execute(professorNum, subjectNum, session);
+		return "redirect:subInfo?num="+professorNum+"&num2="+subjectNum;
 	}
 }

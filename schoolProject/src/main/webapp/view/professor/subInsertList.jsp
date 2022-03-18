@@ -51,7 +51,7 @@ function subDel(subNum){
 		<td>교수번호</td>
 		<td>과목번호</td>
 	<!-- 	<td>과목명</td> -->
-		<td>상태</td>
+		<td>폐강</td>
 		<td><input type="submit" value="삭제"/></td>
 	</tr>
 	

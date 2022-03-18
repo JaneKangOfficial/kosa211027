@@ -11,12 +11,12 @@ import school.mapper.ProfessorMapper;
 import school.mapper.ProfessorSubjectMapper;
 
 @Service
-public class SubDelService2 {
+public class SubCancelService {
 	@Autowired
 	ProfessorSubjectMapper professorSubjectMapper;
 	@Autowired
 	ProfessorMapper professorMapper;
-
+	
 	public void execute(String professorNum, String subjectNum, HttpSession session) {
 		AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
 		String proNum = (professorMapper.selectOneById(authInfo.getUserId())).getProfessorNum();
@@ -24,9 +24,13 @@ public class SubDelService2 {
 		ProfessorSubjectDTO dto = new ProfessorSubjectDTO();
 		dto.setProfessorNum(professorNum);
 		dto.setSubjectNum(subjectNum);
-
+		
+		String s = professorSubjectMapper.status(dto);
+		
 		if(proNum.equals(professorNum)) {
-			professorSubjectMapper.subDel2(dto);
+			if(s.equals("Y")) {
+				professorSubjectMapper.subCancel(dto);
+			}
 		}
 	}
 }

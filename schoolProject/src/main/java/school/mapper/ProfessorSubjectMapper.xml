@@ -17,7 +17,7 @@
  
 <insert id="subInsertOne" parameterType="proSubDTO">
  	insert into professor_subject (subject_num, professor_num, status)
- 	values (#{subjectNum}, #{professorNum}, '0')
+ 	values (#{subjectNum}, #{professorNum}, 'N')
 </insert>
 
 <select id="selectAll" resultType="proSubDTO">
@@ -61,12 +61,50 @@
 </delete>
 
 <insert id="subIn" parameterType="hashMap">
-
+	insert into professor_subject()
+	values( 
+	 <foreach collection="condition" item="nums" index="index" separator=",">
+	 	 <foreach collection="nums" item="num" index="index" open="(" close=")" separator=",">
+        subject_num =  #{num}
+	 , professor_num = #{profesorNum}
+	 	</foreach>
+      </foreach>
+	)
 </insert>
+<!-- <insert id="subIn" parameterType="proSubDTO">
+	insert into professor_subject()
+	values( 
+	 <foreach collection="subjectNum" item="num" index="index" separator=",">
+        subject_num =  #{num}
+	 , professor_num = #{profesorNum}
+      </foreach>
+	)
+</insert> -->
 
 <select id="selectProId" parameterType="string" resultType="proSubDTO">
  	select professor_num professorNum, subject_num subjectNum, status
  	from professor_subject
  	where professor_num = #{professorNum}
+</select>
+
+<select id="studentCount" resultType="Integer">
+ 	select count(student_num) from  courses_subject
+</select>
+
+<update id="subClose" parameterType="proSubDTO">
+ 	update professor_subject
+ 	set status = 'Y'
+ 	where professor_num = #{professorNum} and subject_num = #{subjectNum}
+</update>
+<update id="subCancel" parameterType="proSubDTO">
+ 	update professor_subject
+ 	set status = 'N'
+ 	where professor_num = #{professorNum} and subject_num = #{subjectNum}
+</update>
+
+<select id="status" resultType="string" parameterType="proSubDTO">
+	select status
+	from professor_subject
+	where professor_num = #{professorNum} and subject_num = #{subjectNum}
 </select>
 </mapper>

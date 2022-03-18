@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-latest.js"></script> <!-- ajax 다음 페이지에서는 적어주지 않아도 된다. 적어주면 충돌 -->
+<script>
+$(function(){
+	var op = '<select><option value="0">----- 교수를 선택해주세요 -----</option></select>';
+	$("#departmentNum").change(function(){
+		$.ajax({
+			type: "post",
+			data : {"departmentNum" : $("#departmentNum").val()},
+			dataType: "html",
+			url : "classSubject",
+			success : function(result){
+				$("#bDTO").html(result);
+				$("#cDTO").html(op);
+			}
+		})
+	});
+});
+
+$(function(){
+	var openWin;
+	$("#subjectNum2").click(function(){
+		//(주소, 창이름, 크기, 위치) 
+		window.open("coursesInfo", "coursesInfo", "width=620, height=500, left=100, top=100");
+		openWin = window.open("coursesInfo", "coursesInfo", "width=620, height=500, left=100, top=100");
+		openWin.document.getElementById("subjectNum").value = document.getElementById("subjectNum2").value;
+		openWin.document.getElementById("professorNum").value = document.getElementById("professorNum2").value;
+/* 		$(openWin.document).find("#professorNum").val($("#professorNum2").val()); */
+	});
+}); 
+
+</script>
+</head>
+<body>
+<form action="coursesInsert" method="post">
+<table>
+	<tr>
+		<th>학과</th>
+		<th>과목</th>
+		<th>교수</th>
+	</tr>
+	<tr>
+		<td>
+			<div id="aDTO">
+			<select id="departmentNum" name="departmentNum">
+				<option value="0">----- 학과를 선택해주세요 -----</option>
+				<th:block th:each="dto : ${lists}">
+					<option th:value="${dto.departmentNum}">[[${dto.departmentName}]]</option>
+				</th:block>
+			</select>
+			</div>
+		</td>
+		<td>
+			<div id="bDTO"> <!-- select 안에 있는 값을 변경해주기 위해 div 사용 -->
+			<select>
+				<option value="0">----- 과목을 선택해주세요 -----</option>
+			</select>
+			</div>
+		</td>
+		<td>
+			<div id="cDTO">
+			<select>
+				<option value="0">----- 교수를 선택해주세요 -----</option>
+			</select>
+			</div>
+		</td>
+		<td>
+			<input type="submit" value="등록" />
+		</td>
+	</tr>
+</table>
+</form>
+
+<form action="coursesDel" method="post">
+<table border="1">
+	<tr>
+		<th>교수 번호</th>
+		<th>과목 번호</th>
+		<th>폐강 여부</th>
+		<th><input type="submit" value="삭제"/></th>
+	</tr>
+	<th:block th:each="dto : ${list}">
+	<tr align="center">
+		<td><input type="hidden" id="professorNum2" name="professorNum" th:value="${dto.professorNum}"/>[[${dto.professorNum}]]</td>
+		<td><input type=button id="subjectNum2" name="subjectNum" th:value="${dto.subjectNum}" /></td>
+		<td></td>
+		<td>
+			<input type="checkbox" name="delete" th:value="${dto.professorNum}+'`'+${dto.subjectNum}">
+		</td>
+	</tr>
+	</th:block>
+</table>
+</form>
+</body>
+</html>

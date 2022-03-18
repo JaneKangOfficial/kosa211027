@@ -18,6 +18,10 @@
 	select department_num departmentNum, department_name departmentName, department_phone departmentPhone, department_addr departmentAddr, zip, addr1, addr2, depatyment_addr depatymentAddr
 	from department
 	order by department_num desc
+	
+	<!-- <if test="startRow != null">
+	
+	</if> -->
 </select>
 
 <select id="selectOne" resultType="departmentDTO" parameterType="string">
@@ -40,6 +44,25 @@
 <select id="selectNumAll" resultType="departmentDTO">
  	select department_num departmentNum
  	from department
+</select>
+
+<select id="selectSubject" parameterType="string" resultType="subjectDTO">
+ 	select subject_num subjectNum, subject_name subjectName, subject_title subjectTtitle, subject_content subjectContent
+ 	from subject
+ 	where subject_num in (select distinct subject_num 
+ 							from professor_subject 
+		 					where professor_num in (select professor_num 
+		 											from professor
+		 											where department_num = #{departmentNum}))
+
+</select>
+
+<select id="selectProfessor" parameterType="string" resultType="professorDTO">
+ 	select professor_num professorNum, professor_name professorName, professor_phone professorPhone, PROFESSOR_EMAIL professorEmail, PROFESSOR_ID professorId, PROFESSOR_PW professorPw, DEPARTMENT_NUM departmentNum
+ 	from professor
+ 	where professor_num In (select professor_num 
+ 							from professor_subject
+ 							where subject_num = #{subjectNum})
 </select>
 
 </mapper>

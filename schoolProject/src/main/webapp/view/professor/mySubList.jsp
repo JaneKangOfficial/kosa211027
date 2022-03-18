@@ -13,12 +13,15 @@
 	<tr>
 		<td>교수 번호</td>
 		<td>과목 번호</td>
-		<td>상태</td>
+		<td>폐강</td>
 		<td><input type="submit" value="삭제"/></td>
 	</tr>
 	<c:forEach items="${list}" var="dto">
 	<tr align="center">
-		<td><a href="professorInfo/${dto.professorNum}">${dto.professorNum}</a></td>
+		<td>
+		<a href="subInfo?num=${dto.professorNum}&num2=${dto.subjectNum}" >${dto.professorNum}</a>
+<%-- 			<a href="professorInfo/${dto.professorNum}">${dto.professorNum}</a> --%>
+		</td>
 		<td>${dto.subjectNum}</td>
 		<td>${dto.status}</td>
 		<td><input type="checkbox" name="delete" value="${dto.professorNum}`${dto.subjectNum}"/></td>

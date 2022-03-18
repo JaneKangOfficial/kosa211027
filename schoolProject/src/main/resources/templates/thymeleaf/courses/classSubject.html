@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- 주소는 이전 페이지에 있기 때문에 또 적어주면 충돌이 일어난다. -->
+<script>
+$(function(){
+	$("#subjectNum").change(function(){
+		$.ajax({
+			type:"post",
+			url : "professorList",
+			dataType: "html",
+			data : {"subjectNum" : $("#subjectNum").val()},
+			success : function(result){
+				$("#cDTO").html(result);
+			}
+		});
+	});
+});
+</script>
+</head>
+<body>
+<div id="bDTO"> <!-- select 안에 있는 값을 변경해주기 위해 div 사용 -->
+<select id="subjectNum" name="subjectNum">
+	<option value="0">----- 과목을 선택해주세요 -----</option>
+	<th:block th:each="dto : ${list}">
+		<option th:value="${dto.subjectNum}">[[${dto.subjectName}]]</option>
+	</th:block>
+</select>
+</div>
+</body>
+</html>
