@@ -21,17 +21,10 @@ $(function(){
 	});
 });
 
-$(function(){
-	var openWin;
-	$("#subjectNum2").click(function(){
-		//(주소, 창이름, 크기, 위치) 
-		window.open("coursesInfo", "coursesInfo", "width=620, height=500, left=100, top=100");
-		openWin = window.open("coursesInfo", "coursesInfo", "width=620, height=500, left=100, top=100");
-		openWin.document.getElementById("subjectNum").value = document.getElementById("subjectNum2").value;
-		openWin.document.getElementById("professorNum").value = document.getElementById("professorNum2").value;
-/* 		$(openWin.document).find("#professorNum").val($("#professorNum2").val()); */
-	});
-}); 
+function subjectNum2(as) {
+	window.open("/subject/subInfo/"+as, "coursesInfo", "width=620, height=500, left=100, top=100");
+};
+
 
 </script>
 </head>
@@ -79,14 +72,18 @@ $(function(){
 <table border="1">
 	<tr>
 		<th>교수 번호</th>
+		<th>교수 이름</th>
 		<th>과목 번호</th>
+		<th>과목 이름</th>
 		<th>폐강 여부</th>
 		<th><input type="submit" value="삭제"/></th>
 	</tr>
 	<th:block th:each="dto : ${list}">
 	<tr align="center">
 		<td><input type="hidden" id="professorNum2" name="professorNum" th:value="${dto.professorNum}"/>[[${dto.professorNum}]]</td>
-		<td><input type=button id="subjectNum2" name="subjectNum" th:value="${dto.subjectNum}" /></td>
+	<!-- 	<td>[[${dto.professorName}]]</td> -->
+		<td><input type=button th:attr="onclick=|subjectNum2('${dto.subjectNum}')|" value="fff" />[[${dto.subjectNum}]]</td>
+		<!-- <td>[[${dto.subjectName}]]</td> -->
 		<td></td>
 		<td>
 			<input type="checkbox" name="delete" th:value="${dto.professorNum}+'`'+${dto.subjectNum}">

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+
+</head>
+<body>
+
+	<div id="container"></div>
+	<input type="text" id="id"/>
+	<button id="jsonOk">ObjectMapper 사용</button>
+	<button onclick="javascript:history.back();">뒤로 가기</button>
+
+</body>
+</html>
+
+<script type="text/javascript">
+
+	$("#jsonOk").click(function(){
+		$.ajax({
+			type: "post",
+			data: {"id": $("#id").val()},
+			url: "ajax1",
+			success: function(ObjectMapperResult){
+				console.log(ObjectMapperResult);
+				var data = JSON.parse(ObjectMapperResult);	
+				if(!data){
+					alert("!data");
+					return false;
+				}
+				var html = "이름 : " + data.memberName;
+					html += " 주소 : " + data.memberAddr;
+				console.log(html);
+				$("#container").html(html);
+			},
+			error: function(){
+				alert("error");
+				return false;
+			}
+		});
+		
+	});
+
+</script>

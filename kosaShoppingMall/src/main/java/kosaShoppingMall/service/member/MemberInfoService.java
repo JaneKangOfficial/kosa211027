@@ -14,8 +14,10 @@ public class MemberInfoService {
 	@Autowired
 	MemberMapper memberMapper;
 	
-	public void execute(String memberNum, Model model) {
+	public MemberDTO execute(String memberNum, Model model) {
 		MemberDTO dto = memberMapper.selectOne(memberNum);
 		model.addAttribute("memberCommand", dto);
+		// android , jsonController, ajax
+		return dto;
 	}
 }

@@ -1,21 +1,22 @@
 package kosaShoppingMall.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
+
 import kosaShoppingMall.command.DeliveryCommand;
+import kosaShoppingMall.domain.GoodsDTO;
 import kosaShoppingMall.service.EmailCheckService;
 import kosaShoppingMall.service.IdCheckService;
 import kosaShoppingMall.service.employees.EmpEmailCheckService;
@@ -23,12 +24,11 @@ import kosaShoppingMall.service.employees.EmpIdCheckService;
 import kosaShoppingMall.service.goods.DeliveryDelService;
 import kosaShoppingMall.service.goods.DeliveryUpdateProService;
 import kosaShoppingMall.service.goods.GoodsCartAddService;
+import kosaShoppingMall.service.goods.GoodsListService;
 import kosaShoppingMall.service.goods.GoodsWishService;
 import kosaShoppingMall.service.member.MemberEmailCheckService;
 import kosaShoppingMall.service.member.MemberIdCheckService;
 import kosaShoppingMall.service.memberJoin.DelpurchaseService;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 @RestController
 public class CheckController {
@@ -54,6 +54,8 @@ public class CheckController {
 	DeliveryUpdateProService deliveryUpdateProService;
 	@Autowired
 	DeliveryDelService deliveryDelService;
+	@Autowired
+	GoodsListService goodsListService;
 	
 	
 	@RequestMapping(value="/register/idCheck", method=RequestMethod.POST)
@@ -169,5 +171,12 @@ public class CheckController {
 	@RequestMapping(value="/goods/deliveryDel")
 	public Integer deliveryDel(@RequestParam(value="purchaseNum") String purchaseNum) {
 		return deliveryDelService.execute(purchaseNum);
+	}
+	
+	@RequestMapping(value="/android", produces="application/json;charset=utf-8")
+	public @ResponseBody String json(Model model) {
+		Gson gson = new Gson();
+		List<GoodsDTO> dailyBoxOfficeList = goodsListService.execute(model,1,null);
+		return gson.toJson(dailyBoxOfficeList);
 	}
 }

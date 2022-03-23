@@ -5,8 +5,14 @@
 
 <mapper namespace="school.mapper.CoursesSubjectMapper">
 <select id="selectAll" resultType="coursesSubjectDTO">
+	
 	select professor_num professorNum, subject_num subjectNum, student_num studentNum
 	from courses_subject
+	<!--
+	select ps.professor_num professorNum, p.professor_name professorName, ps.subject_num subjectNum, s.subject_name subjectName, status 
+	from professor_subject ps, professor p, subject s
+	where ps.professor_num = p.professor_num and ps.subject_num = s.subject_num
+	 -->
 </select>
 
 <delete id="coursesDel" parameterType="hashMap">

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+
+/* $는 이미 DOC이 다 열린 상태 / $function을 쓰지 않을 경우 문서가 다 열린 후인 맨 마지막</html> 밑에 작성하면 된다. */
+$(function(){ 
+	/* onclick과 같지만 bind는 여러가지 기능을 한번에 쓸 수 있음 */
+	$("#jsonOk").bind("click", function(){
+		/* (agument)에 중괄호{} 있으면 json 형태 */
+		$.ajax({
+			type: "post",
+			data: {"id": $("#id").val()},
+			url: "ajax",
+			success: function(responseData){
+				var data = JSON.parse(responseData); // 문자열을 JSON으로 변경
+				if(!data){
+					alert("!data");
+					return false;
+				}
+				var html = "이름 : " + data.memberName;
+					html += " 주소 : " + data.memberAddr;
+				console.log(html);
+				$("#container").html(html);
+			},
+			error: function(){
+				alert("error");
+				return false;
+			}
+		});
+	});
+});
+
+</script>
+</head>
+<body>
+
+	<div id="container"></div>
+	<input type="text" id="id"/>
+	<button id="jsonOk">response 사용</button>
+	<button onclick="javascript:history.back();">뒤로 가기</button>
+
+</body>
+</html>

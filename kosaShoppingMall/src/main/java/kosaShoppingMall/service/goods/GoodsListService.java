@@ -17,7 +17,7 @@ public class GoodsListService {
 	@Autowired
 	GoodsMapper goodsMapper;
 	
-	public void execute(Model model, Integer page, String goodsWord) {
+	public List<GoodsDTO> execute(Model model, Integer page, String goodsWord) {
 		int limit = 5;
 		int limitPage = 10;
 		
@@ -47,5 +47,8 @@ public class GoodsListService {
 		model.addAttribute("endPage", endPage);
 		model.addAttribute("page", page);
 		model.addAttribute("goodsWord", goodsWord);
+		
+		// android
+		return list;
 	}
 }
