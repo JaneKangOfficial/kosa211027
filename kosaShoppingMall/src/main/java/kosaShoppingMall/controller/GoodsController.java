@@ -2,6 +2,8 @@ package kosaShoppingMall.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,9 +15,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kosaShoppingMall.command.DeliveryCommand;
 import kosaShoppingMall.command.FileInfo;
@@ -105,6 +109,37 @@ public class GoodsController {
 		return new GoodsCommand();
 	}
 	
+	// 포스트맨 사용 연습
+	@RequestMapping(value="goodsRegist2", method=RequestMethod.POST)
+	public @ResponseBody Map<String, Object> goodsRegist1(@RequestBody Map<String, Object> param) {
+		// 전달된 값
+		Map<String,Object> head = (Map<String, Object>) param.get("head");
+		Map<String,Object> body = (Map<String, Object>) param.get("body");
+		
+		System.out.println("headdddd screen_id " + head.get("screen_id"));
+		System.out.println("bodyyyyy goodsNum" + body.get("goodsNum"));
+		System.out.println("bodyyyyy goodsName " + body.get("goodsName"));
+		System.out.println("bodyyyyy goodsPrice " + body.get("goodsPrice"));
+		System.out.println("bodyyyyy goodsContent " + body.get("goodsContent"));
+		System.out.println("bodyyyyy deliveryCost " + body.get("deliveryCost"));
+		
+		// 결과 확인 리턴 값
+		Map<String, Object> result = new HashMap<String, Object>();
+		Map<String, Object> head1 = new HashMap<String, Object>();
+		head1.put("screen_id", "174");
+		head1.put("result_code", "200");
+		Map<String, Object> body1 = new HashMap<String, Object>();
+		body1.put("rsltCode", "0000");
+		body1.put("rsltMsg", "Success");
+		body1.put("userNm", "홍길동");
+		
+		result.put("head", head1);
+		result.put("body", body1);
+		result.put("SUCCESS", true);
+		
+		return result;
+	}
+	
 /* goodsList 페이지와 융합
 	@RequestMapping("goodsSearch")
 	public String goodsSearch(@RequestParam(value="goodsWord" , required = false) String goodsWord,
@@ -124,7 +159,8 @@ public class GoodsController {
 	@RequestMapping(value="goodsRegist", method = RequestMethod.GET)
 	public String goodsRegist1(GoodsCommand goodsCommand) {
 		goodsNumService.execute(goodsCommand);
-		return "thymeleaf/goods/goodsForm";
+		return "thymeleaf/goods/goodsForm3";
+//		return "thymeleaf/goods/goodsForm";
 	}
 	
 	/*
