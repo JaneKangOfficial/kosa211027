@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Store">
+	<select id="storeAutoNum" resultType="String">
+		select concat('store', nvl(max(substr(store_num, 6)), 10000)+1) from store
+	</select>
+	<select id="empAutoNum" resultType="String">
+		select concat('emp', nvl(max(substr(employee_num, 4)), 10000)+1) from store
+	</select>
+	<sql id="base">	
+		store_num, employee_num, employee_name, store_name, store_addr, employee_phone, employee_email,
+		employee_id, employee_pw, delivery_status, pickup_status, STORE_START_TIME, store_end_time, store_phone, 
+		least_price, start_holiday, end_holiday, order_area, delivery_price, store_category_num
+	</sql>
+	<sql id="base2">
+		store_num, employee_num, employee_name, store_name, store_addr, employee_phone, employee_email,
+		employee_id, employee_pw, delivery_status, pickup_status, TO_CHAR(STORE_START_TIME, 'HH24:MI') as storeStartTime, 
+		store_phone, least_price, order_area, delivery_price, store_category_num, TO_CHAR(store_end_time, 'HH24:MI') as storeEndTime,
+		TO_CHAR(start_holiday, 'YY/MM/DD') as startHoliday, TO_CHAR(end_holiday, 'YY/MM/DD') as endHoliday
+	</sql>
+
+	<insert id="insertStore">		
+ 		INSERT INTO STORE (<include refid="base"/>)
+		VALUES (
+			#{storeNum}, #{employeeNum}, #{employeeName}, #{storeName}, #{storeAddr}, 
+			#{employeePhone}, #{employeeEmail}, #{employeeId}, #{employeePw}, #{deliveryStatus}, 
+			#{pickupStatus}, #{storeStartTime}, #{storeEndTime}, #{storePhone}, #{leastPrice}, 
+			#{startHoliday}, #{endHoliday}, #{orderArea}, #{deliveryPrice}, #{storeCategoryNum}
+		)
+		<!-- html에 없음 : #{deliveryStatus}, #{pickupStatus}, #{storeCategoryNum} -->
+	</insert>
+	
+	<select id="detailStore" resultType="edu.example.dto.StoreDTO" parameterType="map">
+		SELECT <include refid="base2"/>
+		FROM STORE
+		<!-- <if test="employeeId != null and employeeId != '' "> -->
+			WHERE EMPLOYEE_ID = #{employeeId}
+<!-- 		<if test="storeNum != null and storeNum != '' ">
+			WHERE STORE_NUM = #{storeNum} -->
+			<!-- <if test="employeePw != null and employeePw != '' ">
+			AND EMPLOYEE_PW = #{employeePw}
+			</if> -->
+		<!-- </if> -->
+	</select>
+	
+	<select id="storeList" resultType="edu.example.dto.StoreCategoryDTO" parameterType="map">
+		<!-- SELECT DISTINCT s.*, c.STORE_CATEGORY_NAME
+		FROM STORE s, CATEGORY c
+		WHERE s.STORE_CATEGORY_NUM = c.STORE_CATEGORY_NUM 
+			AND c.STORE_CATEGORY_NUM = #{storeCategoryNum}   -->
+			
+		SELECT s.*, c.STORE_CATEGORY_NAME
+		FROM STORE s, CATEGORY c
+		<if test="storeCategoryNum != null and storeCategoryNum != '' ">
+			WHERE s.STORE_CATEGORY_NUM = c.STORE_CATEGORY_NUM 
+				AND c.STORE_CATEGORY_NUM = #{storeCategoryNum}
+		</if>
+		<if test="deliveryStatus != null and deliveryStatus != '' ">
+			WHERE s.DELIVERY_STATUS = #{deliveryStatus}
+		</if>
+		<if test="pickupStatus != null and pickupStatus != '' ">
+			WHERE s.PICKUP_STATUS = #{pickupStatus}
+		</if>
+	</select>
+
+	<update id="updateStore" parameterType="map">
+		UPDATE STORE
+		SET STORE_NAME = #{storeName}, EMPLOYEE_NAME = #{employeeName}, 
+			EMPLOYEE_PHONE = #{employeePhone}, EMPLOYEE_EMAIL = #{employeeEmail}, 
+			STORE_PHONE = #{storePhone}, LEAST_PRICE = #{leastPrice}, START_HOLIDAY = #{startHoliday}, END_HOLIDAY = #{endHoliday},
+			ORDER_AREA = #{orderArea}, DELIVERY_PRICE = #{deliveryPrice}, STORE_CATEGORY_NUM = #{storeCategoryNum},
+			DELIVERY_STATUS = #{deliveryStatus}, PICKUP_STATUS = #{pickupStatus}
+		WHERE EMPLOYEE_ID = #{employeeId}     
+	</update>
+	<!-- 
+	 STORE_START_TIME = #{storeStartTime}, 
+			STORE_END_TIME = #{storeEndTime},
+	 -->
+	
+	<delete id="deleteStore" parameterType="map">
+		DELETE FROM STORE
+		WHERE EMPLOYEE_ID = #{employeeId}
+	</delete>
+	
+	<!-- 매장명이나 음식명 검색 -->
+	<select id="nameSearch" parameterType="map" resultType="edu.example.dto.StoreObjectReviewDTO">
+		select store_name
+		from store
+		where store_name like '%'||#{word}||'%'
+		union
+		select object_name
+		from object
+		where object_name like '%'||#{word}||'%'
+	</select>
+	
+	<!-- 주문 목록 -->
+	<select id="orderList" resultType="edu.example.dto.ObjectOrderPaymentStoreDeliveryDTO" parameterType="map">
+		select p.order_num, to_char(p.order_time, 'YY/MM/DD HH24:MI') as order_time, p.ORDER_STATUS, 
+				p.PROGRESS_STATUS, p.member_num, p.payment_category, p.store_request, p.order_total_price, p.delivery_request,
+				o.OBJECT_IMAGE, o.object_num , o.object_name, o.object_content, o.object_price, o.object_qty, 
+				o.object_origin, o.menu_category_num, o.object_name,
+				ol.buy_qty,  ol.member_id,
+				s.store_num, s.store_name
+		from payment p, orderlist ol, object o, store s
+		where o.object_num = ol.object_num and ol.order_num = p.order_num
+				and o.store_num = s.store_num  and s.store_num = #{storeNum}
+		    	<if test="orderNum != null and orderNum != '' ">
+		    		and p.order_num = #{orderNum}
+		    	</if>
+		    	<if test="progressStatus != null and progressStatus != '' ">
+		    		and p.PROGRESS_STATUS = #{progressStatus}
+		    	</if>
+		    	<if test="orderStatus != null and orderStatus != '' ">
+		    		and p.ORDER_STATUS = #{orderStatus}
+		    	</if>
+		order by order_time
+	</select>
+	
+	<!-- 주문 승인시 -->
+	<update id="orderCheck" parameterType="map">
+		UPDATE PAYMENT
+		SET ORDER_STATUS = '주문 승인'
+		WHERE ORDER_NUM = #{orderNum}     
+	</update>
+	
+	<!-- 배달/포장 메뉴 목록 -->
+	<select id="menuList" parameterType="map" resultType="edu.example.dto.StoreObjectReviewDTO">
+	select s.delivery_status, s.pickup_status, s.store_name, s.least_price, s.delivery_price, s.store_category_num,	    
+	    	o.object_name, o.object_image, o.object_origin, r.review_score, r.order_num
+	from store s, object o, review r
+	where s.store_num = o.store_num and s.store_num = r.store_num 
+			and s.store_category_num = #{storeCategoryNum}
+			<if test="deliveryStatus != null and deliveryStatus != '' ">
+	    		and s.delivery_status = #{deliveryStatus}
+	    	</if>
+			<if test="pickupStatus != null and pickupStatus != '' ">
+	    		and s.pickup_status = #{pickupStatus}
+	    	</if>
+	</select>
+	
+</mapper>

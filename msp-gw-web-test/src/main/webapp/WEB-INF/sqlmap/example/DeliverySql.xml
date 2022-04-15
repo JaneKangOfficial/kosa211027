@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Delivery">
+
+	<sql id="base">
+		DELIVERY_NUM, DELIVERY_ID, DELIVERY_NAME, DELIVERY_EMAIL, DELIVERY_PHONE, 
+		DELIVERY_BIRTH, DELIVERY_PW, DELIVERY_ADDR, DELIVERY_ADDRDETAIL
+	</sql>
+	
+	<select id="deliveryAutoNum" resultType="String">
+		select concat('delivery', nvl(max(substr(delivery_num, 9)), 10000)+1) from delivery
+	</select>
+
+	<insert id="insertDelivery">
+		insert into delivery (<include refid="base"/>)
+		values (
+			#{deliveryNum}, #{deliveryId}, #{deliveryName}, #{deliveryEmail}, #{deliveryPhone}, 
+			#{deliveryBirth}, #{deliveryPw}, #{deliveryAddr}, #{deliveryAddrdetail}
+		)
+	</insert>
+	
+	<select id="detailDelivery" resultType="edu.example.dto.DeliveryDTO" parameterType="map">
+		select <include refid="base"/>
+		from delivery
+		where delivery_id = #{deliveryId}
+	</select>
+	
+	<update id="updateDelivery" parameterType="map">
+		update delivery
+		set DELIVERY_NAME = #{deliveryName}, DELIVERY_EMAIL = #{deliveryEmail}, 
+			DELIVERY_PHONE = #{deliveryPhone}, DELIVERY_BIRTH = #{deliveryBirth} 			
+		where delivery_id = #{deliveryId}
+	</update>
+	
+	<delete id="deleteDelivery" parameterType="map">
+		delete from delivery
+		where delivery_id = #{deliveryId}
+	</delete>
+	
+	<!-- 주문 목록 -->
+	<select id="orderList" resultType="edu.example.dto.ObjectOrderPaymentStoreDeliveryDTO" parameterType="map">
+		select ol.order_num, p.progress_status, o.object_name, s.store_name, ol.buy_qty, 
+		  	  to_char(p.order_time,'YY/MM/DD HH24:MI') as orderTime, d.delivery_num, o.object_image
+		from orderlist ol, payment p, object o, store s, delivery d, deliveryrequest dr
+		where ol.order_num = p.order_num and o.store_num = s.store_num and ol.object_num = o.object_num
+		        and dr.order_num = p.order_num and dr.delivery_num = d.delivery_num
+		    	<if test="orderNum != null and orderNum != '' ">
+		    		and p.order_num = #{orderNum}
+		    	</if>
+		    	<if test="deliveryNum != null and deliveryNum != '' ">
+		    		and p.delivery_num = #{deliveryNum}
+		    	</if>
+		    	<if test="progressStatus != null and progressStatus != '' ">
+		    		and p.PROGRESS_STATUS = #{progressStatus}
+		    	</if>		    	
+		order by order_time
+	</select>
+	
+	<update id="orderCheck" parameterType="map">
+		UPDATE PAYMENT
+		SET PROGRESS_STATUS = '주문 승인'
+		WHERE ORDER_NUM = #{orderNum}     
+	</update>
+
+</mapper>
