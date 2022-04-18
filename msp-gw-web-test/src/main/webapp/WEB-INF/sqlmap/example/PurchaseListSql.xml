@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PurchaseList">
+	
+	<delete id="deleteOnePurchase">
+		DELETE FROM PURCHASE_LIST
+		WHERE ORDER_NUM = #{orderNum}
+	</delete>
+	
+	<delete id="deleteAllPurchase">
+		DELETE FROM PURCHASE_LIST
+		WHERE MEMBER_NUM = #{memberNum}
+	</delete>
+</mapper>

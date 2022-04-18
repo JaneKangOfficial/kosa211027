@@ -68,8 +68,8 @@ public class ReviewController {
          	reqBodyMap.put("storeNum", request.getParameter("storeNum"));
          	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
          	String fileDir = "/view/review/upload";
- 			String filePath = request.getServletContext().getRealPath(fileDir);
- 			System.out.println(filePath);
+// 			String filePath = request.getServletContext().getRealPath(fileDir);
+// 			System.out.println(filePath);
 
  			try{
                     System.out.println(reqBodyMap.get("reviewContent"));
@@ -83,9 +83,9 @@ public class ReviewController {
              		
              		String storeFileName=storeName + extension;
              		
-             		File file = new File(filePath + "/" + storeFileName);
+//             		File file = new File(filePath + "/" + storeFileName);
              		try {
-             			reviewMain.transferTo(file); // 파일을 저장
+//             			reviewMain.transferTo(file); // 파일을 저장
              		}catch(Exception e) {e.printStackTrace();}
                      reqBodyMap.put("reviewImage", storeFileName);
                      
@@ -147,8 +147,8 @@ public class ReviewController {
         reqBodyMap.put("storeNum", request.getParameter("storeNum"));
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         String fileDir = "/view/review/upload";
-		String filePath = request.getServletContext().getRealPath(fileDir);
-		System.out.println(filePath);
+//		String filePath = request.getServletContext().getRealPath(fileDir);
+//		System.out.println(filePath);
 
         try{
                     System.out.println(reqBodyMap.get("reviewContent"));
@@ -162,9 +162,9 @@ public class ReviewController {
             		
             		String storeFileName=storeName + extension;
             		
-            		File file = new File(filePath + "/" + storeFileName);
+//            		File file = new File(filePath + "/" + storeFileName);
             		try {
-            			reviewMain.transferTo(file); // 파일을 저장
+//            			reviewMain.transferTo(file); // 파일을 저장
             		}catch(Exception e) {e.printStackTrace();}
                     reqBodyMap.put("reviewImage", storeFileName);
                     
@@ -300,6 +300,9 @@ public class ReviewController {
 			responseBodyMap.put("reviewImage", info.getReviewImage());
 			responseBodyMap.put("storeReview", info.getStoreReview());
 			responseBodyMap.put("storeNum", info.getStoreNum());
+			responseBodyMap.put("storeName", info.getStoreName());
+			responseBodyMap.put("memberNum", info.getMemberNum());
+			responseBodyMap.put("memberNickname", info.getMemberNickname());
 		} else {
 			responseBodyMap.put("rsltCode", "2003");
 			responseBodyMap.put("rsltMsg", "Data not found.");

@@ -4,7 +4,7 @@
                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="OrderList">
-	
+
 	<select id="autoOrderNum" resultType="String">
 		SELECT CONCAT('order', NVL(MAX(SUBSTR(ORDER_NUM, 6)), 10000)+1) FROM ORDERLIST
 	</select>
@@ -24,35 +24,40 @@
 	</select>
 	
 	<insert id="insertOrder">
-		INSERT INTO ORDERLIST
-		VALUES
-	    	(#{objectNum}, #{memberNum}, #{buyQty})
+	    MERGE INTO ORDERLIST w
+		USING (SELECT OBJECT_NUM FROM OBJECT WHERE OBJECT_NUM = #{objectNum}) g
+		    ON (w.OBJECT_NUM = g.OBJECT_NUM AND w.MEMBER_NUM = #{memberNum})
+		When MATCHED THEN
+		    UPDATE SET w.BUY_QTY = w.BUY_QTY + #{buyQty}
+		When NOT MATCHED THEN
+		    INSERT (w.MEMBER_NUM, w.OBJECT_NUM, w.BUY_QTY, w.STATUS)
+		    VALUES(#{memberNum}, #{objectNum}, #{buyQty}, #{status} )
 	</insert>
 	
 	<delete id="deleteOneOrder">
 		DELETE FROM ORDERLIST
-		WHERE OBJECT_NUM = #{objectNum}
+		WHERE OBJECT_NUM = #{objectNum} AND MEMBER_NUM = #{memberNum}
 	</delete>
 	
 	<delete id="deleteOrder">
 		DELETE FROM ORDERLIST
+		WHERE MEMBER_NUM = #{memberNum}
 	</delete>
 	
 	<update id="updateOrder">
 		UPDATE ORDERLIST
 		SET    BUY_QTY = #{buyQty}
-		
-		WHERE OBJECT_NUM = #{objectNum}
+		WHERE OBJECT_NUM = #{objectNum} AND MEMBER_NUM = #{memberNum}
 	</update>
 	
 	<select id="selectAll" parameterType="map" resultType="edu.example.dto.OrderListAllDto">
-		SELECT ob.OBJECT_NUM, s.STORE_NUM, STORE_NAME, OBJECT_NAME, ob.OBJECT_PRICE, od.BUY_QTY, MEMBER_NUM, DELIVERY_PRICE
+		SELECT DISTINCT ob.OBJECT_NUM, s.STORE_NUM, STORE_NAME, OBJECT_NAME, ob.OBJECT_PRICE, od.BUY_QTY, MEMBER_NUM, DELIVERY_PRICE, STATUS, OBJECT_IMAGE
 		FROM OBJECT ob, ORDERLIST od, STORE s 
-		WHERE ob.OBJECT_NUM = od.OBJECT_NUM AND s.STORE_NUM = ob.STORE_NUM AND MEMBER_NUM = #{memberNum} AND s.STORE_NUM = #{storeNum}
+		WHERE ob.OBJECT_NUM = od.OBJECT_NUM AND s.STORE_NUM = ob.STORE_NUM AND MEMBER_NUM = #{memberNum}
 	</select>
 	
-	<select id="objCheck" parameterType="map" resultType="edu.example.dto.Orderlist" >
-		SELECT OBJECTNAME FROM ORDERLIST
+	<select id="staCheck" parameterType="map" resultType="String" >
+		SELECT STATUS FROM ORDERLIST
 		WHERE OBJECT_NUM = #{objectNum}
 	</select>
 	
