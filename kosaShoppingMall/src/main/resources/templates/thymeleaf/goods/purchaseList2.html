@@ -2,8 +2,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!-- bootstrap css -->
-<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
@@ -68,56 +66,15 @@ function dels() {
 </script>
 </head>
 <body>
-<!-- navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">KOSA ShoppingMall</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="goodsList">상품리스트</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="goodsRegist">상품등록</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="goodsIpgoList">상품입고현황</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="goodsIpgo">상품입고</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="purchaseList">주문내역</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="goodsQuestion">상품문의</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-<!-- end of navbar -->
-
-<div class="container">
-<!-- table -->
-	<table class="table text-center mt-5">
-	  	<thead class="thead-light">
-		    <tr>
-		    	<th scope="col"><input type="checkbox" id="prodCkAll"/></th>
-		    	<th scope="col">주문일(결제번호)</th>
-		    	<th scope="col">상품명/주문번호</th>
-		    	<th scope="col">주문상태</th>
-		    	<th scope="col"><input class="btn btn-dark btn-sm" type="button" value="선택삭제" onclick="javascript:dels()"/></th>
-		    </tr>
-	   </thead>
-	  <tbody>
-	  	<tr th:each="dto : ${list}">
+<table width="800" align="center" border="1">
+	<tr>
+		<td><input type="checkbox" id="prodCkAll"  /></td>
+		<td>주문일(결제번호)</td>
+		<td>상품명/주문번호</td>
+		<td>주문상태</td>
+		<td><input type="button" value="선택삭제" onclick="javascript:dels()"  /></td>
+	</tr>
+	<tr th:each="dto : ${list}">
 		<td><th:block th:if="${dto.confirmNumber == null}">
 				<input type="checkbox" name="prodCk" th:value="${dto.purchaseNum}" >	
 			</th:block>
@@ -151,9 +108,6 @@ function dels() {
 			<a th:if="${dto.purchaseStatus == '결제대기중'}" th:href="@{paymentDel(purchaseNum=${dto.purchaseNum})}">삭제하기</a> 
 		</td>
 	</tr>
- 	 </tbody>
-	</table>
-<!-- end of table -->
-</div>
+</table>
 </body>
 </html>

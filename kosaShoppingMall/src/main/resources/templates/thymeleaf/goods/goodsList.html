@@ -2,76 +2,95 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
-<style type="text/css">
-	#leftMenu {
-		width: 25%;
-		float: left;
-		border-right: 1px solid gray;
-		height:500px;
-	}
-	#memberInfo {
-		width: 70%;
-		float: right;
-		padding-left: 30px;
-	}
-</style>
 </head>
 <body>
-<div id="wrapper">
-   <div id="leftMenu">
-      <ul>
-         <li><a href="goodsList">상품리스트</a></li>
-         <li><a href="goodsRegist">상품등록</a></li>
-         <li><a href="goodsIpgoList">상품입고현황</a></li>
-         <li><a href="goodsIpgo">상품입고</a></li>
-         <li><a href="purchaseList">주문내역</a></li>
-         <li><a href="goodsQuestion">상품문의</a></li>
-      </ul>   
-   </div>
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">KOSA ShoppingMall</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="goodsList">상품리스트</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="goodsRegist">상품등록</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="goodsIpgoList">상품입고현황</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="goodsIpgo">상품입고</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="purchaseList">주문내역</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="goodsQuestion">상품문의</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- end of navbar -->
 
-	<div id="memberInfo">
-	<p>상품 조회
-	<!-- <form action="goodsSearch" method="get">  -->
-	<form action="goodsList" method="get"> 
-		<input type="search" name="goodsWord" size="50" />
-		<input type="submit" value="검색" />
-	</form>
+<div class="container">
+	<!-- search bar -->
+	<nav class="navbar navbar-light mt-5">
+	  <div class="container-fluid">
+	    <form action="goodsList" method="get" class="d-flex">
+	      <input class="form-control me-5" type="search" name="goodsWord" size="50"  placeholder="상품검색" aria-label="Search">
+	      <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
+	    </form>
+	  </div>
+	</nav>
+	<!-- end of search bar -->
 	
 	<form action="goodsDels" method="post">
-	<table border="1" width="800">
-		<caption><strong>상품 관리</strong></caption>
-		<tr>
-			<th colspan="5">상품 리스트</th>
-			<th width="150">총 상품 개수 : [[${count}]] </th>
-			<th width="150">현재 페이지 상품 개수 : [[${list.size()}]] </th>
-		</tr>
-		<tr>
-			<th>번호</th>
-			<th>상품 번호</th>
-			<th>이미지</th>
-			<th>상품명</th>
-			<th>가격</th>
-			<th>조회수</th>
-			<th><input type="submit" value="삭제" /></th>
-		</tr>
-		<th:block th:each="goodsCommand, idx : ${list}">
-		<tr>
-			<th>[[${idx.count}]]</th>
-			<th><a th:href="|goodsDetail/${goodsCommand.goodsNum}|">[[${goodsCommand.goodsNum}]]</a></th>
-			<th>
-				<th:block th:if = "${goodsCommand.goodsMain != null}" >
-					<img th:src="|/goods/upload/${goodsCommand.goodsMain}|" width="30px"/>
-				</th:block>
-			</th>
-			<th>[[${goodsCommand.goodsName}]]</th>
-			<th>[[${goodsCommand.goodsPrice}]]</th>
-			<th>[[${goodsCommand.visitCount}]]</th>
-			<th><input type="checkbox" th:value="${goodsCommand.goodsNum}" name="delete" /></th>
-		</tr>
-		</th:block>
-		
-		<tr>
+	<!-- table -->
+	<table class="table text-center mt-3">
+	  	<thead class="thead-light">
+		    <tr>
+		    	<th colspan="5" >상품 리스트</th>
+		    	<th >총 상품 개수 : [[${count}]] </th>
+		    	<th >현재 페이지 상품 개수 : [[${list.size()}]]</th>
+		    </tr>
+		    <tr>
+		      <th scope="col">번호</th>
+		      <th scope="col">상품 번호</th>
+		      <th scope="col">이미지</th>
+		      <th scope="col">상품명</th>
+		      <th scope="col">가격</th>
+		      <th scope="col">조회수</th>
+		      <th scope="col"><input class="btn btn-dark btn-sm" type="submit" value="삭제" /></th>
+		    </tr>
+	   </thead>
+	  <tbody>
+	  	<th:block th:each="goodsCommand, idx : ${list}">
+	    <tr>
+	      <th scope="row">[[${idx.count}]]</th>
+	      <td><a th:href="|goodsDetail/${goodsCommand.goodsNum}|">[[${goodsCommand.goodsNum}]]</a></td>
+	      <td>
+	      	<th:block th:if = "${goodsCommand.goodsMain != null}" >
+				<img th:src="|/goods/upload/${goodsCommand.goodsMain}|" width="30px"/>
+			</th:block>
+	      </td>
+	      <td>[[${goodsCommand.goodsName}]]</td>
+	      <td>[[${goodsCommand.goodsPrice}]]</td>
+	      <td>[[${goodsCommand.visitCount}]]</td>
+	      <td><input type="checkbox" th:value="${goodsCommand.goodsNum}" name="delete" /></td>
+	    </tr>
+	  </th:block>
+		  <tr>
 			<th colspan="7">
 				<th:block th:if="${page <= 1}">
 					[이전]
@@ -92,11 +111,11 @@
 				</th:block>
 			</th>
 		</tr>
-			
+ 	 </tbody>
 	</table>
+	<!-- end of table -->
 	</form>
-	<a href="goodsRegist">상품 등록</a>
-	</div>
+	<a href="goodsRegist" class="btn btn-primary btn-sm">상품 등록</a>
 </div>
 </body>
 </html>

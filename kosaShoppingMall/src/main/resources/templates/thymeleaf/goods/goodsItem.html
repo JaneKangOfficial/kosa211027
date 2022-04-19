@@ -2,6 +2,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
@@ -18,38 +20,46 @@ function itemSend(goodsNum) {
 </script>
 </head>
 <body>
-<p>
-<table width="600">
+<div class="container text-center">
+<!-- search bar -->
+<table class="table table-border">
 <tr>
 	<th>
-		<form action="goodsItem" method="post">
-			상품명 : <input type="search" name="goodsName" size="50" />
-				   <input type="submit" value="검색" />
+		<form action="goodsItem" method="post" class="d-flex">
+			<input class="form-control me-5" type="search" name="goodsName" size="50" placeholder="상품명" aria-label="Search"/>
+			<input class="btn btn-outline-primary btn-sm" type="submit" value="검색" />
 		</form>
 	</th>
 </tr>
 </table>
-</p>
+<!-- end of search bar -->
 
-<table border="1" width="600">
-	<tr>
-		<th colspan="3">상품 리스트</th>
-		<th width="100">상품 개수 : </th>
-	</tr>
-	<tr>
-		<th>상품 번호</th>
-		<th>상품명</th>
-		<th>가격</th>
-		<th>조회수</th>
-	</tr>
-	<th:block th:each="goodsCommand : ${list}" >
-	<tr>
-		<th><a th:href="|javascript:itemSend('${goodsCommand.goodsNum}')|">[[${goodsCommand.goodsNum}]]</a></th>
-		<th>[[${goodsCommand.goodsName}]]</th>
-		<th>[[${goodsCommand.goodsPrice}]]</th>
-		<th>[[${goodsCommand.visitCount}]]</th>
-	</tr>
-	</th:block>
-</table>
+<!-- table -->
+	<table class="table table-border">
+		<thead class="thead-light">
+		    <tr>
+				<th colspan="4">상품 리스트</th>
+			</tr>
+		    <tr>
+		      <th scope="col">상품 번호</th>
+		      <th scope="col">상품명</th>
+		      <th scope="col">가격</th>
+		      <th scope="col">조회수</th>
+		    </tr>
+	   </thead>
+	  <tbody>
+	    <th:block th:each="goodsCommand : ${list}" >
+			<tr>
+				<th><a th:href="|javascript:itemSend('${goodsCommand.goodsNum}')|">[[${goodsCommand.goodsNum}]]</a></th>
+				<th>[[${goodsCommand.goodsName}]]</th>
+				<th>[[${goodsCommand.goodsPrice}]]</th>
+				<th>[[${goodsCommand.visitCount}]]</th>
+			</tr>
+		</th:block>
+	  </tbody>
+	</table>
+	<!-- end of table -->
+
+</div>
 </body>
 </html>

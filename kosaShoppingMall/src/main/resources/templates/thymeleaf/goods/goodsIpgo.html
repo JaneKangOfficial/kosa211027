@@ -2,21 +2,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
-<style type="text/css">
-	#leftMenu {
-		width: 25%;
-		float: left;
-		border-right: 1px solid gray;
-		height:500px;
-	}
-	#memberInfo {
-		width: 70%;
-		float: right;
-		padding-left: 30px;
-	}
-</style>
 <script type="text/javascript">
 $(function(){
 	$("#btn").click(function(){
@@ -28,62 +17,93 @@ $(function(){
 </script>
 </head>
 <body>
-<div id="wrapper">
-   <div id="leftMenu">
-      <ul>
-         <li><a href="goodsList">상품리스트</a></li>
-         <li><a href="goodsRegist">상품등록</a></li>
-         <li><a href="goodsIpgoList">상품입고현황</a></li>
-         <li><a href="goodsIpgo">상품입고</a></li>
-         <li><a href="purchaseList">주문내역</a></li>
-         <li><a href="goodsQuestion">상품문의</a></li>
-      </ul>   
-   </div>
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">KOSA ShoppingMall</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="goodsList">상품리스트</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="goodsRegist">상품등록</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="goodsIpgoList">상품입고현황</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="goodsIpgo">상품입고</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="purchaseList">주문내역</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="goodsQuestion">상품문의</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- end of navbar -->
 
-	<div id="memberInfo">
-	<h2>상품 입고 등록</h2>
+<div class="container text-center mt-5">
 	<form action="ipgoRegist" method="post" th:object="${goodsIpgoCommand}">
-	<table border="1">
-		<tr>
-			<th>상품번호</th>
-			<td th:if="${goodsIpgoCommand == null}"><input type="text" name="goodsNum" id="num" readonly="readonly" />
+	<!-- table -->
+	<table class="table table-border">
+		<thead class="thead-light">
+		    <tr>
+		    	<th colspan="2" >상품 입고 등록</th>
+		    </tr>
+	   </thead>
+	  <tbody>
+	    <tr>
+	      <th scope="row">상품번호</th>
+	      <td th:if="${goodsIpgoCommand == null}"><input type="text" name="goodsNum" id="num" readonly="readonly" />
 			<td th:if="${goodsIpgoCommand != null}"><input type="text" name="goodsNum" id="num" th:value="${goodsIpgoCommand.goodsNum}" readonly="readonly" />
-				<button type="button" id="btn">상품 번호 검색</button><br />
+				<button class="btn btn-outline-primary btn-sm" type="button" id="btn">상품 번호 검색</button><br />
 				<span th:if="${#fields.hasErrors('goodsNum')}" th:errors="*{goodsNum}"></span><br />
 			</td>
+	    </tr>
+	    <tr>
+	      <th scope="row">입고일</th>
+	      <td>
+			<input type="date" name="ipgoDate" th:value="${#dates.format(goodsIpgoCommand.ipgoDate, 'yyyy-MM-dd')}" />
+			<span th:if="${#fields.hasErrors('ipgoDate')}" th:errors="*{ipgoDate}"></span>
+		 </td>
+	    </tr>
+	    <tr>
+	      <th scope="row">입고 수량</th>
+	      <td>
+			<input type="number" name="ipgoQty" min="1" th:value="${goodsIpgoCommand.ipgoQty}"/><br />
+			<span th:if="${#fields.hasErrors('ipgoQty')}" th:errors="*{ipgoQty}"></span><br />
+	     </td>
 		</tr>
-		<tr>
-			<th>입고일</th>
-			<td>
-				<input type="date" name="ipgoDate" th:value="${#dates.format(goodsIpgoCommand.ipgoDate, 'yyyy-MM-dd')}" />
-				<span th:if="${#fields.hasErrors('ipgoDate')}" th:errors="*{ipgoDate}"></span>
-			</td>
-		</tr>
-		<tr>
-			<th>입고 수량</th>
-			<td>
-				<input type="number" name="ipgoQty" min="1" th:value="${goodsIpgoCommand.ipgoQty}"/><br />
-				<span th:if="${#fields.hasErrors('ipgoQty')}" th:errors="*{ipgoQty}"></span><br />
-			</td>
-		</tr>
-		<tr>
-			<th>제조일</th>
-			<td>
-				<input type="datetime-local" name="madeDate" th:value="${goodsIpgoCommand.madeDate}" /><br />
-				<!-- datetime-local을 command에서 date로 받았을 경우 strings로 형변환
-					th:value="${#strings.replace(goodsIpgoCommand.madeDate),' ', 'T'}" 
-				 --> 
-				<span th:if="${#fields.hasErrors('madeDate')}" th:errors="*{madeDate}"></span><br />
-			</td>
-		</tr>
-		<tr>
+	    <tr>
+	      <th scope="row">제조일</th>
+	      <td>
+			<input type="datetime-local" name="madeDate" th:value="${goodsIpgoCommand.madeDate}" /><br />
+			<!-- datetime-local을 command에서 date로 받았을 경우 strings로 형변환
+				th:value="${#strings.replace(goodsIpgoCommand.madeDate),' ', 'T'}" 
+			 --> 
+			<span th:if="${#fields.hasErrors('madeDate')}" th:errors="*{madeDate}"></span><br />
+	     </td>
+	    </tr>
+	   <tr>
 			<th colspan="2">
-				<input type="submit" value="등록" />
+				<input class="btn btn-primary btn-sm" type="submit" value="등록" />
 			</th>
 		</tr>
+	  </tbody>
 	</table>
+	<!-- end of table -->
 	</form>
-	</div>
 </div>
 </body>
 </html>

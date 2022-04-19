@@ -2,45 +2,66 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
-<style type="text/css">
-	#leftMenu {
-		width: 25%;
-		float: left;
-		border-right: 1px solid gray;
-		height:500px;
-	}
-	#memberInfo {
-		width: 70%;
-		float: right;
-		padding-left: 30px;
-	}
-</style>
 </head>
 <body>
-<div id="wrapper">
-   <div id="leftMenu">
-      <ul>
-         <li><a href="goodsList">상품리스트</a></li>
-         <li><a href="goodsRegist">상품등록</a></li>
-         <li><a href="goodsIpgoList">상품입고현황</a></li>
-         <li><a href="goodsIpgo">상품입고</a></li>
-         <li><a href="purchaseList">주문내역</a></li>
-         <li><a href="goodsQuestion">상품문의</a></li>
-         
-      </ul>   
-   </div>
+<div class="contaier">
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">KOSA ShoppingMall</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="goodsList">상품리스트</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="goodsRegist">상품등록</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="goodsIpgoList">상품입고현황</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="goodsIpgo">상품입고</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="purchaseList">주문내역</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="goodsQuestion">상품문의</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- end of navbar -->
 
-	<div id="memberInfo">
-	<table width="600" border="1">
-		<tr>
-			<td>상품명</td>
-			<td>종류</td>
-			<td>제목</td>
-			<td>작성자</td>
-			<td>답변상태</td>
-		</tr>
-		<th:block th:each="goodsInquireDTO : ${list}" >
+
+<div class="container">
+	<!-- table -->
+	<table class="table text-center mt-3">
+	  	<thead class="thead-light">
+		    <tr>
+		    	<th colspan="5" >상품 문의</th>
+		    </tr>
+		    <tr>
+		      <th scope="col">상품명</th>
+		      <th scope="col">종류</th>
+		      <th scope="col">제목</th>
+		      <th scope="col">작성자</th>
+		      <th scope="col">답변상태</th>
+		    </tr>
+	   </thead>
+	  <tbody>
+	  	<th:block th:each="goodsInquireDTO : ${list}" >
 		<tr>
 			<td>[[${goodsInquireDTO.goodsDTO.goodsName}]]</td>
 			<td>[[${goodsInquireDTO.inquireKind}]]</td>
@@ -50,9 +71,10 @@
 			<td th:if="${goodsInquireDTO.inquireAnswer != null}">답변완료</td>
 		</tr>
 		</th:block>
+ 	 </tbody>
 	</table>
-	
-	</div>
+	<!-- end of table -->
+</div>
 </div>
 </body>
 </html>

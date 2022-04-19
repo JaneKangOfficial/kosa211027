@@ -2,6 +2,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
 <script >
 $(function(){
@@ -27,46 +29,73 @@ function answer(id, id1){
 </script>
 </head>
 <body>
-<table border="1" width="600" align="center">
-	<tr><td colspan="7" align="right"><button type="button" id="inquire1" >문의 하기</button></td></tr>
-	<tr><td>번호</td><td>답변 상태</td><td>문의유형</td><td>작성자</td><td>작성일자</td></tr>
-	<th:block  th:each="goodsInquireDTO, idx : ${list}" >
-	<input type="hidden" name="inquireNum" id="inquireNum" th:value="${goodsInquireDTO.inquireNum}" />
-	<tr>
-		<td>[[${idx.count}]]</td>
-		<td>검토중</td>
-		<td>[[${goodsInquireDTO.inquireKind}]]</td>
-		<td>[[${goodsInquireDTO.memberDTO.memberId}]]</td>
-		<td>[[${#dates.format(goodsInquireDTO.inquireDate,'yyyy-MM-dd')}]]</td>
-	</tr> 
-	<tr><td></td>
-		<td colspan="5">
-			[[${goodsInquireDTO.inquireSubject}]]
-			 <a th:href="|javascript:answer('#inq${idx.count}', ingu${idx.count})|">
-			 	<span th:id = "ingu + ${idx.count}">답변 열기</span></a>
-		</td>
-	</tr>
-	<tr><td></td>
-		<td colspan="5">
-			<th:block th:if="${session.memberId} == ${goodsInquireDTO.memberDTO.memberId}">		
-				<!-- <a th:href="@{inquireUpdate(inquireNum=${goodsInquireDTO.inquireNum})}" id="update">
-						[[${goodsInquireDTO.inquireContent}]]</a>
-				 -->
-				[[${goodsInquireDTO.inquireContent}]]
-			<button type="button" id="update1" >수정</button>
-			</th:block>
-			<th:block th:if="${session.memberId} != ${goodsInquireDTO.memberDTO.memberId}">		
-				[[${goodsInquireDTO.inquireContent}]]
-			</th:block>
-		</td>
-	</tr>
-	<tr th:if="dto.inquireAnswer != null" th:id="inq+${idx.count}" style="display:none">
-		<td colspan="5">[[${#dates.format(goodsInquireDTO.inquireDate,'yyyy-MM-dd')}]]<br />
-			[[${goodsInquireDTO.inquireAnswer}]]
-		</td>
-	</tr>
-	<tr><td colspan="7">&nbsp;&nbsp;&nbsp;</td></tr>
-	</th:block>
-</table>
+
+<div class="container">
+	<form action="reviewUpdate">
+	<!-- table -->
+	<table class="table mt-3">
+	  	<thead class="thead-light">
+		    <tr>
+		      <td colspan="7">
+		      	<button class="btn btn-primary btn-sm" type="button" id="inquire1">문의 하기</button>
+		      </td>
+		    </tr>
+		    <tr>
+		      <th scope="col">번호</th>
+		      <th scope="col">답변 상태</th>
+		      <th scope="col">문의유형</th>
+		      <th scope="col">작성자</th>
+		      <th scope="col">작성일자</th>
+		    </tr>
+	   </thead>
+	  <tbody>
+	  	<th:block  th:each="goodsInquireDTO, idx : ${list}" >
+			<input type="hidden" name="inquireNum" id="inquireNum" th:value="${goodsInquireDTO.inquireNum}" />
+			<tr>
+				<td>[[${idx.count}]]</td>
+				<td>검토중</td>
+				<td>[[${goodsInquireDTO.inquireKind}]]</td>
+				<td>[[${goodsInquireDTO.memberDTO.memberId}]]</td>
+				<td>[[${#dates.format(goodsInquireDTO.inquireDate,'yyyy-MM-dd')}]]</td>
+			</tr> 
+			<tr>
+				<td></td>
+				<td>
+					[[${goodsInquireDTO.inquireSubject}]]
+					 <a th:href="|javascript:answer('#inq${idx.count}', ingu${idx.count})|">
+					 	<span th:id = "ingu + ${idx.count}" class="btn btn-outline-primary btn-sm">답변 열기</span></a>
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<th:block th:if="${session.memberId} == ${goodsInquireDTO.memberDTO.memberId}">		
+						<!-- <a th:href="@{inquireUpdate(inquireNum=${goodsInquireDTO.inquireNum})}" id="update">
+								[[${goodsInquireDTO.inquireContent}]]</a>
+						 -->
+						[[${goodsInquireDTO.inquireContent}]]
+					<button type="button" id="update1" >수정</button>
+					</th:block>
+					<th:block th:if="${session.memberId} != ${goodsInquireDTO.memberDTO.memberId}">		
+						[[${goodsInquireDTO.inquireContent}]]
+					</th:block>
+				</td>
+			</tr>
+			<tr th:if="dto.inquireAnswer != null" th:id="inq+${idx.count}" style="display:none">
+				<td></td>
+				<td>[[${#dates.format(goodsInquireDTO.inquireDate,'yyyy-MM-dd')}]]<br />
+					[[${goodsInquireDTO.inquireAnswer}]]
+				</td>
+			</tr>
+			<tr>
+				<td colspan="7"></td>
+			</tr>
+		</th:block>
+ 	 </tbody>
+	</table>
+	<!-- end of table -->
+	</form>
+</div>
+
 </body>
 </html>

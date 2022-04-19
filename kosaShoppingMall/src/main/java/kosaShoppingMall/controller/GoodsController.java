@@ -159,8 +159,8 @@ public class GoodsController {
 	@RequestMapping(value="goodsRegist", method = RequestMethod.GET)
 	public String goodsRegist1(GoodsCommand goodsCommand) {
 		goodsNumService.execute(goodsCommand);
-		return "thymeleaf/goods/goodsForm3";
-//		return "thymeleaf/goods/goodsForm";
+//		return "thymeleaf/goods/goodsForm3";
+		return "thymeleaf/goods/goodsForm";
 	}
 	
 	/*

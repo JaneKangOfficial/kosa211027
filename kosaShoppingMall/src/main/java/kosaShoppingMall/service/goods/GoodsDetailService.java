@@ -26,8 +26,11 @@ public class GoodsDetailService {
 		GoodsDTO dto = goodsMapper.selectOne(goodsNum);
 		model.addAttribute("goodsCommand", dto);
 		
-		AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
-		String memberNum = (memberMapper.selectOneById(authInfo.getUserId())).getMemberNum();
+		/*
+		 * AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo"); String
+		 * memberNum =
+		 * (memberMapper.selectOneById(authInfo.getUserId())).getMemberNum();
+		 */
 		
 		/*
 		 * GoodsDTO goodsDTO = new GoodsDTO(goodsNum); 

@@ -2,63 +2,101 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
-<style type="text/css">
-	#leftMenu {
-		width: 25%;
-		float: left;
-		border-right: 1px solid gray;
-		height:500px;
-	}
-	#memberInfo {
-		width: 70%;
-		float: right;
-		padding-left: 30px;
-	}
-</style>
 </head>
 <body>
-<div id="wrapper">
-   <div id="leftMenu">
-      <ul>
-         <li><a href="../goodsList">상품리스트</a></li>
-         <li><a href="../goodsRegist">상품등록</a></li>
-         <li><a href="../goodsIpgoList">상품입고현황</a></li>
-         <li><a href="../goodsIpgo">상품입고</a></li>
-         <li><a href="../purchaseList">주문내역</a></li>
-         <li><a href="../goodsQuestion">상품문의</a></li>
-         
-      </ul>   
-   </div>
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">KOSA ShoppingMall</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="../goodsList">상품리스트</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="../goodsRegist">상품등록</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="../goodsIpgoList">상품입고현황</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="../goodsIpgo">상품입고</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="../purchaseList">주문내역</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="../goodsQuestion">상품문의</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- end of navbar -->
 
-	<div id="memberInfo">
-		조회수 : [[${goodsCommand.visitCount}]] <br />
-		상품 번호 : [[${goodsCommand.goodsNum}]] <br />
-		상품명 : [[${goodsCommand.goodsName}]] <br />
-		상품 가격 : [[${goodsCommand.goodsPrice}]] <br />
-		배송비 : [[${goodsCommand.deliveryCost}]] <br />
-		상품 설명 : <span th:utext = "${#strings.replace(goodsCommand.goodsContent, newLineChar, '&lt;br /&gt;')}" ></span>
-		<br />
-		
-		<th:block th:if="${goodsCommand.goodsMain != null}">
-			대문 이미지<br />
-			<img th:src="|/goods/upload/${goodsCommand.goodsMain}|" width="500px"/>
-		</th:block>
-		<br />
-		
-		<!-- split을 하면 결과값은 배열로 바뀐다. -->
+<div class="container text-center mt-5 mb-5" >
+	<div class="row" >
+		<div class="col">
+			<th:block th:if="${goodsCommand.goodsMain != null}">
+				<img th:src="|/goods/upload/${goodsCommand.goodsMain}|" width="500px"/>
+			</th:block>
+		</div>
+		<div class="col">
+			<table class="table table-border">
+			  <tbody>
+			    <tr>
+			      <th scope="row">조회수</th>
+			      <td>[[${goodsCommand.visitCount}]]</td>
+			    </tr>
+			    <tr>
+			      <th scope="row">상품 번호</th>
+			      <td>[[${goodsCommand.goodsNum}]]</td>
+			    </tr>
+			    <tr>
+			      <th scope="row">상품명</th>
+			      <td>[[${goodsCommand.goodsName}]]</td>
+			    </tr>
+			    <tr>
+			      <th scope="row">상품 가격</th>
+			      <td>[[${goodsCommand.goodsPrice}]]</td>
+			    </tr>
+			    <tr>
+			      <th scope="row">배송비</th>
+			      <td>[[${goodsCommand.deliveryCost}]]</td>
+			    </tr>
+			    <tr>
+			      <th scope="row">상품 설명</th>
+			      <td>
+			      	<span th:utext = "${#strings.replace(goodsCommand.goodsContent, newLineChar, '&lt;br /&gt;')}" ></span>
+				  </td>
+			    </tr>
+			  </tbody>
+			</table>
+		</div>
+	</div>
+	
+	<!-- split을 하면 결과값은 배열로 바뀐다. -->
+	<div class="container mt-5 mb-5">
 		<th:block th:if="${goodsCommand.goodsImages != null}">
-			이미지<br />
+			<!-- 이미지<br /> -->
 			<th:block th:each="goodsImage : ${#strings.arraySplit(goodsCommand.goodsImages,'`')}" >
-				<img th:src="|/goods/upload/${goodsImage}|" width="300px" /><br />
+				<img th:src="|/goods/upload/${goodsImage}|" width="300px" /><br /><br />
 			</th:block>
 		</th:block>
-		<br />
-		
-		<a href="../goodsList">목록</a> |
-		<a th:href="@{../goodsModify(num=${goodsCommand.goodsNum})}">수정</a> |
-		<a th:href="@{../goodsDel(num=${goodsCommand.goodsNum})}">삭제</a>
 	</div>
+	
+	<a href="../goodsList" class="btn btn-primary btn-sm mr-auto">목록</a>
+	<a th:href="@{../goodsModify(num=${goodsCommand.goodsNum})}" class="btn btn-primary btn-sm mr-auto">수정</a>
+	<a th:href="@{../goodsDel(num=${goodsCommand.goodsNum})}" class="btn btn-primary btn-sm mr-auto">삭제</a>
 </div>
 </body>
 </html>
