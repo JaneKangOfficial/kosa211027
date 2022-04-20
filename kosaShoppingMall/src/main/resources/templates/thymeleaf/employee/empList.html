@@ -2,56 +2,83 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
 </head>
 <body>
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">KOSA ShoppingMall</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- end of navbar -->
+<div class="container">
 <form action="empDels" method="post">
-<table border=1>
-<caption><strong>직원 관리</strong></caption>
+	<!-- table -->
+	<table class="table text-center mt-3">
+	  	<thead class="thead-light">
+		    <tr>
+		    	<th colspan="4" ><h3>직원 리스트</h3></th>
+	    	</tr>
+	    	<tr>
+		    	<th colspan="2" >총 사원수 : [[${count}]] </th>
+		    	<th colspan="2" >현재 페이지 사원수 : [[${list.size()}]]</th>
+		    </tr>
+		    <tr>
+		      <th scope="col">번호</th>
+		      <th scope="col">아이디</th>
+		      <th scope="col">이름</th>
+		      <th scope="col"><input class="btn btn-dark btn-sm" type="submit" value="삭제" /></th>
+		    </tr>
+	   </thead>
+	  <tbody>
+	  	<th:block th:each="dto, idx : ${list}">
 		<tr>
-			<th colspan="2" width="300">직원 리스트</th>
-			<th width="100">총 사원수 : [[${count}]]</th>
-			<th width="100">현재 페이지 사원수 : [[${list.size()}]]</th>
+			<th>[[${idx.count}]]</th>
+			<th><a th:href="@{empInfo(num=${dto.empId})}">[[${dto.empId}]]</a></th>
+			<th><a th:href="@{empInfo(num=${dto.empId})}">[[${dto.empName}]]</a></th>
+			<th><input type="checkbox" name="delete" th:value="${dto.empId}" /></th>
 		</tr>
-	<tr>
-		<th>번호</th>
-		<th>아이디</th>
-		<th>이름</th>
-		<th><input type="submit" value="삭제" /></th>
-	</tr>
-	<th:block th:each="dto, idx : ${list}">
-	<tr>
-		<th>[[${idx.count}]]</th>
-		<th><a th:href="@{empInfo(num=${dto.empId})}">[[${dto.empId}]]</a></th>
-		<th><a th:href="@{empInfo(num=${dto.empId})}">[[${dto.empName}]]</a></th>
-		<th><input type="checkbox" name="delete" th:value="${dto.empId}" /></th>
-	</tr>
-	</th:block>
-	
-	<tr>
-		<th colspan="4">
-			<th:block th:if="${page <= 1}">
-				[이전]
-			</th:block>
-			<th:block th:if="${page > 1}">
-				<a th:href="@{empList(page=${page-1})}">[이전]</a>
-			</th:block>
-			
-			<th:block th:each="i : ${#numbers.sequence(startPage, endPage)}" >
-				[<a th:href="@{empList(page=${i})}" ><th:block th:text="${i}" ></th:block></a>]
-			</th:block>
+		</th:block>
+		  <tr>
+			<th colspan="4">
+				<th:block th:if="${page <= 1}">
+					[이전]
+				</th:block>
+				<th:block th:if="${page > 1}">
+					<a th:href="@{empList(page=${page-1})}">[이전]</a>
+				</th:block>
 				
-			<th:block th:if="${page < maxPage}">	
-				<a th:href="@{empList(page=${page+1})}">[이후]</a>
-			</th:block>
-			<th:block th:if="${page >= maxPage}">	
-				[이후]
-			</th:block>
-		</th>
-	</tr>
-	
-</table>
+				<th:block th:each="i : ${#numbers.sequence(startPage, endPage)}" >
+					[<a th:href="@{empList(page=${i})}" ><th:block th:text="${i}" ></th:block></a>]
+				</th:block>
+					
+				<th:block th:if="${page < maxPage}">	
+					<a th:href="@{empList(page=${page+1})}">[이후]</a>
+				</th:block>
+				<th:block th:if="${page >= maxPage}">	
+					[이후]
+				</th:block>
+			</th> 
+		</tr>
+ 	 </tbody>
+	</table>
+	<!-- end of table -->
 </form>
-<a href="empJoin">직원 등록</a>
+<a href="empJoin" class="btn btn-primary btn-sm">직원 등록</a>
+</div>
+
 </body>
 </html>

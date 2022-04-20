@@ -2,30 +2,59 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
 </head>
 <body>
-<p>회원검색
-<form action="memList" method="get">
-	<input type="search" name="memWord" size="50" />
-	<input type="submit" value="검색" />
-</form>
-</p>
-<form action="memDels" method="post">
-<table border=1>
-	<tr>
-		<th colspan="5" width="500">회원 리스트</th>
-		<th width="100">회원수 : [[${count}]]</th>
-	</tr>
-	<tr>
-		<th>번호</th>
-		<th>회원 번호</th>
-		<th>이름</th>
-		<th>아이디</th>
-		<th>전화번호</th>
-		<th><input type="submit" value="삭제" /></th>
-	</tr>
-	<th:block th:each="dto, idx : ${list}">
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">KOSA ShoppingMall</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- end of navbar -->
+<div class="container">
+	<!-- search bar -->
+	<nav class="navbar navbar-light mt-5">
+	  <div class="container-fluid">
+	    <form action="memList" method="get" class="d-flex">
+	      <input class="form-control me-5" type="search" name="memWord" size="50"  placeholder="회원검색" aria-label="Search">
+	      <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
+	    </form>
+	  </div>
+	</nav>
+	<!-- end of search bar -->
+	
+	<form action="memDels" method="post">
+	<!-- table -->
+	<table class="table text-center mt-3">
+	  	<thead class="thead-light">
+		    <tr>
+		    	<th colspan="5" >회원 리스트</th>
+		    	<th >회원수 : [[${count}]] </th>
+		    </tr>
+		    <tr>
+		      <th scope="col">번호</th>
+		      <th scope="col">회원 번호</th>
+		      <th scope="col">이름</th>
+		      <th scope="col">아이디</th>
+		      <th scope="col">전화번호</th>
+		      <th scope="col"><input class="btn btn-dark btn-sm" type="submit" value="삭제" /></th>
+		    </tr>
+	   </thead>
+	  <tbody>
+	  	<th:block th:each="dto, idx : ${list}">
 	<tr>
 		<th>[[${idx.count}]]</th>
 		<!-- Query String이 없을 경우에는 양쪽 끝에 파이프 "|" -->
@@ -58,8 +87,11 @@
 			</th:block>
 		</th>
 	</tr>
-</table>
+ 	 </tbody>
+	</table>
+	<!-- end of table -->
 </form>
-<a href="memberRegist">회원 등록</a>
+<a href="memberRegist" class="btn btn-primary btn-sm">회원 등록</a>
+</div>
 </body>
 </html>

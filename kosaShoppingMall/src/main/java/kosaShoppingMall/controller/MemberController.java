@@ -100,8 +100,8 @@ public class MemberController {
 	@RequestMapping("memberInfo/{id}")
 	public String memberInfo(@PathVariable(value="id") String memberNum, Model model){
 		memberInfoService.execute(memberNum, model);
-		//return "thymeleaf/member/memberInfo";
-		return "member/memberInfo";
+		return "thymeleaf/member/memberInfo";
+//		return "member/memberInfo";
 	}
 	
 	@RequestMapping(value="memModify", method=RequestMethod.GET)

@@ -2,43 +2,121 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
-<style type="text/css">
-	#leftMenu {
-		width: 25%;
-		float: left;
-		border-right: 1px solid gray;
-		height:500px;
-	}
-	#memberInfo {
-		width: 70%;
-		float: right;
-		padding-left: 30px;
-	}
-</style>
 </head>
 <body>
-<div id="leftMenu" >
-	<ul>
-		<li><a href="memberDetail">내 정보 보기</a></li>
-		<li><a href="memberModify">내 정보 수정</a></li>
-		<li><a href="memberPwForm">비밀번호 수정</a></li>
-		<li><a href="memberUserDel">회원 탈퇴</a></li>
-	</ul>
-</div>
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">KOSA ShoppingMall</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="memberDetail">내 정보 보기</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="memberModify">내 정보 수정</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="memberPwForm">비밀번호 수정</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="memberUserDel">회원 탈퇴</a>
+        </li>
+        <!-- <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="memberDetail" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            내 정보
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="memberDetail">내 정보 보기</a></li>
+            <li><a class="dropdown-item" href="memberModify">내 정보 수정</a></li>
+            <li><a class="dropdown-item" href="memberPwForm">비밀번호 수정</a></li>
+            <li><a class="dropdown-item" href="memberUserDel">회원 탈퇴</a></li>
+          </ul>
+        </li> -->
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- end of navbar -->
 
-<div id="memberInfo">
-내 정보<br />
-번호 : [[${memberCommand.memberNum}]]<br />
-아이디 : [[${memberCommand.memberId}]]<br />
-이름 : [[${memberCommand.memberName}]]<br />
-생년월일 : [[${#dates.format(memberCommand.memberBirth,'yyyy-MM-dd')}]]<br />
-성별 : [[${memberCommand.gender}]]<br />
-이메일 : [[${memberCommand.memberEmail}]]<br />
-연락처 : [[${memberCommand.memberPhone}]]<br />
-주소 : [[${memberCommand.memberAddr}]]<br />
-등록일 : [[${#dates.format(memberCommand.memberRegist,'yyyy-MM-dd')}]]<br />
-	
+<div class="container">
+	<!-- table -->
+	<table class="table text-center mt-3">
+	  	<thead class="thead-light">
+		    <tr>
+		    	<th colspan="2" >내 정보</th>
+		    </tr>
+	   </thead>
+	  <tbody>
+	  	<tr>
+	  		<th>번호</th>
+	  		<td>
+	  			[[${memberCommand.memberNum}]]
+	  		</td>
+	  	</tr>
+	  	<tr>
+	  		<th>아이디</th>
+	  		<td>
+	  			[[${memberCommand.memberId}]]
+	  		</td>
+	  	</tr>
+	  	<tr>
+	  		<th>이름</th>
+	  		<td>
+	  			[[${memberCommand.memberName}]]
+	  		</td>
+	  	</tr>
+	  	<tr>
+	  		<th>생년월일</th>
+	  		<td>
+	  			[[${#dates.format(memberCommand.memberBirth,'yyyy-MM-dd')}]]
+	  		</td>
+	  	</tr>
+	  	<tr>
+	  		<th>성별</th>
+	  		<td>
+	  			[[${memberCommand.gender}]]
+	  		</td>
+	  	</tr>
+	  	<tr>
+	  		<th>이메일</th>
+	  		<td>
+	  			[[${memberCommand.memberEmail}]]
+	  		</td>
+	  	</tr>
+	  	<tr>
+	  		<th>연락처</th>
+	  		<td>
+	  			[[${memberCommand.memberPhone}]]
+	  		</td>
+	  	</tr>
+	  	<tr>
+	  		<th>주소</th>
+	  		<td>
+	  			[[${memberCommand.memberAddr}]]
+	  		</td>
+	  	</tr>
+	  	<tr>
+	  		<th>등록일</th>
+	  		<td>
+	  			[[${#dates.format(memberCommand.memberRegist,'yyyy-MM-dd')}]]
+	  		</td>
+	  	</tr>
+ 	 </tbody>
+	</table>
+	<!-- end of table -->
 </div>
 </body>
+<!-- bootstrap js 사용 --> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+<script type="text/javascript" src="/static/js/bootstrap.bundle.js"></script>
 </html>

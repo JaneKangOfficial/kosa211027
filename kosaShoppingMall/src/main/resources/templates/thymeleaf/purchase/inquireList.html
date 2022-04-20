@@ -8,7 +8,7 @@
 <script >
 $(function(){
 	$("#inquire1").click(function(){
-		window.open("inquireWrite?goodsNum=[[${goodsNum}]]","문의하기","width=700, height=650, top=100, left=100");
+		window.open("inquireWrite?goodsNum=[[${goodsNum}]]","문의하기","width=800, height=650, top=100, left=100");
 	});
 	
 	$("#update1").click(function(){
@@ -74,7 +74,7 @@ function answer(id, id1){
 								[[${goodsInquireDTO.inquireContent}]]</a>
 						 -->
 						[[${goodsInquireDTO.inquireContent}]]
-					<button type="button" id="update1" >수정</button>
+					<button class="btn btn-primary btn-sm" type="button" id="update1" >수정</button>
 					</th:block>
 					<th:block th:if="${session.memberId} != ${goodsInquireDTO.memberDTO.memberId}">		
 						[[${goodsInquireDTO.inquireContent}]]

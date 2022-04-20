@@ -2,32 +2,42 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
 </head>
 <body>
+<div class="container">
 <form action="findIdByEmail" method="post" name="frm" id="frm" th:object="${findIdCommand}">
-<table border="1">
-	<tr>
-		<th>전화번호</th>
-		<td>
-			<input type="tel" name="memberPhone" th:value="${findIdCommand.memberPhone}"/><br />
-			<span th:if="${#fields.hasErrors('memberPhone')}" th:errors="*{memberPhone}"></span>
-		</td>
-	</tr>
-	<tr>
-		<th>이메일</th>
-		<td>
-			<input type="email" name="memberEmail" th:value="${findIdCommand.memberEmail}"/><br />
-			<span th:if="${#fields.hasErrors('memberEmail')}" th:errors="*{memberEmail}"></span>
-		</td>
-	</tr>
-	<tr>
-		<th colspan="2">
-			<input type="submit" value="아이디 찾기" />
-		</th>
-	</tr>
-	
-</table>
+	<table class="table text-center mt-3">
+		<thead class="thead-light">
+		    <tr>
+		    	<th colspan="2"><h3>아이디 찾기</h3></th>
+	    	</tr>
+	   	</thead>
+	   	<tbody class="table-borderless">
+	   		<tr>
+		    	<th>전화번호</th>
+		    	<td>
+					<input type="tel" name="memberPhone" th:value="${findIdCommand.memberPhone}"/><br />
+					<span th:if="${#fields.hasErrors('memberPhone')}" th:errors="*{memberPhone}"></span>
+				</td>
+	    	</tr>
+	    	<tr>
+				<th>이메일</th>
+				<td>
+					<input type="email" name="memberEmail" th:value="${findIdCommand.memberEmail}"/><br />
+					<span th:if="${#fields.hasErrors('memberEmail')}" th:errors="*{memberEmail}"></span>
+				</td>
+			</tr>
+			<tr>
+				<th colspan="2">
+					<input class="btn btn-primary btn-sm" type="submit" value="아이디 찾기" />
+				</th>
+			</tr>
+    	</tbody>
+   	</table>
 </form>
+</div>
 </body>
 </html>

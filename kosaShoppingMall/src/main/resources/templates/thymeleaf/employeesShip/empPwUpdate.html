@@ -2,35 +2,77 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
-<style type="text/css">
-	#leftMenu {
-		width: 25%;
-		float: left;
-	}
-	#memberInfo {
-		width: 70%;
-		float: right;
-		border-left: 1px solid gray;
-		padding-left: 30px;
-	}
-</style>
 </head>
 <body>
-<div id="leftMenu">
-	<ul>
-		<li><a href="empDetail">내 정보 보기</a></li>
-		<li><a href="empUpdate">내 정보 수정</a></li>
-		<li><a href="empPwUpdate">비밀번호 수정</a></li>
-	</ul>
-</div>
-<div id="memberInfo">
-<form action="empPwUpdate" method="post" >
-	아이디 : <input type="text" name="empId" th:value="${employeeCommand.empId}" readonly="readonly"/><br />
-	현재 비밀번호 : <input type="password" name="empPw" /><br /> 
-	새로운 비밀번호 : <input type="password" name="newPw" /><br />
-	<input type="submit" value="수정" /> 
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">KOSA ShoppingMall</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="empDetail">내 정보 보기</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="empUpdate">내 정보 수정</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="empPwUpdate">비밀번호 수정</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- end of navbar -->
+<div class="container">
+<form action="empPwUpdate" method="post" name="frm" id="frm">
+	<!-- table -->
+	<table class="table text-center mt-3">
+	  	<thead class="thead-light">
+		    <tr>
+		    	<th colspan="2" ><h3>비밀번호 변경</h3></th>
+		    </tr>
+	   </thead>
+	  <tbody>
+	  	<tr>
+	  		<th>아이디</th>
+	  		<td>
+	  			<input type="text" name="empId" th:value="${employeeCommand.empId}" readonly="readonly"/>
+	  		</td>
+	  	</tr>
+	  	<tr>
+	  		<th>현재 비밀번호</th>
+	  		<td>
+	  			<input type="password" name="empPw" /><br /> 
+	  		</td>
+	  	</tr>
+	  	<tr>
+	  		<th>새로운 비밀번호</th>
+	  		<td>
+	  			<input type="password" name="newPw" /><br />
+	  		</td>
+	  	</tr>
+ 	 </tbody>
+ 	 <tfoot>
+		<tr>
+			<th colspan="2">
+				<input class="btn btn-primary btn-sm" type="submit" value="수정 완료" />
+			</th>
+		</tr>
+	</tfoot>
+	</table>
+	<!-- end of table -->
 </form>
 </div>
+
 </body>
 </html>

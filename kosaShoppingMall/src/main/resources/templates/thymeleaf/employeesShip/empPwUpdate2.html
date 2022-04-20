@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	#leftMenu {
+		width: 25%;
+		float: left;
+	}
+	#memberInfo {
+		width: 70%;
+		float: right;
+		border-left: 1px solid gray;
+		padding-left: 30px;
+	}
+</style>
+</head>
+<body>
+<div id="leftMenu">
+	<ul>
+		<li><a href="empDetail">내 정보 보기</a></li>
+		<li><a href="empUpdate">내 정보 수정</a></li>
+		<li><a href="empPwUpdate">비밀번호 수정</a></li>
+	</ul>
+</div>
+<div id="memberInfo">
+<form action="empPwUpdate" method="post" >
+	아이디 : <input type="text" name="empId" th:value="${employeeCommand.empId}" readonly="readonly"/><br />
+	현재 비밀번호 : <input type="password" name="empPw" /><br /> 
+	새로운 비밀번호 : <input type="password" name="newPw" /><br />
+	<input type="submit" value="수정" /> 
+</form>
+</div>
+</body>
+</html>

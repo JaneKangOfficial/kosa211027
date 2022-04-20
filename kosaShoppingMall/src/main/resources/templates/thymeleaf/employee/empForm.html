@@ -2,18 +2,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
 	$("#btn").click(function(){
 		$("#appd").append(
-				"<div id='appd'>졸엽년도 : <input type='date' name='choolYear' />"
-				+"학교 : <input type='text' size='15' name='school'/>"
-				+"<button id='btn' onclick='del(this)' type='button'>삭제</button></div>"
+				"<tr><th>졸업년도</th><td><input type='date' name='schoolYear'/></td></tr>"
+				+ "<tr><th>학교</th><td><input type='text' name='school' size='15'/>"
+				+ "</td></tr><div id='appd'></div>"
 		);
 	});
 });
+
 function del(eee){
 	$(eee).parent().remove();
 }
@@ -76,32 +79,106 @@ $(function(){
 </script>
 </head>
 <body>
-등록 <br />
-<form action="empWrite" method="post" id="frm" th:object="${employeeCommand}">
-	아이디 : <input type="text" name="empId" id="empId" th:value="${employeeCommand.empId}" />
-	<span id="idCheck"></span>
-	<span th:if="${#fields.hasErrors('empId')}" th:errors="*{empId}"></span><br />
-	비밀번호 : <input type="password" name="empPw" id="empPw" th:value="${employeeCommand.empPw}" />
-	<span th:if="${#fields.hasErrors('empPw')}" th:errors="*{empPw}"></span><br />
-	비밀번호 확인 : <input type="password" name="empPwCon" id="empPwCon" th:value="${employeeCommand.empPwCon}" />
-	<span th:if="${#fields.hasErrors('empPwCon')}" th:errors="*{empPwCon}"></span><br />
-	이름 : <input type="text" name="empName" th:value="${employeeCommand.empName}" />
-	<span th:if="${#fields.hasErrors('empName')}" th:errors="*{empName}"></span><br />
-	주소 : <input type="text" name="empAddr" th:value="${employeeCommand.empAddr}"  />
-	<span th:if="${#fields.hasErrors('empAddr')}" th:errors="*{empAddr}"></span><br />
-	연락처 : <input type="tel" name="empPhone" th:value="${employeeCommand.empPhone}" />
-	<span th:if="${#fields.hasErrors('empPhone')}" th:errors="*{empPhone}"></span><br />
-	이메일 : <input type="tel" name="empEmail" id="empEmail" th:value="${employeeCommand.empEmail}" />
-	<span id="emailCheck"></span>
-	<span th:if="${#fields.hasErrors('empEmail')}" th:errors="*{empEmail}"></span><br />
-	학력 : 
-	<div id="appd">
-		졸업년도 : <input type="date" name="schoolYear" />
-		학교 : <input type="text" name="school" size="15"/>
-		<button type="button" id="btn">추가</button>
-	</div>
-	
-	<input type="submit" value="등록" />
-</form>
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">KOSA ShoppingMall</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- end of navbar -->
+<div class="container">
+	<form action="empWrite" method="post" id="frm" th:object="${employeeCommand}">
+	<!-- table -->
+	<table class="table text-center mt-3">
+	  	<thead class="thead-light">
+		    <tr>
+		    	<th colspan="2" ><h3>직원 등록</h3></th>
+	   </thead>
+	  <tbody>
+	    <tr>
+	    	<th>아이디</th>
+	    	<td>
+		    	<input type="text" name="empId" id="empId" th:value="${employeeCommand.empId}" />
+				<span id="idCheck"></span>
+				<span th:if="${#fields.hasErrors('empId')}" th:errors="*{empId}"></span><br />
+	    	</td>
+	    </tr>
+	    <tr>
+	    	<th>비밀번호</th>
+	    	<td>
+		    	<input type="password" name="empPw" id="empPw" th:value="${employeeCommand.empPw}" />
+				<span th:if="${#fields.hasErrors('empPw')}" th:errors="*{empPw}"></span><br />
+	    	</td>
+	    </tr>
+	    <tr>
+	    	<th>비밀번호 확인</th>
+	    	<td>
+		    	<input type="password" name="empPwCon" id="empPwCon" th:value="${employeeCommand.empPwCon}" />
+				<span th:if="${#fields.hasErrors('empPwCon')}" th:errors="*{empPwCon}"></span><br />
+	    	</td>
+	    </tr>
+	    <tr>
+	    	<th>이름</th>
+	    	<td>
+	    		<input type="text" name="empName" th:value="${employeeCommand.empName}" />
+				<span th:if="${#fields.hasErrors('empName')}" th:errors="*{empName}"></span><br />
+	    	</td>
+	    </tr>
+	    <tr>
+	    	<th>주소</th>
+	    	<td>
+		    	<input type="text" name="empAddr" th:value="${employeeCommand.empAddr}"  />
+				<span th:if="${#fields.hasErrors('empAddr')}" th:errors="*{empAddr}"></span><br />
+	    	</td>
+	    </tr>
+	    <tr>
+	    	<th>연락처</th>
+	    	<td>
+	    		<input type="tel" name="empPhone" th:value="${employeeCommand.empPhone}" />
+				<span th:if="${#fields.hasErrors('empPhone')}" th:errors="*{empPhone}"></span><br />
+	    	</td>
+	    </tr>
+	    <tr>
+	    	<th>이메일</th>
+	    	<td>
+		    	<input type="tel" name="empEmail" id="empEmail" th:value="${employeeCommand.empEmail}" />
+				<span id="emailCheck"></span>
+				<span th:if="${#fields.hasErrors('empEmail')}" th:errors="*{empEmail}"></span><br />
+	    	</td>
+	    </tr>
+	    <tr>
+	    	<th>졸업년도</th>
+	    	<td>
+	    		<input type="date" name="schoolYear" />
+	    	</td>
+	    </tr>
+	    <tr>
+	    	<th>학교</th>
+	    	<td>
+	    		<input type="text" name="school" size="15"/>
+	    		<button class="btn btn-outline-primary btn-sm" type="button" id="btn">추가</button>
+	    		<div id="appd"></div>
+	    	</td>
+	    </tr>
+	    <tr>
+	    	<th colspan="2">
+	    		<input class="btn btn-primary btn-sm" type="submit" value="등록" />
+	    	</th>
+	    </tr>
+ 	 </tbody>
+	</table>
+	<!-- end of table -->
+	</form>
+</div>
 </body>
 </html>

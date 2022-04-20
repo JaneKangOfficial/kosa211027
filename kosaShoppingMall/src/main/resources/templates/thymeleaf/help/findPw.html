@@ -2,37 +2,48 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
 </head>
 <body>
+<div class="container">
 <form action="findPassword" method="post" th:object="${findPasswordCommand}">
-	<table>
-		<tr>
-			<th>아이디</th>
-			<td>
-				<input type="text" name="userId" th:value="${findPasswordCommand.userId}" />
-				<span th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}"></span>
-			</td>
-		</tr>
-		<tr>
-			<th>연락처</th>
-			<td>
-				<input type="text" name="userPhone" th:value="${findPasswordCommand.userPhone}" />
-				<span th:if="${#fields.hasErrors('userPhone')}" th:errors="*{userPhone}"></span>
-			</td>
-		</tr>
-		<tr>
-			<th>이메일</th>
-			<td>
-				<input type="text" name="userEmail" th:value="${findPasswordCommand.userEmail}" />
-				<span th:if="${#fields.hasErrors('userEmail')}" th:errors="*{userEmail}"></span>
-			</td>
-		</tr>
-		<tr>
-			<th colspan="2"><input type="submit" value="전송" /></th>
-		</tr>
+	<table class="table text-center mt-3">
+		<thead class="thead-light">
+		    <tr>
+		    	<th colspan="2"><h3>비밀번호 찾기</h3></th>
+	    	</tr>
+	   	</thead>
+	   	<tbody class="table-borderless">
+		
+			<tr>
+				<th>아이디</th>
+				<td>
+					<input type="text" name="userId" th:value="${findPasswordCommand.userId}" />
+					<span th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}"></span>
+				</td>
+			</tr>
+			<tr>
+				<th>연락처</th>
+				<td>
+					<input type="text" name="userPhone" th:value="${findPasswordCommand.userPhone}" />
+					<span th:if="${#fields.hasErrors('userPhone')}" th:errors="*{userPhone}"></span>
+				</td>
+			</tr>
+			<tr>
+				<th>이메일</th>
+				<td>
+					<input type="text" name="userEmail" th:value="${findPasswordCommand.userEmail}" />
+					<span th:if="${#fields.hasErrors('userEmail')}" th:errors="*{userEmail}"></span>
+				</td>
+			</tr>
+			<tr>
+				<th colspan="2"><input class="btn btn-primary btn-sm" type="submit" value="비밀번호 찾기" /></th>
+			</tr>
+		</tbody>
 	</table>
 </form>
-
+</div>
 </body>
 </html>

@@ -2,6 +2,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script>
@@ -31,26 +33,32 @@ function del(){
 </script>
 </head>
 <body>
+<div class="container">
 <form action="inquireUpdate" method="post" id="frm">
-<input type="hidden" th:value="${dto.inquireNum}" name="inquireNum"/>
-<input type="hidden" th:value="${dto.goodsNum}" name="goodsNum"/>
-<table>
-	<tr>
-		<td>문의내용 수정</td>
-	</tr>
-	<tr>
-		<td>
-			<textarea rows="6" cols="30" name="inquireContent">[[${dto.inquireContent}]]</textarea>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<input type="submit" id="update2" value="수정완료" />
-			<input type="button" value="삭제" onclick="del()" />
-			<a href="javascript:self.close();">취소</a>
-		</td>
-	</tr>
-</table>
+	<input type="hidden" th:value="${dto.inquireNum}" name="inquireNum"/>
+	<input type="hidden" th:value="${dto.goodsNum}" name="goodsNum"/>
+	<table class="table text-center mt-3">
+		<thead class="thead-light">
+		    <tr>
+		    	<th>문의내용 수정</th>
+	    	</tr>
+	   	</thead>
+	   	<tbody>
+			<tr>
+				<td>
+					<textarea rows="6" cols="30" name="inquireContent">[[${dto.inquireContent}]]</textarea>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input class="btn btn-primary btn-sm mr-auto" type="submit" id="update2" value="수정완료" />
+					<input class="btn btn-primary btn-sm mr-auto" type="button" value="삭제" onclick="del()" />
+					<a href="javascript:self.close();" class="btn btn-primary btn-sm mr-auto">취소</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </form>
+</div>
 </body>
 </html>

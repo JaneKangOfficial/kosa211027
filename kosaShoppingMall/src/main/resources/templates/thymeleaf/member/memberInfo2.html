@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+
+<script type="text/javascript">
+/* jquery 사용 */
+	$(function(){
+		$("#delete").click(function(){
+			//location.href="memDelete?num=[[${memberCommand.memberNum}]]";
+			$.ajax({
+				type : "post",
+				url : "../memDelete",
+				data : {"num" : "[[${memberCommand.memberNum}]]"},
+				dataType : "text",
+				success : function(result){
+					if(result.trim() == '1') {
+						alert("정상 삭제");
+						location.href="../memList";
+					}else {
+						alert("삭제되지 않았습니다.");
+						return false;
+					}
+				},
+				error : function() {
+					alert("페이지 열리지 않음, ERROR!!!");
+					return;
+				}
+			});
+		});
+	});
+
+/* 함수 사용 */
+	function del() {
+		$.ajax({
+			type : "post",
+			url : "../memDelete",
+			data : {"num" : "[[${memberCommand.memberNum}]]"},
+			dataType : "text",
+			success : function(result){
+				if(result.trim() == '1') {
+					alert("정상 삭제");
+					location.href="../memList";
+				}else {
+					alert("삭제되지 않았습니다.");
+					return false;
+				}
+			},
+			error : function() {
+				alert("페이지 열리지 않음, ERROR!!!");
+				return;
+			}
+		});
+	};
+</script>
+</head>
+<body>
+상세정보 <br />
+
+번호 : [[${memberCommand.memberNum}]]<br />
+아이디 : [[${memberCommand.memberId}]]<br />
+이름 : [[${memberCommand.memberName}]]<br />
+주소 : [[${memberCommand.memberAddr}]]<br />
+등록일 : [[${memberCommand.memberRegist}]]<br />
+성별 : <span th:if="${memberCommand.gender=='F'}">여자</span>
+	  <span th:if="${memberCommand.gender=='M'}">남자</span><br />
+전화번호 : [[${memberCommand.memberPhone}]]<br />
+생일 : [[${memberCommand.memberBirth}]]<br />
+이메일 : [[${memberCommand.memberEmail}]]<br />
+<a href="../memList">목록</a> |
+<a th:href="@{../memModify(num=${memberCommand.memberNum})}">수정</a> |
+<!-- <a th:href="@{../memDelete(num=${memberCommand.memberNum})}">삭제</a>  -->
+
+<a href="javascript:del();">삭제</a>
+<!-- 
+<form action="memberModify">
+	<input type="submit" value="수정"/>
+</form>
+ -->
+	<input type="hidden" value="memberNum" th:value="${memberCommand.memberNum}" />
+	<input type="button" value="jquery삭제" id="delete"/>
+	<input type="button" value="function삭제" onclick="del();"/>
+
+</body>
+</html>

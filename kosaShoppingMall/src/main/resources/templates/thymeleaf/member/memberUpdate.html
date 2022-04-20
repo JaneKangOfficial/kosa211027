@@ -2,6 +2,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript">
@@ -30,43 +32,111 @@ $(function(){
 </script>
 </head>
 <body>
-수정 <br />
-<form action="memModify" method="post" th:object="${memberCommand}">
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">KOSA ShoppingMall</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- end of navbar -->
+<div class="container">
+	<form action="memModify" method="post" th:object="${memberCommand}">
 	<!-- 수정에서 비밀번호가 empty이기 때문에 화면이 넘어가지 않는다. 히든으로 의미없는 값을 줘야 한다. -->
 	<input type="hidden" name="memberPw" value="123" />
 	<input type="hidden" name="memberPwCon" value="123" />
 	
-	번호 : <input type="text" name="memberNum" th:value="${memberCommand.memberNum}" readonly="readonly"/><br />
-	<span th:if="${#fields.hasErrors('memberNum')}" th:errors="*{memberNum}"></span><br />
-	
-	회원 아이디 : <input type="text" id="memberId" name="memberId" th:value="${memberCommand.memberId}" readonly="readonly" /><br />
-	<span th:if="${#fields.hasErrors('memberId')}" th:errors="*{memberId}"></span><br />
-	
-	회원 이름 : <input type="text" name="memberName" th:value="${memberCommand.memberName}" /><br />
-	<span th:if="${#fields.hasErrors('memberName')}" th:errors="*{memberName}"></span><br />
-	
-	회원 주소 : <input type="text" name="memberAddr" th:value="${memberCommand.memberAddr}" /><br />
-	<span th:if="${#fields.hasErrors('memberAddr')}" th:errors="*{memberAddr}"></span><br />
-	
-	성별 :
-		<input type="radio" name="gender" th:value="F" checked th:checked="${memberCommand.gender == 'F'}"/>여자
-		<input type="radio" name="gender" th:value="M" th:checked="${memberCommand.gender == 'M'}" />남자<br />
-	<span th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></span><br />
-	
-	연락처 : <input type="tel" name="memberPhone" th:value="${memberCommand.memberPhone}"/><br />
-	<span th:if="${#fields.hasErrors('memberPhone')}" th:errors="*{memberPhone}"></span><br />
-	
-	생년월일 : <input type="date" name="memberBirth" th:value="${#dates.format(memberCommand.memberBirth,'yyyy-MM-dd')}"/><br />
-	<span th:if="${#fields.hasErrors('memberBirth')}" th:errors="*{memberBirth}"></span><br />
-	
-	회원 이메일 : <input type="email" id="memberEmail" name="memberEmail" th:value="${memberCommand.memberEmail}"/>
-	<span id="emailCheck"></span>
-	<span th:if="${#fields.hasErrors('memberEmail')}" th:errors="*{memberEmail}"></span><br />
-	
-	등록일 : <input type="date" name="memberRegist" th:value="${#dates.format(memberCommand.memberRegist,'yyyy-MM-dd')}"/>
-	<span th:if="${#fields.hasErrors('memberRegist')}" th:errors="*{memberRegist}"></span><br />
-	
-	<input type="submit" value="수정 완료" />
+	<!-- table -->
+	<table class="table text-center mt-3">
+	  	<thead class="thead-light">
+		    <tr>
+		    	<th colspan="5" >정보 수정</th>
+		    </tr>
+	   </thead>
+	  <tbody>
+	  	<tr>
+	  		<th>번호</th>
+	  		<td>
+		  		<input type="text" name="memberNum" th:value="${memberCommand.memberNum}" readonly="readonly"/><br />
+				<span th:if="${#fields.hasErrors('memberNum')}" th:errors="*{memberNum}"></span><br />
+	  		</td>
+	  	</tr>
+	  	<tr>
+	  		<th>회원 아이디</th>
+	  		<td>
+	  			<input type="text" id="memberId" name="memberId" th:value="${memberCommand.memberId}" readonly="readonly" /><br />
+				<span th:if="${#fields.hasErrors('memberId')}" th:errors="*{memberId}"></span><br />
+	  		</td>
+	  	</tr>
+	  	<tr>
+	  		<th>회원 이름</th>
+	  		<td>
+	  			<input type="text" name="memberName" th:value="${memberCommand.memberName}" /><br />
+				<span th:if="${#fields.hasErrors('memberName')}" th:errors="*{memberName}"></span><br />
+	  		</td>
+	  	</tr>
+	  	<tr>
+	  		<th>회원 주소</th>
+	  		<td>
+		  		<input type="text" name="memberAddr" th:value="${memberCommand.memberAddr}" /><br />
+				<span th:if="${#fields.hasErrors('memberAddr')}" th:errors="*{memberAddr}"></span><br />
+	  		</td>
+	  	</tr>
+	  	<tr>
+	  		<th>성별</th>
+	  		<td>
+		  		<input type="radio" name="gender" th:value="F" checked th:checked="${memberCommand.gender == 'F'}"/>여자
+				<input type="radio" name="gender" th:value="M" th:checked="${memberCommand.gender == 'M'}" />남자<br />
+				<span th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></span><br />
+	  		</td>
+	  	</tr>
+	  	<tr>
+	  		<th>연락처</th>
+	  		<td>
+	  			<input type="tel" name="memberPhone" th:value="${memberCommand.memberPhone}"/><br />
+				<span th:if="${#fields.hasErrors('memberPhone')}" th:errors="*{memberPhone}"></span><br />
+	  		</td>
+	  	</tr>
+	  	<tr>
+	  		<th>생년월일</th>
+	  		<td>
+	  			<input type="date" name="memberBirth" th:value="${#dates.format(memberCommand.memberBirth,'yyyy-MM-dd')}"/><br />
+				<span th:if="${#fields.hasErrors('memberBirth')}" th:errors="*{memberBirth}"></span><br />
+	  		</td>
+	  	</tr>
+	  	<tr>
+	  		<th>회원 이메일</th>
+	  		<td>
+	  			<input type="email" id="memberEmail" name="memberEmail" th:value="${memberCommand.memberEmail}"/>
+				<span id="emailCheck"></span>
+				<span th:if="${#fields.hasErrors('memberEmail')}" th:errors="*{memberEmail}"></span><br />
+	  		</td>
+	  	</tr>
+	  	<tr>
+	  		<th>등록일</th>
+	  		<td>
+	  			<input type="date" name="memberRegist" th:value="${#dates.format(memberCommand.memberRegist,'yyyy-MM-dd')}"/>
+				<span th:if="${#fields.hasErrors('memberRegist')}" th:errors="*{memberRegist}"></span><br />
+	  		</td>
+	  	</tr>
+	  	<tr>
+	  		<th colspan="2">
+	  			<input class="btn btn-primary btn-sm" type="submit" value="수정 완료" />
+	  		</th>
+	  	</tr>
+ 	 </tbody>
+	</table>
+	<!-- end of table -->
 </form>
+</div>
 </body>
 </html>

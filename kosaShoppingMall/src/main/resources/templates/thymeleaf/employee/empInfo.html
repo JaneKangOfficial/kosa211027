@@ -2,29 +2,86 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>empInfo.html</title>
-
 </head>
 <body>
-상세 정보<br />
-
-아이디 : [[${employeeCommand.empId}]] <br />
-이름 :[[${employeeCommand.empName}]] <br />
-주소 : [[${employeeCommand.empAddr}]] <br />
-연락처 : [[${employeeCommand.empPhone}]] <br />
-이메일 : [[${employeeCommand.empEmail}]] <br />
-
-	<h2>학력 소개</h2>
-	<th:block th:each="educationDTO : ${employeeCommand.educations}">
-		졸업년도 : [[${#dates.format(educationDTO.schoolYear,'yyyy-MM-dd')}]] &nbsp;&nbsp;
-		학교 : [[${educationDTO.school}]]<br />
-	</th:block>
-<br />
-<a href="empList">리스트</a> | 
-<a th:href="@{empModify(num=${employeeCommand.empId})}">수정</a> | 
-<a th:href="@{empPassModify(num=${employeeCommand.empId})}">비번수정</a> | 
-<a th:href="@{empDelete(num=${employeeCommand.empId})}">삭제</a>
-
-
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">KOSA ShoppingMall</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- end of navbar -->
+<div class="container">
+<!-- table -->
+	<table class="table text-center mt-3">
+	  	<thead class="thead-light">
+		    <tr>
+		    	<th colspan="2" ><h3>상세 정보</h3></th>
+	    	</tr>
+	   </thead>
+	  <tbody>
+		<tr>
+			<th>아이디</th>
+			<td>[[${employeeCommand.empId}]]</td>
+		</tr>
+		<tr>
+			<th>이름</th>
+			<td>[[${employeeCommand.empName}]]</td>
+		</tr>
+		<tr>
+			<th>주소</th>
+			<td>[[${employeeCommand.empAddr}]]</td>
+		</tr>
+		<tr>
+			<th>연락처</th>
+			<td>[[${employeeCommand.empPhone}]]</td>
+		</tr>
+		<tr>
+			<th>이메일</th>
+			<td>[[${employeeCommand.empEmail}]]</td>
+		</tr>
+ 	 </tbody>
+	</table>
+	<!-- end of table -->
+	
+	<!-- table -->
+	<table class="table text-center mt-3">
+	  	<thead class="thead-light">
+		    <tr>
+		    	<th colspan="2" ><h3>학력 소개</h3></th>
+	    	</tr>
+	   </thead>
+	   <tbody>
+		  	<th:block th:each="educationDTO : ${employeeCommand.educations}">
+			  	<tr>
+			  		<th>졸업년도</th>
+			  		<td>[[${#dates.format(educationDTO.schoolYear,'yyyy-MM-dd')}]]</td>
+			  	</tr>
+			  	<tr>
+			  		<th>학교</th>
+			  		<td>[[${educationDTO.school}]]</td>
+			  	</tr>
+		  	</th:block>
+	  	</tbody>
+	</table>
+	<!-- end of table -->
+	<a href="empList" class="btn btn-primary btn-sm">리스트</a> | 
+	<a th:href="@{empModify(num=${employeeCommand.empId})}" class="btn btn-primary btn-sm">수정</a> | 
+	<a th:href="@{empPassModify(num=${employeeCommand.empId})}" class="btn btn-primary btn-sm">비번수정</a> | 
+	<a th:href="@{empDelete(num=${employeeCommand.empId})}" class="btn btn-primary btn-sm">삭제</a>
+</div>
 </body>
 </html>

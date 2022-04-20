@@ -2,6 +2,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript">
@@ -31,22 +33,81 @@ $(function(){
 </script>
 </head>
 <body>
-수정 <br />
-<!-- 
-	controller에서 service로 command를 사용해서 넘겨주고 command가 html로 값을 전달한다. 
-		=> <form>에 th:object="${employeeCommand}"를 적어준다. 
- -->
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">KOSA ShoppingMall</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- end of navbar -->
+<div class="container">
 <form action="empUpdate" method="post" id="frm" th:object="${employeeCommand}">
-	아이디 : <input type="text" name="empId" th:value="${employeeCommand.empId}" readonly="readonly"/><br />
-	비밀번호 : <input type="password" name="empPw" />
-	<!-- th:if= empPw라는 filed에 error가 있다면 th:errors= empPw에 해당하는 에러 메세지를 출력 -->
-	<span th:if="${#fields.hasErrors('empPw')}" th:errors="*{empPw}"></span><br />
-	이름 : <input type="text" name="empName" th:value="${employeeCommand.empName}"/><br />
-	주소 : <input type="text" name="empAddr" th:value="${employeeCommand.empAddr}"/><br />
-	연락처 : <input type="tel" name="empPhone" th:value="${employeeCommand.empPhone}"/><br />
-	이메일 : <input type="email" name="empEmail" id="empEmail" th:value="${employeeCommand.empEmail}"/>
-	<span id="emailCheck"></span><br />
-	<input type="submit" value="수정완료" />
-</form>
+	<!-- table -->
+	<table class="table text-center mt-3">
+	  	<thead class="thead-light">
+		    <tr>
+		    	<th colspan="2" ><h3>정보 수정</h3></th>
+	    	</tr>
+	   </thead>
+	  <tbody>
+		<tr>
+			<th>아이디</th>
+			<td>
+				<input type="text" name="empId" th:value="${employeeCommand.empId}" readonly="readonly"/>
+			</td>
+		</tr>
+		<tr>
+			<th>비밀번호</th>
+			<td>
+				<input type="password" name="empPw" />
+				<!-- th:if= empPw라는 filed에 error가 있다면 th:errors= empPw에 해당하는 에러 메세지를 출력 -->
+				<span th:if="${#fields.hasErrors('empPw')}" th:errors="*{empPw}"></span>
+			</td>
+		</tr>
+		<tr>
+			<th>이름</th>
+			<td>
+				<input type="text" name="empName" th:value="${employeeCommand.empName}"/>
+			</td>
+		</tr>
+		<tr>
+			<th>주소</th>
+			<td>
+				<input type="text" name="empAddr" th:value="${employeeCommand.empAddr}"/>
+			</td>
+		</tr>
+		<tr>
+			<th>연락처</th>
+			<td>
+				<input type="tel" name="empPhone" th:value="${employeeCommand.empPhone}"/>
+			</td>
+		</tr>
+		<tr>
+			<th>이메일</th>
+			<td>
+				<input type="email" name="empEmail" id="empEmail" th:value="${employeeCommand.empEmail}"/>
+				<span id="emailCheck"></span>
+			</td>
+		</tr>
+		<tr>
+			<th colspan="2">
+				<input class="btn btn-primary btn-sm" type="submit" value="수정완료" />
+			</th>
+		</tr>
+ 	 </tbody>
+	</table>
+	<!-- end of table -->
+</form>	
+</div>
 </body>
 </html>

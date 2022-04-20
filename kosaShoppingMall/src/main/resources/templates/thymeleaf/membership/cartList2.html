@@ -2,8 +2,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!-- bootstrap css -->
-<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
@@ -107,63 +105,19 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<!-- navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">KOSA ShoppingMall</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="orderList">주문목록</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="goodsCartList">장바구니</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="../mypage/memberDetail">내 정보</a>
-        </li>
-        <!-- <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="../mypage/memberDetail" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            내 정보
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="../mypage/memberDetail">내 정보 보기</a></li>
-            <li><a class="dropdown-item" href="../mypage/memberModify">내 정보 수정</a></li>
-            <li><a class="dropdown-item" href="../mypage/memberPwForm">비밀번호 수정</a></li>
-            <li><a class="dropdown-item" href="../mypage/memberUserDel">회원 탈퇴</a></li>
-          </ul>
-        </li> -->
-      </ul>
-    </div>
-  </div>
-</nav>
-<!-- end of navbar -->
-<div class="container">
-	<form action="goodsBuy" method="post" onsubmit="return goodsCheck();">
-	<!-- table -->
-	<table class="table text-center mt-3">
-	  	<thead class="thead-light">
-		    <tr>
-		    	<th colspan="7" >장바구니 목록</th>
-		    </tr>
-		    <tr>
-		      <th scope="col"><input type="checkbox" id="prodCkAll" onclick="javascript:prodCkAll()"/></th>
-		      <th scope="col">이미지</th>
-		      <th scope="col">상품명</th>
-		      <th scope="col">수량</th>
-		      <th scope="col">합계금액</th>
-		      <th scope="col">배송비</th>
-		      <th scope="col"><input class="btn btn-dark btn-sm" type="button" onclick="javascript:dels()" value="선택 상품 삭제" /></th>
-		    </tr>
-	   </thead>
-	  <tbody>
-	  	<tr th:each="dto : ${lists}">
+<form action="goodsBuy" method="post" onsubmit="return goodsCheck();">
+<table width="600" align="center" border="1">
+	<caption>장바구니 목록</caption>
+	<tr>
+		<td><input type="checkbox" id="prodCkAll" onclick="javascript:prodCkAll()"  /></td>
+		<td>이미지</td>
+		<td>제품이름</td>
+		<td>수량</td>
+		<td>합계금액</td>
+		<td>배송비</td>
+		<td><input type="button"  onclick="javascript:dels()" value="선택 상품 삭제" /></td>
+	</tr>
+	<tr th:each="dto : ${lists}">
 		<td><input type="checkbox" name="prodCk" id="delete" th:value="${dto.goodsDTO.goodsNum}" checked="checked" /></td>
 		<td><img th:src="|/goods/upload/${dto.goodsDTO.goodsMain}|" width="30"/></td>
 		<td>[[${dto.goodsDTO.goodsName}]]</td>
@@ -178,17 +132,10 @@ $(document).ready(function() {
 	</tr>
 	<tr>
 		<td colspan="7" align="center">
-			<input class="btn btn-primary btn-sm" type="submit" value="구매하기" />
+			<input type="submit" value="구매하기" />
 		</td>
 	</tr>
- 	 </tbody>
-	</table>
-	<!-- end of table -->
-	</form>
-</div>
+</table>
+</form>
 </body>
-
-<!-- bootstrap js 사용 --> 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
-<script type="text/javascript" src="/static/js/bootstrap.bundle.js"></script>
 </html>

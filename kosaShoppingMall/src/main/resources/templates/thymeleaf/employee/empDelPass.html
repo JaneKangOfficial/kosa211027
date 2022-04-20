@@ -2,6 +2,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
@@ -63,18 +65,43 @@
 
 </head>
 <body>
+<div class="container">
 <form action="empDeleteOk" method="post">
-	<input type="text" name="empId" th:value="${employeeCommand.empId}" readonly="readonly"/><br />
-	현재 비밀번호 : <input type="password" name="empPw" id="empPw" /><br />
-	<span id="errPw"></span><br />
-	<input type="submit" value="확인" />
-
-<hr />
-	<a href="javascript:del();">삭제</a>
-	<input type="hidden" value="empId" th:value="${employeeCommand.empId}" />
-	<input type="submit" value="수정"/>
-	<input type="button" value="jquery삭제" id="delete"/>
-	<input type="button" value="function삭제" onclick="del();"/>
+<!-- table -->
+	<table class="table text-center mt-3">
+	  	<thead class="thead-light">
+		    <tr>
+		    	<th colspan="4" ><h3>삭제하기</h3></th>
+	    	</tr>
+	   </thead>
+	  <tbody>
+	  	<tr>
+  			<th>아이디</th>
+  			<td>
+  				<input type="text" name="empId" th:value="${employeeCommand.empId}" readonly="readonly"/>
+  			</td>
+  		</tr>
+ 		<tr>
+	  		<th>현재 비밀번호</th>
+	  		<td>
+	  			<input type="password" name="empPw" id="empPw" /><br />
+				<span id="errPw"></span>
+			</td>
+	  	</tr>
+	  	<tr>
+	  		<th colspan="2">
+	  			<input class="btn btn-primary btn-sm" type="submit" value="확인" />
+	  		</th>
+	  	</tr>
+	  </tbody>
+	 </table>
+	 <a href="javascript:del();" class="btn btn-primary btn-sm">삭제</a>
+	<input class="btn btn-primary btn-sm" type="hidden" value="empId" th:value="${employeeCommand.empId}" />
+	<input class="btn btn-primary btn-sm" type="submit" value="수정"/>
+	<input class="btn btn-primary btn-sm" type="button" value="jquery삭제" id="delete"/>
+	<input class="btn btn-primary btn-sm" type="button" value="function삭제" onclick="del();"/>
+	 
 </form>
+</div>
 </body>
 </html>

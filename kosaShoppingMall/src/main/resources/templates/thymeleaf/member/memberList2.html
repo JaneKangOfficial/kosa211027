@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<p>회원검색
+<form action="memList" method="get">
+	<input type="search" name="memWord" size="50" />
+	<input type="submit" value="검색" />
+</form>
+</p>
+<form action="memDels" method="post">
+<table border=1>
+	<tr>
+		<th colspan="5" width="500">회원 리스트</th>
+		<th width="100">회원수 : [[${count}]]</th>
+	</tr>
+	<tr>
+		<th>번호</th>
+		<th>회원 번호</th>
+		<th>이름</th>
+		<th>아이디</th>
+		<th>전화번호</th>
+		<th><input type="submit" value="삭제" /></th>
+	</tr>
+	<th:block th:each="dto, idx : ${list}">
+	<tr>
+		<th>[[${idx.count}]]</th>
+		<!-- Query String이 없을 경우에는 양쪽 끝에 파이프 "|" -->
+		<!-- ${dto.memberNum}: PathVariable -->
+		<td><a th:href="|memberInfo/${dto.memberNum}|">[[${dto.memberNum}]]</a></td>
+		<td>[[${dto.memberName}]]</td>
+		<td>[[${dto.memberId}]]</td>
+		<td>[[${dto.memberPhone}]]</td>
+		<th><input type="checkbox" name="delete" th:value="${dto.memberNum}" /></th>
+	</tr>
+	</th:block>
+	<tr>
+		<th colspan="6">
+			<th:block th:if="${page <= 1}">
+				[이전]
+			</th:block>
+			<th:block th:if="${page > 1}">
+				<a th:href="@{memList(page=${page-1}, memWord=${memWord})}">[이전]</a>
+			</th:block>
+			
+			<th:block th:each="i : ${#numbers.sequence(startPage, endPage)}" >
+				[<a th:href="@{memList(page=${i}, memWord=${memWord})}" ><th:block th:text="${i}" ></th:block></a>]
+			</th:block>
+				
+			<th:block th:if="${page < maxPage}">	
+				<a th:href="@{memList(page=${page+1}, memWord=${memWord})}">[이후]</a>
+			</th:block>
+			<th:block th:if="${page >= maxPage}">	
+				[이후]
+			</th:block>
+		</th>
+	</tr>
+</table>
+</form>
+<a href="memberRegist">회원 등록</a>
+</body>
+</html>

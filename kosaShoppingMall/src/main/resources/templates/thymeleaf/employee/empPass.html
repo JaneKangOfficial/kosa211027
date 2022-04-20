@@ -2,14 +2,42 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
 </head>
 <body>
+<div class="container">
 <form action="empPassUpdate" method="post" th:object="${employeeCommand}">
-	<input type="text" name="empId" th:value="${employeeCommand.empId}" readonly="readonly"/><br />
-	현재 비밀번호 : <input type="password" name="empPw" /><br />
-	<span th:if="${#fields.hasErrors('empPw')}" th:errors="*{empPw}"></span><br />
-	<input type="submit" value="확인" />
+	<!-- table -->
+	<table class="table text-center mt-3">
+	  	<thead class="thead-light">
+		    <tr>
+		    	<th colspan="4" ><h3>비밀번호 확인</h3></th>
+	    	</tr>
+	   </thead>
+	  <tbody>
+			<tr>
+	  			<th>아이디</th>
+	  			<td>
+	  				<input type="text" name="empId" th:value="${employeeCommand.empId}" readonly="readonly"/>
+	  			</td>
+	  		</tr>
+	  		<tr>
+		  		<th>현재 비밀번호</th>
+		  		<td>
+		  			<input type="password" name="empPw" /><br />
+					<span th:if="${#fields.hasErrors('empPw')}" th:errors="*{empPw}"></span><br />
+		  		</td>
+		  	</tr>
+		  	<tr>
+		  		<th colspan="2">
+		  			<input class="btn btn-primary btn-sm" type="submit" value="확인" />
+		  		</th>
+		  	</tr>
+	  </tbody>
+  </table>
 </form>
+</div>
 </body>
 </html>

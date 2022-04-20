@@ -2,12 +2,24 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!-- bootstrap css -->
-<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 
 <!-- <link href="memMypage.css" rel="stylesheet" type="text/css" />  -->
+<style type="text/css">
+	#leftMenu {
+		width: 25%;
+		float: left;
+	}
+	
+	#memberInfo {
+		width: 70%;
+		float: right;
+		border-left: 1px solid gray;
+		padding-left: 30px;
+	}
+</style>
+
 <script type="text/javascript">
 $(function(){
 	$("#memberEmail").keyup(function(){
@@ -34,68 +46,41 @@ $(function(){
 </script>
 </head>
 <body>
-<!-- navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">KOSA ShoppingMall</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="memberDetail">내 정보 보기</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="memberModify">내 정보 수정</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="memberPwForm">비밀번호 수정</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="memberUserDel">회원 탈퇴</a>
-        </li>
-        <!-- <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="memberDetail" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            내 정보
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="memberDetail">내 정보 보기</a></li>
-            <li><a class="dropdown-item" href="memberModify">내 정보 수정</a></li>
-            <li><a class="dropdown-item" href="memberPwForm">비밀번호 수정</a></li>
-            <li><a class="dropdown-item" href="memberUserDel">회원 탈퇴</a></li>
-          </ul>
-        </li> -->
-      </ul>
-    </div>
-  </div>
-</nav>
-<!-- end of navbar -->
-<div class="container">
-	<form action="memberModify" method="post" name="frm" id="frm" th:object="${memberCommand}">
-	<input type="hidden" name="memberNum" th:value="${memberCommand.memberNum}" />
-	<span th:if="${#fields.hasErrors('memberNum')}" th:errors="*{memberNum}"></span>
-	
-	<input type="hidden" name="memberRegist" value="1999-01-01"/>
-	<span th:if="${#fields.hasErrors('memberRegist')}" th:errors="*{memberRegist}"></span>
-	
-	<input type="hidden" name="memberPwCon" id="memberPwCon" value="123" />
-	
-	<!-- table -->
-	<table class="table text-center mt-3">
-	  	<thead class="thead-light">
-		    <tr>
-		    	<th colspan="2" >내 정보 수정</th>
-		    </tr>
-	   </thead>
-	  <tbody>
-	  	<tr>
-	  		<th colspan="2">사용자 ID와 비밀번호 입력</th>
-	  	</tr>
-	  	<tr>
+<div id="leftMenu" >
+	<ul>
+		<li><a href="memberDetail">내 정보 보기</a></li>
+		<li><a href="memberModify">내 정보 수정</a></li>
+		<li><a href="memberPwForm">비밀번호 수정</a></li>
+		<li><a href="memberUserDel">회원 탈퇴</a></li>
+	</ul>
+</div>
+<div id="memberInfo">
+<form action="memberModify" method="post" name="frm" id="frm" th:object="${memberCommand}">
+<input type="hidden" name="memberNum" th:value="${memberCommand.memberNum}" />
+<span th:if="${#fields.hasErrors('memberNum')}" th:errors="*{memberNum}"></span><br />
+
+<input type="hidden" name="memberRegist" value="1999-01-01"/>
+<span th:if="${#fields.hasErrors('memberRegist')}" th:errors="*{memberRegist}"></span><br />
+
+<input type="hidden" name="memberPwCon" id="memberPwCon" value="123" />
+<fieldset>
+	<legend>내 정보 수정</legend>
+	<table width="600" align="center" border=1>
+		<caption><strong>회원정보 수정</strong></caption>
+		<tfoot>
+		<tr>
+			<th colspan="2">
+				<input type="submit" value="수정 완료" />
+				<input type="reset" value="다시 입력" />
+				<input type="button" value="수정 안함" onclick="javascript:location.href='/'" />
+			</th>
+		</tr>
+		</tfoot>
+		<tbody>
+		<tr>
+			<th colspan="2">사용자 ID와 비밀번호 입력</th>
+		</tr>
+		<tr>
 			<th> 
 				<label for="memberId">* 사용자 아이디</label> 
 			</th>
@@ -176,20 +161,10 @@ $(function(){
 				<span th:if="${#fields.hasErrors('memberPhone')}" th:errors="*{memberPhone}"></span><br />
 			</td>
 		</tr>
- 	 </tbody>
- 	 <tfoot>
-		<tr>
-			<th colspan="2">
-				<input class="btn btn-primary btn-sm" type="submit" value="수정 완료" />
-				<input class="btn btn-primary btn-sm" type="reset" value="다시 입력" />
-				<input class="btn btn-primary btn-sm" type="button" value="수정 안함" onclick="javascript:location.href='/'" />
-			</th>
-		</tr>
-		</tfoot>
+		</tbody>
 	</table>
-	<!-- end of table -->
-	</form>
+</fieldset>
+</form>
 </div>
-
 </body>
 </html>
