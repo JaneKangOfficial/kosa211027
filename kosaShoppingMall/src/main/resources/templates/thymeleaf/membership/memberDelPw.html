@@ -2,36 +2,76 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
-<style type="text/css">
-	#leftMenu {
-		width: 25%;
-		float: left;
-	}
-	
-	#memberInfo {
-		width: 70%;
-		float: right;
-		border-left: 1px solid gray;
-		padding-left: 30px;
-	}
-</style>
 </head>
 <body>
-<div id="leftMenu" >
-	<ul>
-		<li><a href="memberDetail">내 정보 보기</a></li>
-		<li><a href="memberModify">내 정보 수정</a></li>
-		<li><a href="memberPwForm">비밀번호 수정</a></li>
-		<li><a href="memberUserDel">회원 탈퇴</a></li>
-	</ul>
-</div>
-
-<div id="memberInfo">
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">KOSA ShoppingMall</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="memberDetail">내 정보 보기</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="memberModify">내 정보 수정</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="memberPwForm">비밀번호 수정</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="memberUserDel">회원 탈퇴</a>
+        </li>
+        <!-- <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="memberDetail" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            내 정보
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="memberDetail">내 정보 보기</a></li>
+            <li><a class="dropdown-item" href="memberModify">내 정보 수정</a></li>
+            <li><a class="dropdown-item" href="memberPwForm">비밀번호 수정</a></li>
+            <li><a class="dropdown-item" href="memberUserDel">회원 탈퇴</a></li>
+          </ul>
+        </li> -->
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- end of navbar -->
+<div class="container">
 <form action="memberUserDel" method="post">
-	<input type="text" name="memberNum" th:value="${memberCommand.memberNum}" readonly="readonly"/><br />
-	비밀번호 : <input type="password" name="memberPw" /><br /> 
-	<input type="submit" value="탈퇴" /> 
+<input type="hidden" name="memberNum" th:value="${memberCommand.memberNum}" readonly="readonly"/><br />
+	<!-- table -->
+	<table class="table text-center mt-3">
+	  	<thead class="thead-light">
+		    <tr>
+		    	<th colspan="2" >탈퇴하기</th>
+		    </tr>
+	   </thead>
+	  <tbody>
+	  	<tr>
+	  		<th>비밀번호</th>
+	  		<td>
+	  			<input type="password" name="memberPw" />
+	  		</td>
+	  	</tr>
+	  	<tr>
+	  		<th colspan="2">
+	  			<input class="btn btn-primary btn-sm" type="submit" value="탈퇴" /> 
+	  		</th>
+	  	</tr>
+ 	 </tbody>
+	</table>
+	<!-- end of table -->
 </form>
 </div>
 </body>

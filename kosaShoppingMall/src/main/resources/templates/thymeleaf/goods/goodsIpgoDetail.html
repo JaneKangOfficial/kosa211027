@@ -2,23 +2,120 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
 </head>
 <body>
-제품번호 : [[${goodsIpgoGoodsCommand.goodsDTO.goodsNum}]]<br />
-제품명 : [[${goodsIpgoGoodsCommand.goodsDTO.goodsName}]]<br />
-가격 : [[${goodsIpgoGoodsCommand.goodsDTO.goodsPrice}]]<br />
-내용 : [[${goodsIpgoGoodsCommand.goodsDTO.goodsContent}]]<br />
-배송비 : [[${goodsIpgoGoodsCommand.goodsDTO.deliveryCost}]]<br />
-조회수 : [[${goodsIpgoGoodsCommand.goodsDTO.visitCount}]]<br />
-입고일 : [[${goodsIpgoGoodsCommand.goodsIpgoDTO.ipgoDate}]]<br />
-입고 수량 : [[${goodsIpgoGoodsCommand.goodsIpgoDTO.ipgoQty}]]<br />
-제조일 : [[${goodsIpgoGoodsCommand.goodsIpgoDTO.madeDate}]]<br />
-
-<a href="goodsIpgoList">목록</a> |
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">KOSA ShoppingMall</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="goodsList">상품리스트</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="goodsRegist">상품등록</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="goodsIpgoList">상품입고현황</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="goodsIpgo">상품입고</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="purchaseList">주문내역</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="goodsQuestion">상품문의</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- end of navbar -->
+<div class="container">
+	<form action="goodsDels" method="post">
+	<!-- table -->
+	<table class="table text-center mt-3">
+	  	<thead class="thead-light">
+		    <tr>
+		    	<th colspan="6" >상품 입고 정보</th>
+	    	</tr>
+	   </thead>
+	  <tbody>
+	  	<tr>
+	  		<th>제품번호</th>
+			<td>
+				[[${goodsIpgoGoodsCommand.goodsDTO.goodsNum}]]
+			</td>
+	  	</tr>
+	  	<tr>
+	  		<th>제품명</th>
+			<td>
+				[[${goodsIpgoGoodsCommand.goodsDTO.goodsName}]]
+			</td>
+	  	</tr>
+	  	<tr>
+	  		<th>가격</th>
+			<td>
+				[[${goodsIpgoGoodsCommand.goodsDTO.goodsPrice}]]
+			</td>
+	  	</tr>
+	  	<tr>
+	  		<th>내용</th>
+			<td>
+				[[${goodsIpgoGoodsCommand.goodsDTO.goodsContent}]]
+			</td>
+	  	</tr>
+	  	<tr>
+	  		<th>배송비</th>
+			<td>
+				[[${goodsIpgoGoodsCommand.goodsDTO.deliveryCost}]]
+			</td>
+	  	</tr>
+	  	<tr>
+	  		<th>조회수</th>
+			<td>
+				[[${goodsIpgoGoodsCommand.goodsDTO.visitCount}]]
+			</td>
+	  	</tr>
+	  	<tr>
+	  		<th>입고일</th>
+			<td>
+				[[${goodsIpgoGoodsCommand.goodsIpgoDTO.ipgoDate}]]
+			</td>
+	  	</tr>
+	  	<tr>
+	  		<th>입고 수량</th>
+			<td>
+				[[${goodsIpgoGoodsCommand.goodsIpgoDTO.ipgoQty}]]
+			</td>
+	  	</tr>
+	  	<tr>
+	  		<th>제조일</th>
+			<td>
+				[[${goodsIpgoGoodsCommand.goodsIpgoDTO.madeDate}]]
+			</td>
+	  	</tr>
+ 	 </tbody>
+	</table>
+	<!-- end of table -->
+	</form>
+	<a href="goodsIpgoList" class="btn btn-primary btn-sm">목록</a>
 <a th:href="@{goodsIpgoModify(goodsNum=${goodsIpgoGoodsCommand.goodsDTO.goodsNum},
-								ipgoDate=${#dates.format(goodsIpgoGoodsCommand.goodsIpgoDTO.ipgoDate,'yyyy-MM-dd')})}">수정</a> |
+								ipgoDate=${#dates.format(goodsIpgoGoodsCommand.goodsIpgoDTO.ipgoDate,'yyyy-MM-dd')})}" class="btn btn-primary btn-sm">수정</a>
 <a th:href="@{goodsIpgoDel(goodsNum=${goodsIpgoGoodsCommand.goodsDTO.goodsNum},
-								ipgoDate=${#dates.format(goodsIpgoGoodsCommand.goodsIpgoDTO.ipgoDate,'yyyy-MM-dd')})}">삭제</a> 
+								ipgoDate=${#dates.format(goodsIpgoGoodsCommand.goodsIpgoDTO.ipgoDate,'yyyy-MM-dd')})}" class="btn btn-primary btn-sm">삭제</a> 
+	
+</div>
 </body>
 </html>
