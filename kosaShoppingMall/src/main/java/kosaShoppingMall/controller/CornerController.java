@@ -128,17 +128,17 @@ public class CornerController {
 	
 	
 	
-//	@RequestMapping(value="/corner/reviewUpdate", method=RequestMethod.GET)
-//	public String reviewUpdate() {
-//		
-//	}
+	@RequestMapping(value="/corner/reviewUpdate", method=RequestMethod.GET)
+	public String reviewUpdate() {
+		return "thymeleaf/purchase/goodsReviewUpdate"; 
+	}
 	
 	
-//	@RequestMapping(value="/corner/reviewUpdate", method=RequestMethod.POST)
-//	public String reviewUpdate(@RequestParam(value="reviewContent") String reviewContent,
-//			@RequestParam(value="purchaseNum") String purchaseNum) {
-//		reviewUpdateService.execute(reviewContent, purchaseNum);
-//		return "thymeleaf/purchase/reviewUpdate"; 
-//	}
+	@RequestMapping(value="/corner/reviewUpdate", method=RequestMethod.POST)
+	public String reviewUpdate(@RequestParam(value="reviewContent") String reviewContent,
+			@RequestParam(value="purchaseNum") String purchaseNum) {
+		reviewUpdateService.execute(reviewContent, purchaseNum);
+		return "thymeleaf/purchase/goodsReviewUpdate"; 
+	}
 	
 }

@@ -2,25 +2,73 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
 </head>
 <body>
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">KOSA ShoppingMall</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="orderList">주문목록</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="goodsCartList">장바구니</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="../mypage/memberDetail">내 정보</a>
+        </li>
+        <!-- <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="../mypage/memberDetail" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            내 정보
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="../mypage/memberDetail">내 정보 보기</a></li>
+            <li><a class="dropdown-item" href="../mypage/memberModify">내 정보 수정</a></li>
+            <li><a class="dropdown-item" href="../mypage/memberPwForm">비밀번호 수정</a></li>
+            <li><a class="dropdown-item" href="../mypage/memberUserDel">회원 탈퇴</a></li>
+          </ul>
+        </li> -->
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- end of navbar -->
+<div class="container">
 <form action="reviewWrite" method="post">
 <input type="hidden" name="goodsNum" th:value="${goodsNum}" />
 <input type="hidden" name="purchaseNum" th:value="${purchaseNum}" />
-<table>
-	<tr>
-		<td>리뷰작성</td>
-		<td>
-			<textarea rows="5" cols="30" name="reviewContent"></textarea>
-		</td>
-	</tr>
-	<tr>
+<table class="table text-center mt-3">
+	<thead class="thead-light">
+		<tr>
+			<th><h3>리뷰작성</h3></th>
+		</tr>
+	
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<textarea rows="5" cols="30" name="reviewContent"></textarea>
+			</td>
+		</tr>
+		<tr>
 		<td colspan="2">
-			<input type="submit" value="리뷰등록" /> 
+			<input class="btn btn-primary btn-sm" type="submit" value="리뷰등록" /> 
 		</td>
 	</tr>
+	</tbody>
 </table>
-</form>
+</div>
+
 </body>
 </html>
