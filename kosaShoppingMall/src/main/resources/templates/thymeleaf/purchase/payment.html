@@ -2,37 +2,88 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/static/css/bootstrap.css" />
 <title>Insert title here</title>
 </head>
 <body>
-결제 페이지입니다.
-<form action="doPayment" method="post">
-<input type="hidden" name="purchaseNum" th:value="${purchaseNum}" />
-<input type="hidden" name="totalPrice" th:value="${totalPrice}" />
-<table>
-	<tr>
-		<td>구매번호</td>
-		<td>[[${purchaseNum}]]</td>
-	</tr>
-	<tr>
-		<td>결제금액</td>
-		<td>[[${totalPrice}]]원</td>
-	</tr>
-	<tr>
-		<td>결제방법</td>
-		<td>카드</td>
-	</tr>
-	<tr>
-		<td>카드번호</td>
-		<td><input type="text" name="cardNumber"/></td>
-	</tr>
-	<tr>
-		<td align="center" colspan="2">
-			<input type="submit" value="결제 완료" />
-			<input type="button" value="주문목록" onclick="javascript:location.href='orderList'" />
-		</td>
-	</tr>
-</table>
-</form>
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">KOSA ShoppingMall</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="orderList">주문목록</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="goodsCartList">장바구니</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="../mypage/memberDetail">내 정보</a>
+        </li>
+        <!-- <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="../mypage/memberDetail" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            내 정보
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="../mypage/memberDetail">내 정보 보기</a></li>
+            <li><a class="dropdown-item" href="../mypage/memberModify">내 정보 수정</a></li>
+            <li><a class="dropdown-item" href="../mypage/memberPwForm">비밀번호 수정</a></li>
+            <li><a class="dropdown-item" href="../mypage/memberUserDel">회원 탈퇴</a></li>
+          </ul>
+        </li> -->
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- end of navbar -->
+
+<div class="container">
+	<form action="doPayment" method="post">
+	<input type="hidden" name="purchaseNum" th:value="${purchaseNum}" />
+	<input type="hidden" name="totalPrice" th:value="${totalPrice}" />
+	
+	<!-- table -->
+	<table class="table text-center mt-3">
+	  	<thead class="thead-light">
+		    <tr>
+		    	<th colspan="5" >결제 페이지</th>
+		    </tr>
+	   </thead>
+	  <tbody>
+		  	<tr>
+				<th>구매번호</th>
+				<td>[[${purchaseNum}]]</td>
+			</tr>
+			<tr>
+				<th>결제금액</th>
+				<td>[[${totalPrice}]]원</td>
+			</tr>
+			<tr>
+				<th>결제방법</th>
+				<td>카드</td>
+			</tr>
+			<tr>
+				<th>카드번호</th>
+				<td><input type="text" name="cardNumber"/></td>
+			</tr>
+			<tr>
+				<th align="center" colspan="2">
+					<input class="btn btn-primary btn-sm mr-auto" type="submit" value="결제 완료" />
+					<input class="btn btn-primary btn-sm mr-auto" type="button" value="주문목록" onclick="javascript:location.href='orderList'" />
+				</th>
+			</tr>
+	  </tbody>
+	</table>
+	</form>
+</div>
+
 </body>
 </html>

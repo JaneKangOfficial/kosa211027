@@ -33,6 +33,7 @@ public class GoodsInquireAnswerWriteService {
 		goodsInquireMapper.setInquireAnswer(goodsInquireDTO);
 		MemberDTO memberDTO = memberMapper.selectOne(memberNum);
 		
+		/*
 		MimeMessage msg = mailSender.createMimeMessage();
 		String content = "<html><body>"
 				+ "안녕하세요. 코사 쇼핑몰입니다. <BR />"
@@ -50,9 +51,10 @@ public class GoodsInquireAnswerWriteService {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		*/
 		
 		
-		
+		/*
 		String api_key = "NCSW6VCZXODXGPOX";
 		String api_secret = "UZMGJ9ADCK2LCTIEWQRITSVRXW3J0B3T";
 		Message coolsms = new Message(api_key, api_secret);
@@ -74,5 +76,6 @@ public class GoodsInquireAnswerWriteService {
 		}catch(CoolsmsException e) {
 			e.printStackTrace();
 		}
+		*/
 	}
 }

@@ -91,7 +91,7 @@
 	  	<tr>
 	  		<th>입고일</th>
 			<td>
-				[[${goodsIpgoGoodsCommand.goodsIpgoDTO.ipgoDate}]]
+				[[${#dates.format(goodsIpgoGoodsCommand.goodsIpgoDTO.ipgoDate, 'yyyy-MM-dd')}]]
 			</td>
 	  	</tr>
 	  	<tr>
@@ -103,7 +103,7 @@
 	  	<tr>
 	  		<th>제조일</th>
 			<td>
-				[[${goodsIpgoGoodsCommand.goodsIpgoDTO.madeDate}]]
+				[[${#dates.format(goodsIpgoGoodsCommand.goodsIpgoDTO.madeDate, 'yyyy-MM-dd')}]]
 			</td>
 	  	</tr>
  	 </tbody>

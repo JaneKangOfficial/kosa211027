@@ -114,7 +114,7 @@
 	  	<tr>
 	  		<th>등록일</th>
 	  		<td>
-	  			[[${memberCommand.memberRegist}]]
+	  			[[${#dates.format(memberCommand.memberRegist,'yyyy-MM-dd')}]]
 	  		</td>
 	  	</tr>
 	  	<tr>
@@ -133,7 +133,7 @@
 	  	<tr>
 	  		<th>생일</th>
 	  		<td>
-	  			[[${memberCommand.memberBirth}]]
+	  			[[${#dates.format(memberCommand.memberBirth,'yyyy-MM-dd')}]]
 	  		</td>
 	  	</tr>
 	  	<tr>
@@ -145,8 +145,8 @@
  	 </tbody>
 	</table>
 	<!-- end of table -->
-	<a href="../memList" class="btn btn-primary btn-sm">목록</a> |
-	<a th:href="@{../memModify(num=${memberCommand.memberNum})}" class="btn btn-primary btn-sm">수정</a> |
+	<a href="../memList" class="btn btn-primary btn-sm">목록</a>
+	<a th:href="@{../memModify(num=${memberCommand.memberNum})}" class="btn btn-primary btn-sm">수정</a>
 	<!-- <a th:href="@{../memDelete(num=${memberCommand.memberNum})}">삭제</a>  -->
 	
 	<a href="javascript:del();" class="btn btn-primary btn-sm">삭제</a>
